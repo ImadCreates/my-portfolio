@@ -190,7 +190,7 @@ export default function Hero() {
                 <div style={{ paddingLeft: "2.5rem" }}>
                   <span className="c-string">&quot;Firebase&quot;</span>
                   <span className="c-bracket">, </span>
-                  <span className="c-string">&quot;Docker&quot;</span>
+                  <span className="c-string">&quot;Node.js&quot;</span>
                 </div>
                 <div style={{ paddingLeft: "1.25rem" }}>
                   <span className="c-bracket">],</span>
