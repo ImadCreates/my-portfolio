@@ -14,7 +14,7 @@ export default function Footer({ onNavigate }) {
           {/* Left */}
           <div>
             <div className="font-orbitron font-black text-lg text-white tracking-widest mb-1">
-              &lt;DEV/&gt;
+              Imad
             </div>
             <p className="font-rajdhani text-xs text-gray-600 tracking-widest">
               {personalInfo.tagline.toUpperCase()}

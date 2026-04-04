@@ -51,7 +51,7 @@ export default function Navbar({ activeSection, onNavigate }) {
             className="font-orbitron font-bold text-lg tracking-widest"
             style={{ color: '#ff4655' }}
           >
-            &lt;DEV/&gt;
+            Imad
           </span>
           <span className="font-rajdhani text-xs text-gray-500 block tracking-widest uppercase">
             Portfolio
