@@ -157,28 +157,28 @@ const cardConfig = {
   },
   education: {
     label: 'EDUCATION',
-    color: '#4fc3f7',
-    shadowColor: 'rgba(79,195,247,0.4)',
+    color: '#39ff88',
+    shadowColor: 'rgba(57,255,136,0.4)',
     icon: '△',
-    gradient: 'from-blue-900/60 via-blue-800/20 to-transparent',
-    bgAccent: 'rgba(79,195,247,0.06)',
+    gradient: 'from-emerald-900/60 via-emerald-800/20 to-transparent',
+    bgAccent: 'rgba(57,255,136,0.07)',
     Visual: () => (
       <div className="absolute inset-0 flex flex-col items-center justify-start overflow-hidden pt-8 px-4">
         {/* Graduation icon / book */}
         <div className="relative">
           <svg viewBox="0 0 80 60" width="80" height="60" className="opacity-60">
-            <polygon points="40,5 75,20 40,35 5,20" fill="none" stroke="#4fc3f7" strokeWidth="1.5"/>
-            <line x1="40" y1="35" x2="40" y2="55" stroke="#4fc3f7" strokeWidth="1.5"/>
-            <ellipse cx="40" cy="55" rx="12" ry="4" fill="none" stroke="#4fc3f7" strokeWidth="1.5"/>
-            <line x1="75" y1="20" x2="75" y2="40" stroke="#4fc3f7" strokeWidth="1.5"/>
-            <circle cx="75" cy="42" r="3" fill="#4fc3f7"/>
+            <polygon points="40,5 75,20 40,35 5,20" fill="none" stroke="#39ff88" strokeWidth="1.5"/>
+            <line x1="40" y1="35" x2="40" y2="55" stroke="#39ff88" strokeWidth="1.5"/>
+            <ellipse cx="40" cy="55" rx="12" ry="4" fill="none" stroke="#39ff88" strokeWidth="1.5"/>
+            <line x1="75" y1="20" x2="75" y2="40" stroke="#39ff88" strokeWidth="1.5"/>
+            <circle cx="75" cy="42" r="3" fill="#39ff88"/>
           </svg>
-          <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(circle, #4fc3f7, transparent 70%)', filter: 'blur(8px)' }} />
+          <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(circle, #39ff88, transparent 70%)', filter: 'blur(8px)' }} />
         </div>
         <div className="mt-4 text-center">
-          <div className="font-orbitron text-xs text-blue-300/60 tracking-widest">SOFTWARE</div>
-          <div className="font-orbitron text-xs text-blue-300/60 tracking-widest">ENGINEERING</div>
-          <div className="mt-2 font-rajdhani text-xs text-blue-400/40">York University · 4th Year</div>
+          <div className="font-orbitron text-xs text-green-300/70 tracking-widest">SOFTWARE</div>
+          <div className="font-orbitron text-xs text-green-300/70 tracking-widest">ENGINEERING</div>
+          <div className="mt-2 font-rajdhani text-xs text-green-400/50">York University · 4th Year</div>
         </div>
         <div className="mt-3 flex gap-1">
           {[...Array(4)].map((_, i) => (
@@ -191,9 +191,45 @@ const cardConfig = {
   },
 };
 
-export default function AgentCard({ id, isCenter, isActive, onClick, position }) {
+function seededFloat(seed) {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967295;
+}
+
+function buildParticles(id, count = 32) {
+  return Array.from({ length: count }, (_, i) => {
+    const sx = 12 + seededFloat(`${id}-${i}-sx`) * 76;
+    const sy = 10 + seededFloat(`${id}-${i}-sy`) * 80;
+    const dx = -70 + seededFloat(`${id}-${i}-dx`) * 140;
+    const dy = -70 + seededFloat(`${id}-${i}-dy`) * 140;
+    const size = 1 + seededFloat(`${id}-${i}-sz`) * 2.4;
+    const delay = seededFloat(`${id}-${i}-dl`) * 0.42;
+    const duration = 0.8 + seededFloat(`${id}-${i}-du`) * 0.9;
+
+    return {
+      sx,
+      sy,
+      dx,
+      dy,
+      size,
+      delay,
+      duration,
+    };
+  });
+}
+
+const cardParticles = Object.fromEntries(
+  Object.keys(cardConfig).map((id) => [id, buildParticles(id)])
+);
+
+export default function AgentCard({ id, isCenter, isActive, onClick, position, deteriorating = false }) {
   const config = cardConfig[id];
   const Visual = config.Visual;
+  const particles = cardParticles[id] || [];
 
   const positionScale = {
     far: 0.88,
@@ -221,8 +257,26 @@ export default function AgentCard({ id, isCenter, isActive, onClick, position })
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       {/* Outer border / glow container */}
-      <div
+      <motion.div
         className="relative w-full h-full rounded-sm overflow-hidden"
+        animate={
+          deteriorating
+            ? {
+                opacity: [1, 0.9, 0.62, 0],
+                scale: [1, 0.74, 0.32, 0.04],
+                y: [0, 6, 14, 20],
+              }
+            : {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }
+        }
+        transition={
+          deteriorating
+            ? { duration: 2.1, ease: [0.22, 1, 0.36, 1] }
+            : { duration: 0.42, ease: [0.22, 1, 0.36, 1] }
+        }
         style={{
           border: `1px solid ${isActive ? config.color : 'rgba(255,255,255,0.08)'}`,
           boxShadow: isActive
@@ -320,7 +374,40 @@ export default function AgentCard({ id, isCenter, isActive, onClick, position })
           className="absolute bottom-0 right-0 w-4 h-4 z-20"
           style={{ borderBottom: `2px solid ${config.color}`, borderRight: `2px solid ${config.color}`, opacity: 0.8 }}
         />
-      </div>
+      </motion.div>
+
+      {deteriorating && (
+        <div className="absolute -inset-2 pointer-events-none overflow-visible z-40">
+          {particles.map((p, i) => (
+            <motion.span
+              key={`${id}-particle-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: `${p.sx}%`,
+                top: `${p.sy}%`,
+                width: p.size,
+                height: p.size,
+                background: config.color,
+                boxShadow: `0 0 10px ${config.color}`,
+                mixBlendMode: 'screen',
+              }}
+              animate={{
+                x: [0, p.dx * 0.35, p.dx],
+                y: [0, p.dy * 0.35, p.dy],
+                opacity: [0, 1, 0.65, 0],
+                scale: [0.2, 1.35, 0.9, 0.15],
+              }}
+              transition={{
+                duration: p.duration,
+                delay: p.delay,
+                repeat: Infinity,
+                repeatDelay: 0.02,
+                ease: 'easeOut',
+              }}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }

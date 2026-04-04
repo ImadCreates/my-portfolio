@@ -165,6 +165,6 @@ export const education = [
       "Currently architecting PrimeBid (microservices) and MediLink (full-stack ecosystem)",
       "Actively seeking new-grad and junior engineering roles",
     ],
-    color: "#4fc3f7",
+    color: "#39ff88",
   },
 ];

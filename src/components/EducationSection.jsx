@@ -10,7 +10,7 @@ export default function EducationSection() {
         <SectionHeader
           title="EDUCATION"
           subtitle="AGENT TRAINING"
-          color="#4fc3f7"
+          color="#39ff88"
           icon="△"
         />
 

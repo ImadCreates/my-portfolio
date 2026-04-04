@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Code2, Globe } from 'lucide-react';
 import SectionHeader from './SectionHeader';
@@ -16,10 +17,197 @@ const techStack = [
   { name: 'Postman', color: '#ff6b35' },
 ];
 
-export default function AboutSection({ onOpenContact }) {
+const phraseTargets = [
+  {
+    id: 'education',
+    color: '#39ff88',
+    text: '4th-year Software Engineering student at York University',
+  },
+  {
+    id: 'about',
+    color: '#ff4655',
+    text: 'Full-Stack Developer',
+  },
+  {
+    id: 'projects',
+    color: '#00d4ff',
+    text: 'building scalable, end-to-end solutions',
+  },
+  {
+    id: 'skills',
+    color: '#bd93f9',
+    text: 'Java (Spring Boot), React, and Flutter',
+  },
+  {
+    id: 'experience',
+    color: '#ffd700',
+    text: 'concurrent internships',
+  },
+  {
+    id: 'experienceCetmatrix',
+    color: '#ffd700',
+    text: 'Cetmatrix',
+  },
+  {
+    id: 'experienceCare',
+    color: '#ffd700',
+    text: 'Care Hospitals',
+  },
+];
+
+function seededFloat(seed) {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i += 1) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967295;
+}
+
+function buildMergeParticles(targetId, count = 22) {
+  return Array.from({ length: count }, (_, i) => ({
+    startAngle: seededFloat(`${targetId}-${i}-sa`) * Math.PI * 2,
+    radiusOffset: -28 + seededFloat(`${targetId}-${i}-ro`) * 56,
+    curveSign: seededFloat(`${targetId}-${i}-sg`) > 0.5 ? 1 : -1,
+    curveStrength: 90 + seededFloat(`${targetId}-${i}-cs`) * 130,
+    launchJitter: -18 + seededFloat(`${targetId}-${i}-lj`) * 36,
+    size: 1 + seededFloat(`${targetId}-${i}-sz`) * 2.8,
+    delay: seededFloat(`${targetId}-${i}-dl`) * 0.45,
+    durationOffset: seededFloat(`${targetId}-${i}-du`) * 0.95,
+  }));
+}
+
+export default function AboutSection({ onOpenContact, heroSpinActive = false }) {
+  const sectionRef = useRef(null);
+  const bioCardRef = useRef(null);
+  const phraseRefs = useRef({});
+  const [mergeActive, setMergeActive] = useState(false);
+  const [mergeCycle, setMergeCycle] = useState(0);
+  const [phraseCenters, setPhraseCenters] = useState({});
+  const [sectionSize, setSectionSize] = useState({ width: 0, height: 0 });
+
+  const mergeParticles = useMemo(
+    () => Object.fromEntries(phraseTargets.map((t) => [t.id, buildMergeParticles(t.id)])),
+    []
+  );
+
+  const setPhraseRef = (id) => (node) => {
+    if (node) {
+      phraseRefs.current[id] = node;
+    }
+  };
+
+  const recalcPhraseCenters = () => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const sectionRect = section.getBoundingClientRect();
+    const nextCenters = {};
+
+    phraseTargets.forEach(({ id }) => {
+      const phraseNode = phraseRefs.current[id];
+      if (!phraseNode) return;
+      const rect = phraseNode.getBoundingClientRect();
+      nextCenters[id] = {
+        x: rect.left - sectionRect.left + rect.width / 2,
+        y: rect.top - sectionRect.top + rect.height / 2,
+      };
+    });
+
+    setPhraseCenters(nextCenters);
+    setSectionSize({ width: sectionRect.width, height: sectionRect.height });
+  };
+
+  useEffect(() => {
+    recalcPhraseCenters();
+    const onResize = () => recalcPhraseCenters();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    setMergeActive(heroSpinActive);
+    if (heroSpinActive) {
+      setMergeCycle((v) => v + 1);
+      requestAnimationFrame(() => recalcPhraseCenters());
+    }
+  }, [heroSpinActive]);
+
   return (
-    <section id="about" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} id="about" className="relative -mt-52 pt-24 pb-32 px-6 md:-mt-64 md:pt-28">
+      <div className="absolute inset-0 pointer-events-none z-30 overflow-visible">
+        {phraseTargets.flatMap((target) => {
+          const center = phraseCenters[target.id];
+          const particles = mergeParticles[target.id] || [];
+          if (!center || !sectionSize.width || !sectionSize.height) return [];
+
+          const ringCenterX = sectionSize.width * 0.5;
+          const ringCenterY = -Math.max(72, Math.min(138, sectionSize.height * 0.12));
+          const circleRadius = Math.min(262, Math.max(186, sectionSize.width * 0.225));
+
+          return particles.map((p, i) => {
+            const startRadius = circleRadius + p.radiusOffset;
+            const startX = ringCenterX + Math.cos(p.startAngle) * startRadius;
+            const startY = ringCenterY + Math.sin(p.startAngle) * startRadius + p.launchJitter;
+
+            const dx = center.x - startX;
+            const dy = center.y - startY;
+            const length = Math.max(1, Math.hypot(dx, dy));
+            const nx = -dy / length;
+            const ny = dx / length;
+            const curvePush = p.curveStrength * p.curveSign;
+
+            const midX = startX + dx * 0.46 + nx * curvePush;
+            const midY = startY + dy * 0.46 + ny * curvePush - 34;
+
+            return (
+              <motion.span
+                key={`${target.id}-merge-${i}-${mergeCycle}`}
+                className="absolute rounded-full"
+                style={{
+                  left: 0,
+                  top: 0,
+                  width: p.size,
+                  height: p.size,
+                  background: target.color,
+                  boxShadow: `0 0 10px ${target.color}`,
+                  mixBlendMode: 'screen',
+                }}
+                initial={{ x: startX, y: startY, opacity: 0, scale: 0.15 }}
+                animate={
+                  mergeActive
+                    ? {
+                        x: [startX, midX, center.x],
+                        y: [startY, midY, center.y],
+                        opacity: [0, 1, 0.9, 0],
+                        scale: [0.12, 1.4, 0.88, 0.12],
+                      }
+                    : {
+                        opacity: 0,
+                        scale: 0.1,
+                      }
+                }
+                transition={
+                  mergeActive
+                    ? {
+                        duration: 1.42 + p.durationOffset,
+                        delay: p.delay,
+                        repeat: Infinity,
+                        repeatDelay: 0.06,
+                        ease: 'easeOut',
+                      }
+                    : {
+                        duration: 0.2,
+                        ease: 'easeOut',
+                      }
+                }
+              />
+            );
+          });
+        })}
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <SectionHeader
           title="ABOUT ME"
           subtitle="AGENT PROFILE"
@@ -31,6 +219,7 @@ export default function AboutSection({ onOpenContact }) {
           {/* Left: Bio */}
           <div>
             <motion.div
+              ref={bioCardRef}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -52,7 +241,70 @@ export default function AboutSection({ onOpenContact }) {
               </div>
 
               <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '1.05rem' }}>
-                {personalInfo.bio}
+                I'm a{' '}
+                <motion.span
+                  ref={setPhraseRef('education')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#39ff88', textShadow: '0 0 12px rgba(57,255,136,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(57,255,136,0)' }}
+                  transition={{ duration: 0.35 }}
+                >
+                  4th-year Software Engineering student at York University
+                </motion.span>{' '}
+                and a{' '}
+                <motion.span
+                  ref={setPhraseRef('about')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#ff4655', textShadow: '0 0 12px rgba(255,70,85,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,70,85,0)' }}
+                  transition={{ duration: 0.35, delay: 0.06 }}
+                >
+                  Full-Stack Developer
+                </motion.span>{' '}
+                focused on{' '}
+                <motion.span
+                  ref={setPhraseRef('projects')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#00d4ff', textShadow: '0 0 12px rgba(0,212,255,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(0,212,255,0)' }}
+                  transition={{ duration: 0.35, delay: 0.12 }}
+                >
+                  building scalable, end-to-end solutions
+                </motion.span>
+                . I specialize in bridging high-performance backend architectures with polished, user-centric interfaces using{' '}
+                <motion.span
+                  ref={setPhraseRef('skills')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#bd93f9', textShadow: '0 0 12px rgba(189,147,249,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(189,147,249,0)' }}
+                  transition={{ duration: 0.35, delay: 0.18 }}
+                >
+                  Java (Spring Boot), React, and Flutter
+                </motion.span>
+                . I recently completed{' '}
+                <motion.span
+                  ref={setPhraseRef('experience')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
+                  transition={{ duration: 0.35, delay: 0.24 }}
+                >
+                  concurrent internships
+                </motion.span>{' '}
+                balancing full-stack mobile development at{' '}
+                <motion.span
+                  ref={setPhraseRef('experienceCetmatrix')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
+                  transition={{ duration: 0.35, delay: 0.28 }}
+                >
+                  Cetmatrix
+                </motion.span>{' '}
+                with critical IT infrastructure management at{' '}
+                <motion.span
+                  ref={setPhraseRef('experienceCare')}
+                  className="inline-block"
+                  animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
+                  transition={{ duration: 0.35, delay: 0.32 }}
+                >
+                  Care Hospitals
+                </motion.span>
+                , mastering both the software lifecycle and the underlying systems that keep applications running securely.
               </p>
             </motion.div>
 

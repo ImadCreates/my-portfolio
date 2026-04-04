@@ -17,6 +17,7 @@ export default function App() {
   const [activePortfolio, setActivePortfolio] = useState('val');
   const [activeSection, setActiveSection] = useState('hero');
   const [contactOpen, setContactOpen] = useState(false);
+  const [heroSpinActive, setHeroSpinActive] = useState(false);
 
   // Track active section on scroll
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function App() {
   useEffect(() => {
     if (activePortfolio !== 'val') {
       setContactOpen(false);
+      setHeroSpinActive(false);
     }
   }, [activePortfolio]);
 
@@ -83,12 +85,16 @@ export default function App() {
 
           {/* Main content */}
           <main className="relative z-10">
-            <HeroSection onNavigate={navigateTo} onOpenContact={() => setContactOpen(true)} />
+            <HeroSection
+              onNavigate={navigateTo}
+              onOpenContact={() => setContactOpen(true)}
+              onSpinChange={setHeroSpinActive}
+            />
 
             {/* Divider */}
             <SectionDivider />
 
-            <AboutSection onOpenContact={() => setContactOpen(true)} />
+            <AboutSection onOpenContact={() => setContactOpen(true)} heroSpinActive={heroSpinActive} />
             <SectionDivider />
             <ExperienceSection />
             <SectionDivider />
