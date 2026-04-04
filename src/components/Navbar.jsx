@@ -9,10 +9,20 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onOpenContact }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleOpenContact = () => {
+    if (typeof onOpenContact === "function") {
+      onOpenContact();
+      setMobileOpen(false);
+      return;
+    }
+
+    window.location.href = "mailto:approachimad@gmail.com";
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -65,9 +75,14 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
-            <a href="mailto:approachimad@gmail.com" className="btn-outline" style={{ padding: "0.45rem 1.1rem", fontSize: "0.85rem" }}>
+            <button
+              type="button"
+              onClick={handleOpenContact}
+              className="btn-outline"
+              style={{ padding: "0.45rem 1.1rem", fontSize: "0.85rem" }}
+            >
               <span>Let's Connect</span>
-            </a>
+            </button>
           </nav>
 
           {/* Mobile hamburger */}
@@ -137,9 +152,14 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
-          <a href="mailto:approachimad@gmail.com" className="btn-outline" style={{ alignSelf: "flex-start" }}>
+          <button
+            type="button"
+            onClick={handleOpenContact}
+            className="btn-outline"
+            style={{ alignSelf: "flex-start" }}
+          >
             <span>Let's Connect</span>
-          </a>
+          </button>
         </div>
       )}
     </>

@@ -34,7 +34,7 @@ const links = [
   },
 ];
 
-export default function Contact() {
+export default function Contact({ onOpenContact }) {
   return (
     <section id="contact" style={{ padding: "7rem 0 5rem" }}>
       <div className="gradient-divider" />
@@ -72,9 +72,9 @@ export default function Contact() {
 
         {/* CTA */}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "4rem" }}>
-          <a href="mailto:approachimad@gmail.com" className="btn-primary">
+          <button type="button" onClick={onOpenContact} className="btn-primary">
             <span>Say Hello</span>
-          </a>
+          </button>
         </div>
 
         {/* Contact cards */}

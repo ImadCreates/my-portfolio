@@ -1,3 +1,5 @@
+"use client";
+
 const stats = [
   { value: "4th", label: "Year at York University" },
   { value: "2x", label: "Concurrent Internships" },
@@ -5,6 +7,7 @@ const stats = [
 ];
 
 export default function About() {
+
   return (
     <section id="about" style={{ padding: "7rem 0" }}>
       <div className="max-container">
@@ -45,6 +48,7 @@ export default function About() {
               contribute to engineering teams building the next generation of
               web and mobile platforms.
             </p>
+
           </div>
 
           {/* Right */}
