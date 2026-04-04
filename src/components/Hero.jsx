@@ -114,6 +114,14 @@ export default function Hero() {
               <a href="#contact" className="btn-outline">
                 Get In Touch
               </a>
+              <a
+                href="https://val-portfolio-steel.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+              >
+                Valorant Theme Portfolio
+              </a>
             </div>
 
             {/* Social links */}

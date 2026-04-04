@@ -23,6 +23,18 @@ const projects = [
     github: null,
     live: null,
   },
+  {
+    number: "03",
+    name: "Valorant Theme Portfolio",
+    subtitle: "Stylized Personal Portfolio",
+    status: "Active",
+    period: "Apr 2026",
+    description:
+      "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
+    tags: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
+    github: "https://github.com/ImadCreates/val-portfolio",
+    live: "https://val-portfolio-steel.vercel.app/",
+  },
 ];
 
 export default function Projects() {
