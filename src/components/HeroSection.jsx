@@ -51,7 +51,7 @@ export default function HeroSection({ onNavigate, onOpenContact }) {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-center"
         >
-          <h1 className="font-orbitron font-black tracking-widest" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#ece8e1' }}>
+          <h1 className="hidden md:block font-orbitron font-black tracking-widest" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#ece8e1' }}>
             {personalInfo.name}
           </h1>
           <div className="flex items-center justify-center gap-3 mt-2">
@@ -68,8 +68,8 @@ export default function HeroSection({ onNavigate, onOpenContact }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex items-end justify-center gap-3 md:gap-4 w-full overflow-x-auto pb-2"
-          style={{ scrollbarWidth: 'none' }}
+          className="flex items-end justify-start md:justify-center gap-3 md:gap-4 w-full overflow-x-auto pb-2 px-2 md:px-0"
+          style={{ scrollbarWidth: 'none', touchAction: 'pan-x' }}
         >
           {cards.map((card, i) => (
             <motion.div

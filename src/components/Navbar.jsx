@@ -10,9 +10,11 @@ const navItems = [
   { id: 'education', label: 'EDUCATION', color: '#4fc3f7' },
 ];
 
-export default function Navbar({ activeSection, onNavigate }) {
+export default function Navbar({ activeSection, onNavigate, activePortfolio, onSwitchPortfolio }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const showFloatingSwitch = !scrolled;
+  const showInlineSwitch = scrolled;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -41,7 +43,7 @@ export default function Navbar({ activeSection, onNavigate }) {
         borderBottom: scrolled ? '1px solid rgba(255,70,85,0.15)' : 'none',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
         {/* Logo */}
         <button
           onClick={() => handleNav('hero')}
@@ -62,8 +64,26 @@ export default function Navbar({ activeSection, onNavigate }) {
           />
         </button>
 
+        {/* Mobile centered switch */}
+        <div className="md:hidden absolute left-1/2 -translate-x-1/2">
+          <PortfolioSwitchButtons
+            activePortfolio={activePortfolio}
+            onSwitchPortfolio={onSwitchPortfolio}
+            compact
+          />
+        </div>
+
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
+          {showInlineSwitch && (
+            <div className="mr-3">
+              <PortfolioSwitchButtons
+                activePortfolio={activePortfolio}
+                onSwitchPortfolio={onSwitchPortfolio}
+              />
+            </div>
+          )}
+
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -113,6 +133,24 @@ export default function Navbar({ activeSection, onNavigate }) {
         </button>
       </div>
 
+      {/* Floating switch at top only before scrolling in Valorant mode */}
+      <AnimatePresence>
+        {showFloatingSwitch && (
+          <motion.div
+            initial={{ y: -16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -16, opacity: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="hidden md:flex justify-center mt-2"
+          >
+            <PortfolioSwitchButtons
+              activePortfolio={activePortfolio}
+              onSwitchPortfolio={onSwitchPortfolio}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
@@ -151,5 +189,53 @@ export default function Navbar({ activeSection, onNavigate }) {
         )}
       </AnimatePresence>
     </motion.nav>
+  );
+}
+
+function PortfolioSwitchButtons({ activePortfolio, onSwitchPortfolio, compact = false }) {
+  const baseButtonClass = compact
+    ? 'flex items-center gap-1.5 px-2 py-1 border transition-colors duration-200'
+    : 'flex items-center gap-2 px-3 py-1.5 border transition-colors duration-200';
+  const textClass = compact ? 'font-rajdhani text-[10px] tracking-widest' : 'font-rajdhani text-xs tracking-widest';
+  const proLabel = compact ? 'PRO' : 'PRO PORTFOLIO';
+  const valLabel = compact ? 'VAL' : 'VALORANT PORTFOLIO';
+
+  return (
+    <div
+      className="flex gap-2 rounded-md p-1"
+      style={{ background: 'rgba(8,10,14,0.72)', border: '1px solid rgba(255,255,255,0.08)' }}
+    >
+      <button
+        type="button"
+        onClick={() => onSwitchPortfolio('my')}
+        aria-pressed={activePortfolio === 'my'}
+        className={baseButtonClass}
+        style={{
+          background: 'rgba(15,16,20,0.88)',
+          borderColor: activePortfolio === 'my' ? 'rgba(255,70,85,0.6)' : 'rgba(255,255,255,0.1)',
+        }}
+      >
+        <span className={compact ? 'text-[10px]' : 'text-xs'} style={{ color: activePortfolio === 'my' ? '#ff4655' : '#9e9e9e' }}>🔒</span>
+        <span className={textClass} style={{ color: activePortfolio === 'my' ? '#ff4655' : '#9e9e9e' }}>
+          {proLabel}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => onSwitchPortfolio('val')}
+        aria-pressed={activePortfolio === 'val'}
+        className={baseButtonClass}
+        style={{
+          background: 'rgba(15,16,20,0.88)',
+          borderColor: activePortfolio === 'val' ? 'rgba(0,212,255,0.6)' : 'rgba(255,255,255,0.1)',
+        }}
+      >
+        <span className={textClass} style={{ color: activePortfolio === 'val' ? '#00d4ff' : '#9e9e9e' }}>
+          {valLabel}
+        </span>
+        <span className={compact ? 'text-[10px]' : 'text-xs'} style={{ color: activePortfolio === 'val' ? '#00d4ff' : '#9e9e9e' }}>🔓</span>
+      </button>
+    </div>
   );
 }
