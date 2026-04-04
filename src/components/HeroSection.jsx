@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
@@ -15,6 +15,32 @@ const cards = [
 
 export default function HeroSection({ onNavigate, onOpenContact }) {
   const [activeCard, setActiveCard] = useState('about');
+  const cardsRowRef = useRef(null);
+  const aboutCardRef = useRef(null);
+
+  useEffect(() => {
+    const centerAboutCard = () => {
+      if (window.innerWidth >= 768) return;
+
+      const row = cardsRowRef.current;
+      const aboutCard = aboutCardRef.current;
+      if (!row || !aboutCard) return;
+
+      const targetScrollLeft = aboutCard.offsetLeft - (row.clientWidth - aboutCard.clientWidth) / 2;
+      const maxScrollLeft = row.scrollWidth - row.clientWidth;
+      row.scrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScrollLeft));
+    };
+
+    const frame = requestAnimationFrame(centerAboutCard);
+    const timeout = setTimeout(centerAboutCard, 120);
+    window.addEventListener('resize', centerAboutCard);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timeout);
+      window.removeEventListener('resize', centerAboutCard);
+    };
+  }, []);
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -65,6 +91,7 @@ export default function HeroSection({ onNavigate, onOpenContact }) {
 
         {/* Cards Row */}
         <motion.div
+          ref={cardsRowRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -74,6 +101,7 @@ export default function HeroSection({ onNavigate, onOpenContact }) {
           {cards.map((card, i) => (
             <motion.div
               key={card.id}
+              ref={card.id === 'about' ? aboutCardRef : null}
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1 * i + 0.4 }}
