@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { Mail, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
@@ -58,6 +58,11 @@ const cardLayout = [
   },
 ];
 
+const cardLayoutById = Object.fromEntries(cardLayout.map((card) => [card.id, card]));
+const mobileCardLayout = ['skills', 'projects', 'about', 'experience', 'education']
+  .map((id) => cardLayoutById[id])
+  .filter(Boolean);
+
 const SPIN_ENTER_Y = 1;
 const SPIN_EXIT_Y = 0;
 const SPIN_REV_DURATION = 0.0134;
@@ -70,15 +75,22 @@ const CARD_ROTATE_SPRING = { type: 'spring', stiffness: 260, damping: 26, mass: 
 export default function HeroSection({ onNavigate, onOpenContact, onSpinChange }) {
   const [activeCard, setActiveCard] = useState('about');
   const [layoutScale, setLayoutScale] = useState(0.9);
+  const [isDesktop, setIsDesktop] = useState(true);
   const [spinMode, setSpinMode] = useState(false);
   const [isReverting, setIsReverting] = useState(false);
   const orbitControls = useAnimationControls();
+  const mobileScrollerRef = useRef(null);
+  const mobileAboutRef = useRef(null);
 
   useEffect(() => {
     const updateLayout = () => {
       const w = window.innerWidth;
+      const desktop = w >= 768;
+      setIsDesktop(desktop);
+
       if (w < 768) {
         setLayoutScale(0.66);
+        setSpinMode(false);
       } else if (w < 1024) {
         setLayoutScale(0.78);
       } else if (w < 1280) {
@@ -95,6 +107,11 @@ export default function HeroSection({ onNavigate, onOpenContact, onSpinChange })
 
   useEffect(() => {
     const onScroll = () => {
+      if (!isDesktop) {
+        setSpinMode(false);
+        return;
+      }
+
       const y = window.scrollY;
       setSpinMode((prev) => (prev ? y > SPIN_EXIT_Y : y > SPIN_ENTER_Y));
     };
@@ -102,7 +119,7 @@ export default function HeroSection({ onNavigate, onOpenContact, onSpinChange })
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isDesktop]);
 
   useEffect(() => {
     if (spinMode) {
@@ -131,6 +148,21 @@ export default function HeroSection({ onNavigate, onOpenContact, onSpinChange })
       onSpinChange(spinMode);
     }
   }, [spinMode, onSpinChange]);
+
+  useEffect(() => {
+    if (isDesktop) return undefined;
+
+    const rafId = window.requestAnimationFrame(() => {
+      const scroller = mobileScrollerRef.current;
+      const aboutCard = mobileAboutRef.current;
+      if (!scroller || !aboutCard) return;
+
+      const targetLeft = aboutCard.offsetLeft - (scroller.clientWidth - aboutCard.clientWidth) / 2;
+      scroller.scrollTo({ left: Math.max(0, targetLeft), behavior: 'auto' });
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [isDesktop]);
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -254,10 +286,14 @@ export default function HeroSection({ onNavigate, onOpenContact, onSpinChange })
           </motion.div>
         </div>
 
-        <div className="md:hidden w-full overflow-x-auto px-1 pb-2 -mx-1">
+        <div ref={mobileScrollerRef} className="md:hidden w-full overflow-x-auto px-1 pb-2 -mx-1 snap-x snap-mandatory">
           <div className="flex gap-4 min-w-max px-2">
-            {cardLayout.map((card) => (
-              <div key={card.id} className="shrink-0">
+            {mobileCardLayout.map((card) => (
+              <div
+                key={card.id}
+                ref={card.id === 'about' ? mobileAboutRef : null}
+                className="shrink-0 snap-center"
+              >
                 <AgentCard
                   id={card.id}
                   position={card.id === 'about' ? 'center' : 'far'}
