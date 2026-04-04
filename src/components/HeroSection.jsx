@@ -1,0 +1,234 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Mail, ChevronDown } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from './Icons';
+import AgentCard from './AgentCard';
+import { personalInfo } from '../data/portfolioData';
+
+const cards = [
+  { id: 'skills', position: 'far' },
+  { id: 'projects', position: 'side' },
+  { id: 'about', position: 'center' },
+  { id: 'experience', position: 'side' },
+  { id: 'education', position: 'far' },
+];
+
+export default function HeroSection({ onNavigate, onOpenContact }) {
+  const [activeCard, setActiveCard] = useState('about');
+
+  const handleCardClick = (id) => {
+    setActiveCard(id);
+    if (id !== 'about') {
+      setTimeout(() => onNavigate(id), 300);
+    }
+  };
+
+  return (
+    <section
+      id="hero"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-grid opacity-40" />
+
+      {/* Top decorative bar (like Valorant header) */}
+      <div className="absolute top-20 left-0 right-0 flex justify-center gap-12 z-10 pointer-events-none">
+        <div
+          className="flex items-center gap-2 px-4 py-1.5 border border-white/10"
+          style={{ background: 'rgba(15,16,20,0.8)' }}
+        >
+          <span className="text-gray-400 text-xs">🔒</span>
+          <span className="font-rajdhani text-xs text-gray-400 tracking-widest">CLOSE ◈</span>
+        </div>
+        <div
+          className="flex items-center gap-2 px-4 py-1.5 border border-white/10"
+          style={{ background: 'rgba(15,16,20,0.8)' }}
+        >
+          <span className="font-rajdhani text-xs text-gray-400 tracking-widest">OPEN ◇</span>
+          <span className="text-gray-400 text-xs">🔓</span>
+        </div>
+      </div>
+
+      {/* Diagonal accent lines left */}
+      <div className="absolute left-0 top-0 bottom-0 w-24 overflow-hidden opacity-20 pointer-events-none">
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute top-0 bottom-0 w-px"
+            style={{
+              left: `${i * 24}px`,
+              background: 'linear-gradient(to bottom, transparent, rgba(255,70,85,0.4), transparent)',
+              transform: 'skewX(-15deg)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Diagonal accent lines right */}
+      <div className="absolute right-0 top-0 bottom-0 w-24 overflow-hidden opacity-20 pointer-events-none">
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute top-0 bottom-0 w-px"
+            style={{
+              right: `${i * 24}px`,
+              background: 'linear-gradient(to bottom, transparent, rgba(255,70,85,0.4), transparent)',
+              transform: 'skewX(15deg)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-7xl mx-auto px-4">
+
+        {/* Name / Title Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-center"
+        >
+          <h1
+            className="font-orbitron font-black tracking-widest"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#ece8e1' }}
+          >
+            {personalInfo.name}
+          </h1>
+          <div className="flex items-center justify-center gap-3 mt-2">
+            <div className="h-px w-16 bg-red-500/40" />
+            <span
+              className="font-rajdhani font-semibold tracking-widest text-sm"
+              style={{ color: '#ff4655' }}
+            >
+              {personalInfo.title.toUpperCase()}
+            </span>
+            <div className="h-px w-16 bg-red-500/40" />
+          </div>
+        </motion.div>
+
+        {/* Cards Row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex items-end justify-center gap-3 md:gap-4 w-full overflow-x-auto pb-2"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          {cards.map((card, i) => (
+            <motion.div
+              key={card.id}
+              initial={{ y: 60, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 * i + 0.4 }}
+            >
+              <AgentCard
+                id={card.id}
+                position={card.position}
+                isCenter={card.id === 'about'}
+                isActive={activeCard === card.id}
+                onClick={() => handleCardClick(card.id)}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+          className="flex items-center gap-3 md:gap-4"
+        >
+          {/* GitHub Button */}
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center gap-2 px-5 py-2.5 border border-white/15 hover:border-cyan-400/50 transition-all duration-300"
+            style={{ background: 'rgba(15,16,20,0.8)' }}
+          >
+            <span
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: 'rgba(0,212,255,0.05)' }}
+            />
+            <GithubIcon size={16} className="text-gray-400 group-hover:text-cyan-400 transition-colors duration-200" />
+            <span className="font-rajdhani font-semibold text-sm tracking-widest text-gray-400 group-hover:text-cyan-400 transition-colors duration-200">
+              GITHUB
+            </span>
+            <span className="absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 bg-cyan-400" />
+          </a>
+
+          {/* Contact Me Button (Main CTA) */}
+          <button
+            onClick={onOpenContact}
+            className="group relative flex items-center gap-2 px-8 py-3 overflow-hidden"
+            style={{ background: '#ff4655', clipPath: 'polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%)' }}
+          >
+            <span
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              style={{ background: 'rgba(255,255,255,0.1)' }}
+            />
+            <Mail size={16} className="text-white" />
+            <span className="font-rajdhani font-bold text-sm tracking-widest text-white">
+              CONTACT ME
+            </span>
+            <span
+              className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ boxShadow: '0 0 25px rgba(255,70,85,0.6)', background: 'transparent' }}
+            />
+          </button>
+
+          {/* LinkedIn Button */}
+          <a
+            href={personalInfo.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center gap-2 px-5 py-2.5 border border-white/15 hover:border-blue-400/50 transition-all duration-300"
+            style={{ background: 'rgba(15,16,20,0.8)' }}
+          >
+            <span
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: 'rgba(79,195,247,0.05)' }}
+            />
+            <LinkedinIcon size={16} className="text-gray-400 group-hover:text-blue-400 transition-colors duration-200" />
+            <span className="font-rajdhani font-semibold text-sm tracking-widest text-gray-400 group-hover:text-blue-400 transition-colors duration-200">
+              LINKEDIN
+            </span>
+            <span className="absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 bg-blue-400" />
+          </a>
+        </motion.div>
+
+        {/* Party not eligible bar (Valorant style) */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1 }}
+          className="flex items-center gap-2 px-4 py-1.5"
+          style={{ background: 'rgba(139,0,0,0.3)', border: '1px solid rgba(255,70,85,0.2)' }}
+        >
+          <span style={{ color: '#ff4655', fontSize: '10px' }}>▲</span>
+          <span className="font-rajdhani text-xs text-red-400 tracking-widest">
+            {personalInfo.tagline.toUpperCase()}
+          </span>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.3 }}
+          className="flex flex-col items-center gap-1"
+        >
+          <span className="font-rajdhani text-xs text-gray-600 tracking-widest">SCROLL</span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ChevronDown size={16} className="text-gray-600" />
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
