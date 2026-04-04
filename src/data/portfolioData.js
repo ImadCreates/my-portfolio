@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "Imaduddin Ahmed",
-  title: "Full-Stack Software Engineering Student",
+  title: "Full-Stack Software Engineer",
   tagline: "Engineer by passion, builder by nature.",
   bio: `I'm a 4th-year Software Engineering student at York University and a Full-Stack Developer
   focused on building scalable, end-to-end solutions. I specialize in bridging high-performance
