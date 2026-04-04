@@ -197,8 +197,8 @@ function PortfolioSwitchButtons({ activePortfolio, onSwitchPortfolio, compact = 
     ? 'flex items-center gap-1.5 px-2 py-1 border transition-colors duration-200'
     : 'flex items-center gap-2 px-3 py-1.5 border transition-colors duration-200';
   const textClass = compact ? 'font-rajdhani text-[10px] tracking-widest' : 'font-rajdhani text-xs tracking-widest';
-  const proLabel = compact ? 'PRO' : 'PRO PORTFOLIO';
-  const valLabel = compact ? 'VAL' : 'VALORANT PORTFOLIO';
+  const proLabel = 'PRO';
+  const valLabel = 'VAL';
 
   return (
     <div
