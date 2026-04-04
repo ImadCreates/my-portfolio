@@ -32,8 +32,8 @@ const projects = [
     description:
       "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
     tags: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
-    github: "https://github.com/ImadCreates/val-portfolio",
-    live: "https://val-portfolio-steel.vercel.app/",
+    github: "https://github.com/ImadCreates/my-portfolio",
+    live: "https://imaduddin-ahmed.vercel.app/",
   },
 ];
 
