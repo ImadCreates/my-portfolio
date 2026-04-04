@@ -100,6 +100,20 @@ export const projects = [
     color: "#bd93f9",
     featured: true,
   },
+  {
+    title: "Valorant Theme Portfolio",
+    subtitle: "Stylized Personal Portfolio",
+    period: "Apr 2026",
+    status: "Active",
+    description:
+      "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
+    techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
+    highlights: ["Active project", "Valorant-inspired UI", "Responsive design"],
+    github: "https://github.com/ImadCreates/val-portfolio",
+    live: "https://val-portfolio-steel.vercel.app/",
+    color: "#ff4655",
+    featured: true,
+  },
 ];
 
 export const experience = [

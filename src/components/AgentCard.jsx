@@ -57,6 +57,7 @@ const cardConfig = {
           {[
             { name: 'MEDILINK', tags: ['Flutter', 'React', 'Firebase'], active: true },
             { name: 'PRIMEBID', tags: ['Java', 'Spring Boot', 'Docker'], active: false },
+            { name: 'VALORANT PORTFOLIO', tags: ['React', 'Vite', 'Framer'], active: true },
           ].map((proj, i) => (
             <div
               key={proj.name}
