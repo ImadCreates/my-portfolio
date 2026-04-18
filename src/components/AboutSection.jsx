@@ -218,6 +218,55 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left: Bio */}
           <div>
+            {/* Profile Photo */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="relative mb-6 flex justify-center"
+            >
+              <div className="relative w-44 h-44">
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-5 h-5 z-10" style={{ borderTop: '2px solid #ff4655', borderLeft: '2px solid #ff4655' }} />
+                <div className="absolute top-0 right-0 w-5 h-5 z-10" style={{ borderTop: '2px solid #ff4655', borderRight: '2px solid #ff4655' }} />
+                <div className="absolute bottom-0 left-0 w-5 h-5 z-10" style={{ borderBottom: '2px solid #ff4655', borderLeft: '2px solid #ff4655' }} />
+                <div className="absolute bottom-0 right-0 w-5 h-5 z-10" style={{ borderBottom: '2px solid #ff4655', borderRight: '2px solid #ff4655' }} />
+
+                {personalInfo.avatar ? (
+                  <img
+                    src={personalInfo.avatar}
+                    alt={personalInfo.name}
+                    className="w-full h-full object-cover"
+                    style={{ border: '1px solid rgba(255,70,85,0.2)' }}
+                  />
+                ) : (
+                  <div
+                    className="w-full h-full flex flex-col items-center justify-center gap-2"
+                    style={{
+                      background: 'rgba(26,29,35,0.8)',
+                      border: '1px solid rgba(255,70,85,0.15)',
+                    }}
+                  >
+                    {/* Silhouette placeholder */}
+                    <svg viewBox="0 0 80 80" width="56" height="56" className="opacity-25">
+                      <circle cx="40" cy="28" r="16" fill="#ff4655" />
+                      <path d="M10 72 Q10 50 40 50 Q70 50 70 72" fill="#ff4655" />
+                    </svg>
+                    <span className="font-orbitron text-[9px] tracking-widest text-red-500/50 text-center px-2">
+                      PHOTO<br />COMING SOON
+                    </span>
+                  </div>
+                )}
+
+                {/* Glow backdrop */}
+                <div
+                  className="absolute -inset-3 -z-10 rounded-sm opacity-20"
+                  style={{ background: 'radial-gradient(circle at center, #ff4655, transparent 70%)', filter: 'blur(12px)' }}
+                />
+              </div>
+            </motion.div>
+
             <motion.div
               ref={bioCardRef}
               initial={{ opacity: 0, y: 20 }}
@@ -240,8 +289,9 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 <span className="font-orbitron text-xs text-red-500 tracking-widest">ACTIVE AGENT</span>
               </div>
 
-              <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '1.05rem' }}>
-                I'm a{' '}
+              <p className="font-rajdhani text-gray-300 leading-relaxed mb-4" style={{ fontSize: '1.05rem' }}>
+                Software has always been more than a degree to me — it&apos;s how I make ideas real.
+                I&apos;m a{' '}
                 <motion.span
                   ref={setPhraseRef('education')}
                   className="inline-block"
@@ -305,6 +355,42 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                   Care Hospitals
                 </motion.span>
                 , mastering both the software lifecycle and the underlying systems that keep applications running securely.
+              </p>
+
+              <p className="font-rajdhani text-gray-400 leading-relaxed" style={{ fontSize: '0.97rem' }}>
+                What sets me apart is that rare dual perspective — I understand the code <span style={{ color: '#ece8e1' }}>and</span> the
+                infrastructure it lives on. That hands-on mix of shipping features and managing production systems
+                is what makes me a developer who builds with the full picture in mind.
+              </p>
+            </motion.div>
+
+            {/* Goals & Vision */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="relative p-5 mb-6"
+              style={{
+                border: '1px solid rgba(0,212,255,0.18)',
+                background: 'rgba(0,212,255,0.04)',
+              }}
+            >
+              <div className="absolute top-0 left-0 w-4 h-4" style={{ borderTop: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff' }} />
+              <div className="absolute bottom-0 right-0 w-4 h-4" style={{ borderBottom: '2px solid #00d4ff', borderRight: '2px solid #00d4ff' }} />
+
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full" style={{ background: '#00d4ff', boxShadow: '0 0 8px #00d4ff' }} />
+                <span className="font-orbitron text-xs tracking-widest" style={{ color: '#00d4ff' }}>GOALS &amp; VISION</span>
+              </div>
+
+              <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '1.02rem' }}>
+                My goal is to join a high-impact engineering team where I can contribute as a
+                full-stack engineer from day one — tackling real problems at scale, writing code
+                that ships, and growing into a technical lead who architects systems that matter.
+                I&apos;m drawn to teams that move fast, care deeply about quality, and aren&apos;t
+                afraid to build something new. Long term, I want to be the engineer who bridges
+                the gap between bold product vision and solid, scalable execution.
               </p>
             </motion.div>
 

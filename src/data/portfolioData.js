@@ -13,7 +13,7 @@ export const personalInfo = {
   github: "https://github.com/ImadCreates",
   linkedin: "https://linkedin.com/in/imadsecures",
   website: "https://imaduddin-ahmed.vercel.app",
-  avatar: null,
+  avatar: "/me.png",
 };
 
 export const skills = [
