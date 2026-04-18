@@ -8,6 +8,7 @@ const navItems = [
   { id: 'about', label: 'ABOUT ME', color: '#ff4655' },
   { id: 'experience', label: 'EXPERIENCE', color: '#ffd700' },
   { id: 'education', label: 'EDUCATION', color: '#39ff88' },
+  { id: 'whyme', label: 'WHY ME', color: '#ffd700' },
 ];
 
 export default function Navbar({ activeSection, onNavigate, activePortfolio, onSwitchPortfolio }) {
