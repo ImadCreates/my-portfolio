@@ -294,7 +294,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 I&apos;m a{' '}
                 <motion.span
                   ref={setPhraseRef('education')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#39ff88', textShadow: '0 0 12px rgba(57,255,136,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(57,255,136,0)' }}
                   transition={{ duration: 0.35 }}
                 >
@@ -303,7 +303,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 and a{' '}
                 <motion.span
                   ref={setPhraseRef('about')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#ff4655', textShadow: '0 0 12px rgba(255,70,85,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,70,85,0)' }}
                   transition={{ duration: 0.35, delay: 0.06 }}
                 >
@@ -312,7 +312,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 focused on{' '}
                 <motion.span
                   ref={setPhraseRef('projects')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#00d4ff', textShadow: '0 0 12px rgba(0,212,255,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(0,212,255,0)' }}
                   transition={{ duration: 0.35, delay: 0.12 }}
                 >
@@ -321,7 +321,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 . I specialize in bridging high-performance backend architectures with polished, user-centric interfaces using{' '}
                 <motion.span
                   ref={setPhraseRef('skills')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#bd93f9', textShadow: '0 0 12px rgba(189,147,249,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(189,147,249,0)' }}
                   transition={{ duration: 0.35, delay: 0.18 }}
                 >
@@ -330,7 +330,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 . I recently completed{' '}
                 <motion.span
                   ref={setPhraseRef('experience')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
                   transition={{ duration: 0.35, delay: 0.24 }}
                 >
@@ -339,7 +339,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 balancing full-stack mobile development at{' '}
                 <motion.span
                   ref={setPhraseRef('experienceCetmatrix')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
                   transition={{ duration: 0.35, delay: 0.28 }}
                 >
@@ -348,13 +348,22 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 with critical IT infrastructure management at{' '}
                 <motion.span
                   ref={setPhraseRef('experienceCare')}
-                  className="inline-block"
+                  className="inline"
                   animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
                   transition={{ duration: 0.35, delay: 0.32 }}
                 >
                   Care Hospitals
                 </motion.span>
                 , mastering both the software lifecycle and the underlying systems that keep applications running securely.
+              </p>
+
+              <p className="font-rajdhani text-gray-400 leading-relaxed mb-4" style={{ fontSize: '0.97rem' }}>
+                I came into engineering curious but unfocused — building small things just to see if I could.
+                Two concurrent internships changed that. At{' '}
+                <span style={{ color: '#ffd700' }}>Cetmatrix</span> I owned a full mobile CI/CD pipeline end-to-end.
+                At{' '}
+                <span style={{ color: '#ffd700' }}>CARE Hospitals</span> I kept live healthcare infrastructure running.
+                Those experiences taught me accountability, speed, and what it actually means to ship code that matters.
               </p>
 
               <p className="font-rajdhani text-gray-400 leading-relaxed" style={{ fontSize: '0.97rem' }}>
@@ -364,69 +373,31 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
               </p>
             </motion.div>
 
-            {/* Goals & Vision */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="relative p-5 mb-6"
-              style={{
-                border: '1px solid rgba(0,212,255,0.18)',
-                background: 'rgba(0,212,255,0.04)',
-              }}
-            >
-              <div className="absolute top-0 left-0 w-4 h-4" style={{ borderTop: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff' }} />
-              <div className="absolute bottom-0 right-0 w-4 h-4" style={{ borderBottom: '2px solid #00d4ff', borderRight: '2px solid #00d4ff' }} />
-
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full" style={{ background: '#00d4ff', boxShadow: '0 0 8px #00d4ff' }} />
-                <span className="font-orbitron text-xs tracking-widest" style={{ color: '#00d4ff' }}>GOALS &amp; VISION</span>
-              </div>
-
-              <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '1.02rem' }}>
-                My goal is to join a high-impact engineering team where I can contribute as a
-                full-stack engineer from day one — tackling real problems at scale, writing code
-                that ships, and growing into a technical lead who architects systems that matter.
-                I&apos;m drawn to teams that move fast, care deeply about quality, and aren&apos;t
-                afraid to build something new. Long term, I want to be the engineer who bridges
-                the gap between bold product vision and solid, scalable execution.
-              </p>
-            </motion.div>
-
-            {/* Info Cards */}
+            {/* Info Cards — Location + Email only */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="grid grid-cols-1 gap-3 mb-6"
+              className="grid grid-cols-2 gap-3 mb-6"
             >
               {[
-                { icon: <MapPin size={14} />, label: 'LOCATION', value: personalInfo.location, color: '#ff4655' },
-                { icon: <Mail size={14} />, label: 'EMAIL', value: personalInfo.email, color: '#00d4ff' },
-                { icon: <Code2 size={14} />, label: 'SCHOOL', value: 'York University', color: '#bd93f9' },
-                { icon: <Globe size={14} />, label: 'WEBSITE', value: 'imaduddin-ahmed.vercel.app', color: '#ffd700', href: personalInfo.website },
+                { icon: <MapPin size={13} />, label: 'LOCATION', value: 'North York, ON', color: '#ff4655' },
+                { icon: <Mail size={13} />, label: 'EMAIL', value: personalInfo.email, color: '#00d4ff' },
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-center gap-4 px-4 py-3"
+                  className="flex flex-col gap-1 px-3 py-2.5"
                   style={{
                     border: '1px solid rgba(255,255,255,0.06)',
                     background: 'rgba(15,16,20,0.6)',
                   }}
                 >
-                  <span style={{ color: item.color }}>{item.icon}</span>
-                  <span className="font-orbitron text-xs tracking-widest text-gray-500 w-20">{item.label}</span>
-                  {item.href ? (
-                    <a href={item.href} target="_blank" rel="noopener noreferrer"
-                      className="font-rajdhani text-sm hover:underline transition-colors"
-                      style={{ color: item.color }}>
-                      {item.value}
-                    </a>
-                  ) : (
-                    <span className="font-rajdhani text-sm text-gray-200">{item.value}</span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    <span style={{ color: item.color }}>{item.icon}</span>
+                    <span className="font-orbitron tracking-widest text-gray-500" style={{ fontSize: '9px' }}>{item.label}</span>
+                  </div>
+                  <span className="font-rajdhani text-xs text-gray-200 truncate">{item.value}</span>
                 </div>
               ))}
             </motion.div>
@@ -525,6 +496,66 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                   </motion.div>
                 ))}
               </div>
+
+              {/* Goals & Vision */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.12 }}
+                className="relative p-5 mt-8"
+                style={{
+                  border: '1px solid rgba(0,212,255,0.18)',
+                  background: 'rgba(0,212,255,0.04)',
+                }}
+              >
+                <div className="absolute top-0 left-0 w-4 h-4" style={{ borderTop: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff' }} />
+                <div className="absolute bottom-0 right-0 w-4 h-4" style={{ borderBottom: '2px solid #00d4ff', borderRight: '2px solid #00d4ff' }} />
+
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full" style={{ background: '#00d4ff', boxShadow: '0 0 8px #00d4ff' }} />
+                  <span className="font-orbitron text-xs tracking-widest" style={{ color: '#00d4ff' }}>GOALS &amp; VISION</span>
+                </div>
+
+                <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '0.97rem' }}>
+                  My goal is to join a high-impact engineering team where I can contribute as a
+                  full-stack engineer from day one — tackling real problems at scale and growing
+                  into a technical lead who architects systems that matter. Long term, I want to
+                  be the engineer who bridges bold product vision with solid, scalable execution.
+                </p>
+              </motion.div>
+
+              {/* School + Website — outside the card */}
+              <div className="grid grid-cols-2 gap-3 mt-3">
+                {[
+                  { icon: <Code2 size={13} />, label: 'SCHOOL', value: 'York University', color: '#bd93f9' },
+                  { icon: <Globe size={13} />, label: 'WEBSITE', value: 'imaduddin-ahmed.vercel.app', color: '#ffd700', href: personalInfo.website },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex flex-col gap-1 px-3 py-2.5"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      background: 'rgba(15,16,20,0.6)',
+                    }}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span style={{ color: item.color }}>{item.icon}</span>
+                      <span className="font-orbitron tracking-widest text-gray-500" style={{ fontSize: '9px' }}>{item.label}</span>
+                    </div>
+                    {item.href ? (
+                      <a href={item.href} target="_blank" rel="noopener noreferrer"
+                        className="font-rajdhani text-xs hover:underline transition-colors truncate"
+                        style={{ color: item.color }}>
+                        {item.value}
+                      </a>
+                    ) : (
+                      <span className="font-rajdhani text-xs text-gray-200 truncate">{item.value}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
             </motion.div>
           </div>
         </div>

@@ -7,12 +7,11 @@ import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import EducationSection from './components/EducationSection';
-import WhyMeSection from './components/WhyMeSection';
 import ContactModal from './components/ContactModal';
 import Footer from './components/Footer';
 import MyPortfolioApp from './myPortfolio/MyPortfolioApp';
 
-const sectionOrder = ['hero', 'about', 'experience', 'projects', 'skills', 'education', 'whyme'];
+const sectionOrder = ['hero', 'about', 'experience', 'projects', 'skills', 'education'];
 
 export default function App() {
   const [activePortfolio, setActivePortfolio] = useState('val');
@@ -104,8 +103,6 @@ export default function App() {
             <SkillsSection />
             <SectionDivider />
             <EducationSection />
-            <SectionDivider />
-            <WhyMeSection />
           </main>
 
           <Footer onNavigate={navigateTo} />
