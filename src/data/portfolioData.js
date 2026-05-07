@@ -83,6 +83,7 @@ export const projects = [
     highlights: ["Active project", "Mobile + Web", "Real-time sync"],
     github: "https://github.com/ImadCreates/Medilink",
     live: "https://medilink-pied.vercel.app",
+    demo: "https://www.youtube.com/embed/KYjn9Eqjglw",
     color: "#00d4ff",
     featured: true,
   },
