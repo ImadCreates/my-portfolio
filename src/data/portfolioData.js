@@ -77,35 +77,34 @@ export const projects = [
     subtitle: "Full Stack Ecosystem",
     period: "Feb 2026 – Present",
     status: "Active",
+    featured: true,
+    wide: true,
     description:
-      "A comprehensive full-stack ecosystem bridging mobile and web platforms to create a unified, responsive user experience. Leverages Flutter for the mobile app and React for the administrative web dashboard, integrated with Google Firebase for real-time database management and secure authentication. Enables low-latency data synchronization demonstrating full-stack capabilities required to build modern, connected applications.",
-    techStack: ["Flutter", "React", "Firebase", "Firestore", "JavaScript", "Real-time DB"],
-    highlights: ["Active project", "Mobile + Web", "Real-time sync"],
+      "An emergency dispatch ecosystem connecting a React web dashboard, Flutter mobile app, and a DE10-Lite FPGA board in real time. A dispatcher sends an alert from the web app — Firebase triggers an FCM push notification to the responder's phone, the responder accepts, a live map loads, and the dashboard updates instantly. The FPGA runs 8 Verilog modules handling UART communication, a 4-state FSM, VGA display output, and a buzzer alarm — bridging hardware and software in a single cohesive system.",
+    techStack: ["Flutter", "React", "Firebase", "Firestore", "Verilog", "FPGA", "FCM", "Real-time DB"],
+    highlights: ["Active project", "Mobile + Web + Hardware", "Real-time sync", "FPGA integration"],
     github: "https://github.com/ImadCreates/Medilink",
     live: "https://medilink-pied.vercel.app",
-    demo: "https://www.youtube.com/embed/KYjn9Eqjglw",
+    demos: [
+      {
+        url: "https://www.youtube.com/embed/ykPL2PVdLWw",
+        label: "APP DEMO",
+        desc: "Dispatch → FCM push → responder accepts → live map → dashboard update",
+      },
+      {
+        url: "https://www.youtube.com/embed/KYjn9Eqjglw",
+        label: "HARDWARE DEMO",
+        desc: "DE10-Lite FPGA — UART, 4-state FSM, VGA display, buzzer alarm",
+      },
+    ],
     color: "#00d4ff",
-    featured: true,
-  },
-  {
-    title: "PrimeBid",
-    subtitle: "Microservices Architecture System",
-    period: "Jan 2026 – Present",
-    status: "In Development",
-    description:
-      "A distributed auction platform built with Java and Spring Boot to manage high-concurrency bidding environments. Features five core microservices — including a centralized API Gateway and IAM — ensuring scalable, isolated service management. Standardized development lifecycle with automated environment parity, keeping backend services stable and reproducible across testing stages with secure routing for high-throughput cloud infrastructure.",
-    techStack: ["Java", "Spring Boot", "Microservices", "Docker", "API Gateway", "IAM"],
-    highlights: ["In development", "5 microservices", "High-concurrency"],
-    github: null,
-    live: null,
-    color: "#bd93f9",
-    featured: true,
   },
   {
     title: "Valorant Theme Portfolio",
     subtitle: "Stylized Personal Portfolio",
     period: "Apr 2026",
     status: "Active",
+    featured: true,
     description:
       "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
     techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
@@ -113,7 +112,6 @@ export const projects = [
     github: "https://github.com/ImadCreates/my-portfolio",
     live: "https://imaduddin-ahmed.vercel.app/",
     color: "#ff4655",
-    featured: true,
   },
 ];
 
