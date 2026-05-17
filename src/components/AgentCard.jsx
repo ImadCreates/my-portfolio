@@ -55,8 +55,7 @@ const cardConfig = {
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="relative w-full h-full flex flex-col gap-2 p-5 pt-8">
           {[
-            { name: 'MEDILINK', tags: ['Flutter', 'React', 'Firebase'], active: true },
-            { name: 'PRIMEBID', tags: ['Java', 'Spring Boot', 'Docker'], active: false },
+            { name: 'MEDILINK', tags: ['Flutter', 'React', 'Spring Boot'], active: true },
             { name: 'VALORANT PORTFOLIO', tags: ['React', 'Vite', 'Framer'], active: true },
           ].map((proj, i) => (
             <div
@@ -135,19 +134,21 @@ const cardConfig = {
         <div className="relative w-full flex flex-col gap-3">
           <div className="absolute left-2 top-3 bottom-3 w-px bg-yellow-500/20" />
           {[
+            { role: 'Founder', company: 'MediLink', year: '2026' },
+            { role: 'SWE Intern', company: 'Superstars', year: '2026' },
             { role: 'SWE Intern', company: 'CETMATRIX', year: '2025' },
             { role: 'IT Infra Intern', company: 'CARE Hospitals', year: '2025' },
           ].map((exp, i) => (
-            <div key={i} className="flex items-start gap-3 pl-1">
-              <div className="relative mt-1.5 z-10">
+            <div key={i} className="flex items-start gap-2 pl-1">
+              <div className="relative mt-1 z-10">
                 <div
-                  className="w-3 h-3 rounded-full border-2"
-                  style={{ borderColor: '#ffd700', background: i === 0 ? '#ffd700' : 'transparent', boxShadow: i === 0 ? '0 0 8px #ffd700' : 'none' }}
+                  className="w-2.5 h-2.5 rounded-full border-2"
+                  style={{ borderColor: '#ffd700', background: i <= 1 ? '#ffd700' : 'transparent', boxShadow: i <= 1 ? '0 0 8px #ffd700' : 'none' }}
                 />
               </div>
-              <div style={{ opacity: 1 - i * 0.25 }}>
-                <div className="font-rajdhani font-semibold text-xs text-yellow-300">{exp.role}</div>
-                <div className="font-rajdhani text-xs text-gray-500">{exp.company} · {exp.year}</div>
+              <div style={{ opacity: 1 - i * 0.18 }}>
+                <div className="font-rajdhani font-semibold text-yellow-300" style={{ fontSize: '10px' }}>{exp.role}</div>
+                <div className="font-rajdhani text-gray-500" style={{ fontSize: '9px' }}>{exp.company} · {exp.year}</div>
               </div>
             </div>
           ))}

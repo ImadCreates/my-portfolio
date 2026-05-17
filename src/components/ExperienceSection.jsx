@@ -90,10 +90,12 @@ export default function ExperienceSection() {
                           {exp.duration}
                         </div>
                       )}
-                      <div className="flex items-center gap-1.5">
-                        <MapPin size={11} className="text-gray-500" />
-                        <span className="font-rajdhani text-xs text-gray-500">{exp.location}</span>
-                      </div>
+                      {exp.location && (
+                        <div className="flex items-center gap-1.5">
+                          <MapPin size={11} className="text-gray-500" />
+                          <span className="font-rajdhani text-xs text-gray-500">{exp.location}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 

@@ -1,15 +1,41 @@
 const experiences = [
   {
+    role: "Founder",
+    company: "MediLink",
+    period: "Apr 2026 – Present",
+    type: "Self-employed",
+    tags: ["React", "Flutter", "Spring Boot", "Firebase", "FCM", "Leaflet", "Railway"],
+    bullets: [
+      "Built the full dispatcher dashboard in React with live Firestore listeners, a Leaflet map, haversine distance ranking, and a two-step dispatch modal.",
+      "Built the Flutter responder app on Android with GPS tracking, FCM push notifications targeted by UID, and a full alert lifecycle.",
+      "Built the Spring Boot backend deployed on Railway handling alert encoding and targeted FCM delivery via fcm_tokens per user UID.",
+      "Implemented Firestore security rules, environment variable hardening, and composite indexes for production readiness.",
+    ],
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Superstars",
+    period: "May 2026 – Present",
+    type: "Internship",
+    tags: ["Flutter", "Dart", "REST APIs"],
+    bullets: [
+      "Mobile development using Flutter and Dart.",
+      "Connecting front end to back end via REST APIs.",
+      "Weekly sprints and product strategy discussions.",
+      "Contributing to platform improvements and special projects.",
+    ],
+  },
+  {
     role: "Software Engineer Intern",
     company: "CETMATRIX — Career Education and Travel",
     period: "Sep 2025 – Dec 2025",
     type: "Internship · 4 months",
     tags: ["Flutter", "Dart", "Firebase", "GitHub Actions", "CI/CD", "Vercel"],
     bullets: [
-      "Developed and maintained cross-platform Flutter applications using Dart, implementing robust state management with Provider and Riverpod.",
-      "Built and extended cloud backend infrastructure on Google Firebase — managing Firestore databases, Cloud Functions, and Firebase Authentication.",
+      "Developed and maintained cross-platform Flutter applications using Dart, with Provider and Riverpod for state management.",
+      "Built and extended cloud backend infrastructure on Google Firebase, managing Firestore databases, Cloud Functions, and Firebase Authentication.",
       "Engineered CI/CD pipelines using GitHub Actions to automate testing and deployment of web and mobile applications.",
-      "Created internal tools utilizing Cloud Functions and social media APIs to automate analytics, reporting, and dynamic content display.",
+      "Created internal tools using Cloud Functions and social media APIs to automate analytics, reporting, and dynamic content display.",
       "Managed company website infrastructure: hosting, deployment, and performance monitoring on Firebase Hosting and Vercel.",
     ],
   },
@@ -21,8 +47,8 @@ const experiences = [
     tags: ["Networking", "System Security", "Cloud Infrastructure", "Healthcare IT"],
     bullets: [
       "Managed critical IT infrastructure for a high-volume healthcare environment, ensuring 99.9% uptime for essential medical databases and staff workstations.",
-      "Streamlined hardware-to-software integration by troubleshooting complex network issues and maintaining system security protocols across local and cloud-based assets.",
-      "Collaborated with cross-functional teams to provide technical solutions for real-time data management, bridging hardware limitations with software requirements.",
+      "Troubleshot complex network issues and maintained system security protocols across local and cloud-based assets.",
+      "Collaborated with cross-functional teams to deliver technical solutions for real-time data management.",
     ],
   },
 ];

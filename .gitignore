@@ -4,3 +4,5 @@ dist/
 .env.local
 *.log
 .claude/
+.DS_Store
+Thumbs.db

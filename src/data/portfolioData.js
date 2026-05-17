@@ -2,12 +2,11 @@ export const personalInfo = {
   name: "Imaduddin Ahmed",
   title: "Full-Stack Software Engineer",
   tagline: "Engineer by passion, builder by nature.",
-  bio: `I'm a 4th-year Software Engineering student at York University and a Full-Stack Developer
-  focused on building scalable, end-to-end solutions. I specialize in bridging high-performance
-  backend architectures with polished, user-centric interfaces using Java (Spring Boot), React,
-  and Flutter. I recently completed concurrent internships — balancing full-stack mobile development
-  at Cetmatrix with critical IT infrastructure management at Care Hospitals — mastering both the
-  software lifecycle and the underlying systems that keep applications running securely.`,
+  bio: `I'm a founder building MediLink, a real-time dispatch and field coordination platform
+  currently live in production. I'm also a 4th-year Software Engineering student at York University
+  and a Full-Stack Developer working across Java (Spring Boot), React, and Flutter. Three internships
+  have shaped how I think about shipping code: full-stack mobile at Cetmatrix, healthcare IT
+  infrastructure at Care Hospitals, and now software development at Superstars.`,
   location: "North York, Ontario, Canada",
   email: "approachimad@gmail.com",
   github: "https://github.com/ImadCreates",
@@ -74,17 +73,17 @@ export const skillTags = [
 export const projects = [
   {
     title: "MediLink",
-    subtitle: "Full Stack Ecosystem",
+    subtitle: "Real-Time Dispatch Platform",
     period: "Feb 2026 – Present",
     status: "Active",
     featured: true,
     wide: true,
     description:
-      "An emergency dispatch ecosystem connecting a React web dashboard, Flutter mobile app, and a DE10-Lite FPGA board in real time. A dispatcher sends an alert from the web app — Firebase triggers an FCM push notification to the responder's phone, the responder accepts, a live map loads, and the dashboard updates instantly. The FPGA runs 8 Verilog modules handling UART communication, a 4-state FSM, VGA display output, and a buzzer alarm — bridging hardware and software in a single cohesive system.",
-    techStack: ["Flutter", "React", "Firebase", "Firestore", "Verilog", "FPGA", "FCM", "Real-time DB"],
-    highlights: ["Active project", "Mobile + Web + Hardware", "Real-time sync", "FPGA integration"],
+      "A real-time dispatch and field coordination platform built across a React dispatcher dashboard, Flutter responder app, and Spring Boot backend. Dispatchers assign the nearest available worker by GPS distance, workers receive targeted push notifications and navigate to the job, and status updates flow back to the dashboard in real time. An optional DE10-Lite FPGA hardware layer handles UART communication, a 4-state FSM, VGA display output, and a buzzer alarm for environments requiring physical alert systems.",
+    techStack: ["Flutter", "React", "Spring Boot", "Firebase", "Firestore", "FCM", "Leaflet", "Real-time DB"],
+    highlights: ["Active project", "Mobile + Web + Hardware", "Real-time sync", "GPS distance routing"],
     github: "https://github.com/ImadCreates/Medilink",
-    live: "https://medilink-pied.vercel.app",
+    live: "https://medilink-technologies.vercel.app/",
     demos: [
       {
         url: "https://www.youtube.com/embed/ykPL2PVdLWw",
@@ -116,6 +115,36 @@ export const projects = [
 ];
 
 export const experience = [
+  {
+    role: "Founder",
+    company: "MediLink",
+    period: "Apr 2026 – Present",
+    location: "Self-employed",
+    description:
+      "Building MediLink, a dispatch and field coordination platform for any team that moves people to locations. Dispatchers assign the nearest available worker to any job from a live web dashboard. Workers receive the assignment on their phone, accept, navigate, and mark it done. Built the full system solo across React, Flutter, Spring Boot, and Firebase. Currently live at medilink-technologies.vercel.app and being taken to market.",
+    achievements: [
+      "Built the full dispatcher dashboard in React with live Firestore listeners, a Leaflet map, haversine distance ranking, and a two-step dispatch modal",
+      "Built the Flutter responder app on Android with GPS tracking, FCM push notifications targeted by UID, and a full alert lifecycle",
+      "Built the Spring Boot backend deployed on Railway handling alert encoding and targeted FCM delivery via fcm_tokens per user UID",
+      "Implemented Firestore security rules, environment variable hardening, and composite indexes for production readiness",
+    ],
+    color: "#00d4ff",
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Superstars",
+    period: "May 2026 – Present",
+    location: "",
+    description:
+      "Building and improving features on the Superstars platform at superstars.co, a professional networking app available on iOS and Android. Working directly with the team on mobile development and product strategy.",
+    achievements: [
+      "Mobile development using Flutter and Dart",
+      "Connecting front end to back end via REST APIs",
+      "Weekly sprints and product strategy discussions",
+      "Contributing to platform improvements and special projects",
+    ],
+    color: "#bd93f9",
+  },
   {
     role: "Software Engineer Intern",
     company: "CETMATRIX — Career Education and Travel",
@@ -160,8 +189,8 @@ export const education = [
     honors: "4th Year — Currently Enrolled",
     highlights: [
       "Relevant Courses: Advanced OOP, Data Structures & Algorithms, Building E-Commerce Systems, Digital Systems Engineering",
-      "Completed concurrent dual internships in software engineering and IT infrastructure",
-      "Currently architecting PrimeBid (microservices) and MediLink (full-stack ecosystem)",
+      "Completed internships in software engineering and IT infrastructure across CETMATRIX and Care Hospitals",
+      "Currently building MediLink, a live dispatch and field coordination platform being taken to market",
       "Actively seeking new-grad and junior engineering roles",
     ],
     color: "#39ff88",

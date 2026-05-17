@@ -31,17 +31,12 @@ const phraseTargets = [
   {
     id: 'projects',
     color: '#00d4ff',
-    text: 'building scalable, end-to-end solutions',
+    text: 'building MediLink',
   },
   {
     id: 'skills',
     color: '#bd93f9',
     text: 'Java (Spring Boot), React, and Flutter',
-  },
-  {
-    id: 'experience',
-    color: '#ffd700',
-    text: 'concurrent internships',
   },
   {
     id: 'experienceCetmatrix',
@@ -52,6 +47,11 @@ const phraseTargets = [
     id: 'experienceCare',
     color: '#ffd700',
     text: 'Care Hospitals',
+  },
+  {
+    id: 'experienceSuperstars',
+    color: '#bd93f9',
+    text: 'Superstars',
   },
 ];
 
@@ -290,7 +290,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
               </div>
 
               <p className="font-rajdhani text-gray-300 leading-relaxed mb-4" style={{ fontSize: '1.05rem' }}>
-                Software has always been more than a degree to me — it&apos;s how I make ideas real.
+                Software has always been more than a degree to me. It&apos;s how I make ideas real.
                 I&apos;m a{' '}
                 <motion.span
                   ref={setPhraseRef('education')}
@@ -308,17 +308,18 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                   transition={{ duration: 0.35, delay: 0.06 }}
                 >
                   Full-Stack Developer
-                </motion.span>{' '}
-                focused on{' '}
+                </motion.span>
+                . The clearest picture of where I am right now is{' '}
                 <motion.span
                   ref={setPhraseRef('projects')}
                   className="inline"
                   animate={mergeActive ? { color: '#00d4ff', textShadow: '0 0 12px rgba(0,212,255,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(0,212,255,0)' }}
                   transition={{ duration: 0.35, delay: 0.12 }}
                 >
-                  building scalable, end-to-end solutions
+                  building MediLink
                 </motion.span>
-                . I specialize in bridging high-performance backend architectures with polished, user-centric interfaces using{' '}
+                , a dispatch and field coordination platform I shipped solo across React, Flutter, and Spring Boot.
+                I work across{' '}
                 <motion.span
                   ref={setPhraseRef('skills')}
                   className="inline"
@@ -327,49 +328,48 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 >
                   Java (Spring Boot), React, and Flutter
                 </motion.span>
-                . I recently completed{' '}
-                <motion.span
-                  ref={setPhraseRef('experience')}
-                  className="inline"
-                  animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
-                  transition={{ duration: 0.35, delay: 0.24 }}
-                >
-                  concurrent internships
-                </motion.span>{' '}
-                balancing full-stack mobile development at{' '}
+                , and have built real things through three internships: full-stack mobile at{' '}
                 <motion.span
                   ref={setPhraseRef('experienceCetmatrix')}
                   className="inline"
                   animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
-                  transition={{ duration: 0.35, delay: 0.28 }}
+                  transition={{ duration: 0.35, delay: 0.24 }}
                 >
                   Cetmatrix
-                </motion.span>{' '}
-                with critical IT infrastructure management at{' '}
+                </motion.span>
+                , healthcare IT infrastructure at{' '}
                 <motion.span
                   ref={setPhraseRef('experienceCare')}
                   className="inline"
                   animate={mergeActive ? { color: '#ffd700', textShadow: '0 0 12px rgba(255,215,0,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(255,215,0,0)' }}
-                  transition={{ duration: 0.35, delay: 0.32 }}
+                  transition={{ duration: 0.35, delay: 0.28 }}
                 >
                   Care Hospitals
                 </motion.span>
-                , mastering both the software lifecycle and the underlying systems that keep applications running securely.
+                , and now software development at{' '}
+                <motion.span
+                  ref={setPhraseRef('experienceSuperstars')}
+                  className="inline"
+                  animate={mergeActive ? { color: '#bd93f9', textShadow: '0 0 12px rgba(189,147,249,0.5)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(189,147,249,0)' }}
+                  transition={{ duration: 0.35, delay: 0.32 }}
+                >
+                  Superstars
+                </motion.span>
+                .
               </p>
 
               <p className="font-rajdhani text-gray-400 leading-relaxed mb-4" style={{ fontSize: '0.97rem' }}>
-                I came into engineering curious but unfocused — building small things just to see if I could.
-                Two concurrent internships changed that. At{' '}
-                <span style={{ color: '#ffd700' }}>Cetmatrix</span> I owned a full mobile CI/CD pipeline end-to-end.
-                At{' '}
-                <span style={{ color: '#ffd700' }}>CARE Hospitals</span> I kept live healthcare infrastructure running.
-                Those experiences taught me accountability, speed, and what it actually means to ship code that matters.
+                I started engineering curious but unfocused, building small things just to see if I could.
+                MediLink changed that. Deciding to build a real product solo, take it through production,
+                and now bring it to market forced a different level of accountability. Every decision had
+                to work. There was no team to catch the gaps.
               </p>
 
               <p className="font-rajdhani text-gray-400 leading-relaxed" style={{ fontSize: '0.97rem' }}>
-                What sets me apart is that rare dual perspective — I understand the code <span style={{ color: '#ece8e1' }}>and</span> the
-                infrastructure it lives on. That hands-on mix of shipping features and managing production systems
-                is what makes me a developer who builds with the full picture in mind.
+                What sets me apart is that I understand the code <span style={{ color: '#ece8e1' }}>and</span> the
+                infrastructure it lives on. Building MediLink while doing internships in both software and IT
+                gave me a practical view of how systems actually run in production. That dual perspective is
+                what makes me useful from day one on a real team.
               </p>
             </motion.div>
 
@@ -473,8 +473,8 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
               <div className="grid grid-cols-3 gap-3 mt-8">
                 {[
                   { value: '4th', label: 'Year · York', color: '#ff4655' },
-                  { value: '2x', label: 'Internships', color: '#00d4ff' },
-                  { value: '2', label: 'Active Builds', color: '#ffd700' },
+                  { value: '3x', label: 'Internships', color: '#00d4ff' },
+                  { value: '1', label: 'Active Build', color: '#ffd700' },
                 ].map((stat) => (
                   <motion.div
                     key={stat.label}
@@ -518,10 +518,11 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 </div>
 
                 <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '0.97rem' }}>
-                  My goal is to join a high-impact engineering team where I can contribute as a
-                  full-stack engineer from day one — tackling real problems at scale and growing
-                  into a technical lead who architects systems that matter. Long term, I want to
-                  be the engineer who bridges bold product vision with solid, scalable execution.
+                  Right now I&apos;m working toward two things at once. I want to be on a strong
+                  engineering team where I&apos;m solving real problems and growing as a full-stack
+                  engineer. At the same time, I&apos;m taking MediLink to market as a real company,
+                  not just a project. Long term, the goal is to build it into something that lasts.
+                  Both paths make me better at the other.
                 </p>
               </motion.div>
 

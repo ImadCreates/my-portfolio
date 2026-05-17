@@ -2,8 +2,8 @@
 
 const stats = [
   { value: "4th", label: "Year at York University" },
-  { value: "2x", label: "Concurrent Internships" },
-  { value: "2", label: "Active Projects" },
+  { value: "3x", label: "Internships" },
+  { value: "1", label: "Active Project" },
 ];
 
 export default function About() {
@@ -29,24 +29,25 @@ export default function About() {
               <span className="gradient-text">builder by nature</span>
             </h2>
             <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "1.25rem" }}>
-              I&apos;m a Full-Stack Developer focused on building scalable, end-to-end
-              solutions. I specialize in bridging high-performance backend
-              architectures with polished, user-centric interfaces using Java
-              (Spring Boot), React, and Flutter.
+              The clearest measure of where I am right now is building MediLink,
+              a real-time dispatch and field coordination platform I designed and
+              shipped solo across React, Flutter, and Spring Boot. I&apos;m also
+              a Full-Stack Developer and 4th-year Software Engineering student at
+              York University, working across Java, React, and Flutter.
             </p>
             <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "2rem" }}>
-              My approach to development is rooted in solving complex logic
-              problems with clean, production-ready code. I recently completed
-              concurrent internships where I balanced full-stack mobile
-              development with critical IT infrastructure management — mastering
-              both the software lifecycle and the underlying systems that keep
-              apps running securely.
+              Three real-world roles have shaped how I build: full-stack mobile
+              development at Cetmatrix, healthcare IT infrastructure at Care
+              Hospitals, and now software development at Superstars. That range
+              of experience, from writing code to keeping production systems
+              running, gives me a practical picture of how software works at
+              every layer.
             </p>
             <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "0.95rem" }}>
-              I&apos;m passionate about the intersection of software design and
-              robust infrastructure, and actively looking for opportunities to
-              contribute to engineering teams building the next generation of
-              web and mobile platforms.
+              I&apos;m looking to join an engineering team where I can contribute
+              immediately and grow into a technical lead role over time. At the
+              same time, I&apos;m taking MediLink to market as a real company.
+              Both goals push me in the same direction.
             </p>
 
           </div>
