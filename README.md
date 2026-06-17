@@ -1,6 +1,6 @@
 # Imad Ahmed — Portfolio
 
-Personal portfolio for Imaduddin Ahmed, full-stack software engineer and founder of MediLink.
+Personal portfolio for Imaduddin Ahmed, full-stack software engineer and founder of Routy.
 
 **Live:** https://imaduddin-ahmed.vercel.app
 

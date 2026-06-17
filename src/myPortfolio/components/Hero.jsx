@@ -216,7 +216,7 @@ export default function Hero() {
                   <span className="c-bracket">{"}"}</span>
                 </div>
                 <div style={{ marginTop: "0.75rem" }}>
-                  <span className="c-comment">// Currently building PrimeBid & MediLink</span>
+                  <span className="c-comment">// Currently building PrimeBid & Routy</span>
                 </div>
               </div>
             </div>
