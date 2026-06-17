@@ -29,7 +29,7 @@ export default function About() {
               <span className="gradient-text">builder by nature</span>
             </h2>
             <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "1.25rem" }}>
-              The clearest measure of where I am right now is building MediLink,
+              The clearest measure of where I am right now is building Routy,
               a real-time dispatch and field coordination platform I designed and
               shipped solo across React, Flutter, and Spring Boot. I&apos;m also
               a Full-Stack Developer and 4th-year Software Engineering student at
@@ -46,7 +46,7 @@ export default function About() {
             <p style={{ color: "var(--muted)", lineHeight: 1.85, fontSize: "0.95rem" }}>
               I&apos;m looking to join an engineering team where I can contribute
               immediately and grow into a technical lead role over time. At the
-              same time, I&apos;m taking MediLink to market as a real company.
+              same time, I&apos;m taking Routy to market as a real company.
               Both goals push me in the same direction.
             </p>
 

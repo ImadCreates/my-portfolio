@@ -1,15 +1,15 @@
 const projects = [
   {
     number: "01",
-    name: "MediLink",
+    name: "Routy",
     subtitle: "Real-Time Dispatch Platform",
     status: "Active",
     period: "Apr 2026 – Present",
     description:
       "A real-time dispatch and field coordination platform built across a React dispatcher dashboard, Flutter responder app, and Spring Boot backend. Dispatchers assign the nearest available worker by GPS distance, workers receive targeted push notifications and navigate to the job, and status updates flow back to the dashboard in real time. An optional DE10-Lite FPGA hardware layer handles UART communication, a 4-state FSM, VGA display output, and a buzzer alarm for environments requiring physical alert systems.",
     tags: ["Flutter", "React", "Spring Boot", "Firebase", "Firestore", "FCM", "Real-time DB"],
-    github: "https://github.com/ImadCreates/Medilink",
-    live: "https://medilink-technologies.vercel.app/",
+    github: "https://github.com/ImadCreates/Routy",
+    live: "https://routy.ca",
   },
   {
     number: "02",

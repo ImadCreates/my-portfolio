@@ -55,7 +55,7 @@ const cardConfig = {
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="relative w-full h-full flex flex-col gap-2 p-5 pt-8">
           {[
-            { name: 'MEDILINK', tags: ['Flutter', 'React', 'Spring Boot'], active: true },
+            { name: 'ROUTY', tags: ['Flutter', 'React', 'Spring Boot'], active: true },
             { name: 'VALORANT PORTFOLIO', tags: ['React', 'Vite', 'Framer'], active: true },
           ].map((proj, i) => (
             <div
@@ -134,7 +134,7 @@ const cardConfig = {
         <div className="relative w-full flex flex-col gap-3">
           <div className="absolute left-2 top-3 bottom-3 w-px bg-yellow-500/20" />
           {[
-            { role: 'Founder', company: 'MediLink', year: '2026' },
+            { role: 'Founder', company: 'Routy', year: '2026' },
             { role: 'SWE Intern', company: 'Superstars', year: '2026' },
             { role: 'SWE Intern', company: 'CETMATRIX', year: '2025' },
             { role: 'IT Infra Intern', company: 'CARE Hospitals', year: '2025' },

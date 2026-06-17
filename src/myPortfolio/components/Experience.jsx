@@ -1,7 +1,7 @@
 const experiences = [
   {
     role: "Founder",
-    company: "MediLink",
+    company: "Routy",
     period: "Apr 2026 – Present",
     type: "Self-employed",
     tags: ["React", "Flutter", "Spring Boot", "Firebase", "FCM", "Leaflet", "Railway"],

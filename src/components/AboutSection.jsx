@@ -31,7 +31,7 @@ const phraseTargets = [
   {
     id: 'projects',
     color: '#00d4ff',
-    text: 'building MediLink',
+    text: 'building Routy',
   },
   {
     id: 'skills',
@@ -316,7 +316,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                   animate={mergeActive ? { color: '#00d4ff', textShadow: '0 0 12px rgba(0,212,255,0.55)' } : { color: '#cbd5e1', textShadow: '0 0 0 rgba(0,212,255,0)' }}
                   transition={{ duration: 0.35, delay: 0.12 }}
                 >
-                  building MediLink
+                  building Routy
                 </motion.span>
                 , a dispatch and field coordination platform I shipped solo across React, Flutter, and Spring Boot.
                 I work across{' '}
@@ -360,14 +360,14 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
 
               <p className="font-rajdhani text-gray-400 leading-relaxed mb-4" style={{ fontSize: '0.97rem' }}>
                 I started engineering curious but unfocused, building small things just to see if I could.
-                MediLink changed that. Deciding to build a real product solo, take it through production,
+                Routy changed that. Deciding to build a real product solo, take it through production,
                 and now bring it to market forced a different level of accountability. Every decision had
                 to work. There was no team to catch the gaps.
               </p>
 
               <p className="font-rajdhani text-gray-400 leading-relaxed" style={{ fontSize: '0.97rem' }}>
                 What sets me apart is that I understand the code <span style={{ color: '#ece8e1' }}>and</span> the
-                infrastructure it lives on. Building MediLink while doing internships in both software and IT
+                infrastructure it lives on. Building Routy while doing internships in both software and IT
                 gave me a practical view of how systems actually run in production. That dual perspective is
                 what makes me useful from day one on a real team.
               </p>
@@ -520,7 +520,7 @@ export default function AboutSection({ onOpenContact, heroSpinActive = false }) 
                 <p className="font-rajdhani text-gray-300 leading-relaxed" style={{ fontSize: '0.97rem' }}>
                   Right now I&apos;m working toward two things at once. I want to be on a strong
                   engineering team where I&apos;m solving real problems and growing as a full-stack
-                  engineer. At the same time, I&apos;m taking MediLink to market as a real company,
+                  engineer. At the same time, I&apos;m taking Routy to market as a real company,
                   not just a project. Long term, the goal is to build it into something that lasts.
                   Both paths make me better at the other.
                 </p>
