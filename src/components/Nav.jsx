@@ -174,12 +174,7 @@ export default function Nav() {
   return (
     <header ref={headerRef} className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-ink">
       <nav aria-label="Primary" className="flex h-14 items-center justify-between px-6 md:px-12">
-        <Link
-          to="/"
-          onClick={onLogoClick}
-          className="label-mono text-bone"
-          aria-label="Imaduddin Ahmed, home"
-        >
+        <Link to="/" onClick={onLogoClick} className="label-mono text-bone">
           {personalInfo.shortName}
         </Link>
 

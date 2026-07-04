@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* Anton is self-hosted from /public so index.html can preload it by a
+   stable URL. The hero name is the LCP element and must paint in the
+   display face, not a fallback. */
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/anton-latin-400-normal.woff2") format("woff2");
+}
+
 /*
   RANK ONE design tokens. Single source of truth.
   Palette: concept doc section 2. Type: section 3. Motion: section 7.

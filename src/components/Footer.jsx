@@ -9,7 +9,7 @@ export default function Footer() {
             href="https://github.com/ImadCreates/my-portfolio"
             target="_blank"
             rel="noreferrer"
-            className="text-bone transition-colors duration-(--t-fast) ease-settle hover:text-seal"
+            className="text-bone underline underline-offset-4 transition-colors duration-(--t-fast) ease-settle hover:text-seal"
           >
             SOURCE
           </a>

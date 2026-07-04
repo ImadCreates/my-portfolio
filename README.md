@@ -1,47 +1,94 @@
-# Imad Ahmed — Portfolio
+# RANK ONE
 
-Personal portfolio for Imaduddin Ahmed, full-stack software engineer and founder of Routy.
+The portfolio of Imaduddin Ahmed, structured as the profile of a top-ranked player.
+Career as match record, skills as loadout, contact as a challenge.
+
+![RANK ONE hero](docs/hero.png)
 
 **Live:** https://imaduddin-ahmed.vercel.app
 
----
+## The cut
 
-## Features
+One signature mechanic, built once in `src/components/CutProvider.jsx` and reused three ways:
 
-Two themes in one app, toggled from the navbar:
+1. **Loading sequence.** First visit per session: a 1px seal line draws across the screen,
+   the name snaps in with no fade, the screen splits along the line to reveal the hero.
+   Under one second, sessionStorage-gated.
+2. **Route transitions.** The same split between `/` and case studies. Clip-path polygons
+   driven by a GSAP timeline, under 0.7s, interruptible, never queued.
+3. **Mobile menu.** The overlay wipes open from the diagonal.
 
-- **VAL** — Valorant-inspired dark UI with animated agent cards, particle effects, and a kinetic hero section
-- **PRO** — Clean professional layout for a more traditional presentation
+Everything else stays quiet. `prefers-reduced-motion` turns every reveal opacity-only,
+turns the cut into a plain fade, and disables Lenis.
 
-Same content, different presentation.
+## Design tokens
 
----
+All tokens live in [`src/index.css`](src/index.css) as the entire Tailwind theme.
+Tailwind's default palette is wiped (`--color-*: initial`), so an off-palette utility
+class does not compile. GSAP reads the motion tokens out of the stylesheet at startup
+(`src/lib/motion.js`), so CSS and JS animate with the same curves by construction.
 
-## Tech Stack
+### Color, six values
 
-- React + Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide React
+| Token        | Hex       | Use                                     |
+| ------------ | --------- | --------------------------------------- |
+| `--ink`      | `#0A0A0B` | Page background                         |
+| `--ash`      | `#141416` | Raised surfaces (command palette)       |
+| `--hairline` | `#232327` | All borders, 1px, always                |
+| `--steel`    | `#8A8A93` | Secondary text, labels                  |
+| `--bone`     | `#EDEDE9` | Primary text                            |
+| `--seal`     | `#C81E2E` | The only accent. Cuts, active states, the challenge. Under 2% of any viewport |
 
----
+### Type, three faces
 
-## Running Locally
+| Face           | Job                          | Treatment                                  |
+| -------------- | ---------------------------- | ------------------------------------------ |
+| Anton          | Display, headings, the name  | Caps, line-height 0.95, tight tracking     |
+| Inter          | Body                         | Normal case, 16px, line-height 1.6         |
+| JetBrains Mono | Labels, stats, nav, metadata | Caps, letter-spacing 0.14em, tabular nums  |
+
+Scale: `12 / 16 / 24 / 40 / clamp(64px, 10vw, 140px)`. Big jumps, no in-between sizes.
+
+Anton is self-hosted from `public/fonts/` so `index.html` can preload it by a stable URL;
+Inter and JetBrains Mono ship via fontsource, latin subsets only, `font-display: swap`.
+
+### Motion
+
+| Token           | Value                            | Use                     |
+| --------------- | -------------------------------- | ----------------------- |
+| `--ease-cut`    | `cubic-bezier(0.83, 0, 0.17, 1)` | The cut, decisive       |
+| `--ease-settle` | `cubic-bezier(0.22, 1, 0.36, 1)` | Everything else, calm   |
+| `--t-fast`      | `0.2s`                           | Hovers                  |
+| `--t-base`      | `0.4s`                           | Reveals                 |
+| `--t-cut`       | `0.7s`                           | Page transitions, total |
+
+Motion system: GSAP + ScrollTrigger + Lenis (lerp 0.1). Nothing else.
+
+## Stack
+
+React 19, Vite, Tailwind CSS 4, GSAP, Lenis, React Router. Deployed on Vercel.
+
+## Running locally
 
 ```bash
 npm install
-npm run dev
+npm run dev        # dev server
+npm run build      # production build to dist/
+npm run preview    # serve the production build
 ```
 
----
+The hero screenshot regenerates with `node scripts/screenshot.mjs` against a running
+`npm run preview`.
 
-## Content
+## Engineer details
 
-All portfolio data (experience, projects, education, skills) lives in:
+- `Cmd+K` / `Ctrl+K` opens the command palette: jump to sections, copy email, open GitHub, open resume.
+- Clicking the email copies it; the label flips to `COPIED` for 1.2s. No toast.
+- Typing `gg` outside inputs opens the challenge through the cut.
 
-```
-src/data/portfolioData.js        # VAL theme data source
-src/myPortfolio/components/      # PRO theme components (self-contained data)
-```
+## Performance
 
-To update content, edit those files. The VAL theme reads from `portfolioData.js`; the PRO theme has its data inline in each component.
+Lighthouse (mobile emulation, simulated slow 4G, production build): performance 95,
+accessibility 100. Total JS 136 kB gzipped against a 250 kB budget. The hero is served
+as a static shell in `index.html` (kept in sync with `Hero.jsx`) so the largest paint
+does not wait for the bundle.

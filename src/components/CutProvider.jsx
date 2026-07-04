@@ -156,7 +156,14 @@ export default function CutProvider({ children }) {
     (to) => {
       const { pathname, hash } = locationRef.current;
       if (to === pathname + hash) return;
-      cutTo(() => navigate(to));
+      cutTo(() => {
+        navigate(to);
+        /* The clicked link unmounts with the old page; keep keyboard
+           users anchored at the new page's content. */
+        requestAnimationFrame(() =>
+          document.getElementById('main')?.focus({ preventScroll: true }),
+        );
+      });
     },
     [cutTo, navigate],
   );
