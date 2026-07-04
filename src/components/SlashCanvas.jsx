@@ -114,10 +114,12 @@ export default function SlashCanvas({ onCut }) {
     let pts = [];
     let armed = false;
     let start = null;
+    let idleTimer = 0;
 
     const commit = (endX, endY) => {
       armed = false;
       pts = [];
+      clearTimeout(idleTimer);
       if (!onScreen || document.hidden) return;
       const rect = canvas.getBoundingClientRect();
       const p1 = { x: start.x - rect.left, y: start.y - rect.top };
@@ -143,6 +145,12 @@ export default function SlashCanvas({ onCut }) {
       } else if (armed && speed < SPEED_COMMIT) {
         commit(e.clientX, e.clientY);
       }
+      if (armed) {
+        /* A swipe that stops without lifting still commits. */
+        clearTimeout(idleTimer);
+        const { clientX, clientY } = e;
+        idleTimer = setTimeout(() => commit(clientX, clientY), 140);
+      }
     };
     const onUp = (e) => {
       if (armed) commit(e.clientX, e.clientY);
@@ -165,6 +173,7 @@ export default function SlashCanvas({ onCut }) {
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);
       io.disconnect();
+      clearTimeout(idleTimer);
       cuts.slice().forEach(removeCut);
     };
   }, [reduced]);

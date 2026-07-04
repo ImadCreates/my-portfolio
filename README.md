@@ -9,17 +9,21 @@ Career as match record, skills as loadout, contact as a challenge.
 
 ## The cut
 
-One signature mechanic, built once in `src/components/CutProvider.jsx` and reused three ways:
+One signature mechanic, built once and reused everywhere:
 
-1. **Loading sequence.** First visit per session: a 1px seal line draws across the screen,
-   the name snaps in with no fade, the screen splits along the line to reveal the hero.
-   Under one second, sessionStorage-gated.
-2. **Route transitions.** The same split between `/` and case studies. Clip-path polygons
+1. **The slash.** Swipe fast across the hero and a straight 1px seal line draws along
+   your vector, shears the name 2px along the cut, holds, and fades. Vanilla canvas
+   painted from the GSAP ticker, three cuts max, 60fps under 4x CPU throttle.
+2. **Loading sequence.** First visit per session: the line draws, the name snaps in with
+   no fade, the screen splits along the line to reveal the hero. Under one second.
+3. **Route transitions.** The same split between `/` and case studies. Clip-path polygons
    driven by a GSAP timeline, under 0.7s, interruptible, never queued.
-3. **Mobile menu.** The overlay wipes open from the diagonal.
+4. **Mobile menu.** The overlay wipes open from the diagonal.
+5. **Ghost numerals.** Each section's outlined index numeral reveals with the same
+   diagonal wipe as it enters the viewport.
 
 Everything else stays quiet. `prefers-reduced-motion` turns every reveal opacity-only,
-turns the cut into a plain fade, and disables Lenis.
+turns the cut into a plain fade, disables Lenis, and mounts no slash canvas.
 
 ## Design tokens
 
@@ -77,8 +81,11 @@ npm run build      # production build to dist/
 npm run preview    # serve the production build
 ```
 
-The hero screenshot regenerates with `node scripts/screenshot.mjs` against a running
-`npm run preview`.
+Against a running `npm run preview`: `node scripts/screenshot.mjs` regenerates the hero
+screenshot (captured mid-cut), `node scripts/trace-slash.mjs` reports slash frame timings
+under CPU throttle, and `node scripts/make-placeholders.mjs` regenerates the MEDIA
+PENDING placeholders in `public/media/`. Real product media replaces the placeholders by
+filename, no code changes.
 
 ## Engineer details
 
@@ -89,6 +96,7 @@ The hero screenshot regenerates with `node scripts/screenshot.mjs` against a run
 ## Performance
 
 Lighthouse (mobile emulation, simulated slow 4G, production build): performance 95,
-accessibility 100. Total JS 136 kB gzipped against a 250 kB budget. The hero is served
+accessibility 100. Total JS 139 kB gzipped against a 250 kB budget. The hero is served
 as a static shell in `index.html` (kept in sync with `Hero.jsx`) so the largest paint
-does not wait for the bundle.
+does not wait for the bundle. The slash mechanic holds 60fps at 4x CPU throttle
+(p95 frame 16.7ms, zero frames over 25ms).
