@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { record } from '../data/portfolioData';
 import { useCut, cutClick } from '../components/CutProvider';
+import Slash from '../components/Slash';
 import useReveals from '../lib/useReveals';
 
 /* Case study, concept doc section 10. Outcome before tech, always. */
@@ -18,8 +19,9 @@ export default function CaseStudy() {
       <Link
         to="/#record"
         onClick={cutClick(cutNavigate, '/#record')}
-        className="label-mono text-steel transition-colors duration-(--t-fast) ease-settle hover:text-bone"
+        className="label-mono group inline-flex items-center gap-2 text-steel transition-colors duration-(--t-fast) ease-settle active:translate-x-[2px] hover:text-bone"
       >
+        <Slash />
         BACK TO RECORD
       </Link>
 
@@ -32,14 +34,14 @@ export default function CaseStudy() {
       </header>
 
       <section aria-labelledby="fight-heading" className="mt-24" data-reveal>
-        <h2 id="fight-heading" className="label-mono pb-6 text-steel">
+        <h2 id="fight-heading" className="display-face pb-6 text-title text-bone">
           THE FIGHT
         </h2>
         <p className="max-w-2xl text-body text-bone">{entry.fight}</p>
       </section>
 
       <section aria-labelledby="decisions-heading" className="mt-24">
-        <h2 id="decisions-heading" className="label-mono pb-2 text-steel" data-reveal>
+        <h2 id="decisions-heading" className="display-face pb-6 text-title text-bone" data-reveal>
           DECISIONS
         </h2>
         <ul>
@@ -57,7 +59,7 @@ export default function CaseStudy() {
       </section>
 
       <section aria-labelledby="replay-heading" className="mt-24" data-reveal>
-        <h2 id="replay-heading" className="label-mono pb-6 text-steel">
+        <h2 id="replay-heading" className="display-face pb-6 text-title text-bone">
           REPLAY
         </h2>
         <div className="max-w-3xl border border-hairline">
@@ -79,16 +81,18 @@ export default function CaseStudy() {
             href={entry.links.repo}
             target="_blank"
             rel="noreferrer"
-            className="label-mono text-bone transition-colors duration-(--t-fast) ease-settle hover:text-seal"
+            className="label-mono group flex items-center gap-2 text-bone transition-colors duration-(--t-fast) ease-settle active:translate-x-[2px] hover:text-seal"
           >
+            <Slash />
             REPO
           </a>
           <a
             href={entry.links.live}
             target="_blank"
             rel="noreferrer"
-            className="label-mono text-bone transition-colors duration-(--t-fast) ease-settle hover:text-seal"
+            className="label-mono group flex items-center gap-2 text-bone transition-colors duration-(--t-fast) ease-settle active:translate-x-[2px] hover:text-seal"
           >
+            <Slash />
             LIVE · ROUTY.CA
           </a>
         </div>

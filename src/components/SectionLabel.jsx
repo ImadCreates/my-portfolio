@@ -1,9 +1,13 @@
-/* Section header: mono index plus title. Hierarchy comes from contrast, not size. */
+/* Section header: mono index above a display-face title. */
 export default function SectionLabel({ id, index, title }) {
   return (
-    <h2 id={id} className="label-mono px-6 pb-8 text-steel md:px-12" data-reveal>
-      <span aria-hidden="true">{index} · </span>
-      {title}
-    </h2>
+    <div className="px-6 pb-10 md:px-12" data-reveal>
+      <p aria-hidden="true" className="label-mono text-steel">
+        {index}
+      </p>
+      <h2 id={id} className="display-face mt-2 text-heading text-bone">
+        {title}
+      </h2>
+    </div>
   );
 }
