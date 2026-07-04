@@ -54,6 +54,36 @@ export const record = [
         body: 'The React dispatcher dashboard and the Flutter responder app read the same Firestore collections through realtime listeners. A status change on a phone shows up on the dispatch map without polling or a refresh.',
       },
     ],
+    caseMedia: {
+      loop: {
+        src: '/media/routy-loop.webm',
+        poster: '/media/routy-dashboard.webp',
+        width: 1600,
+        height: 1000,
+        label: 'Routy dispatch loop screen capture, silent',
+        caption: 'THE LOOP · DISPATCH TO CLOSE-OUT · SILENT',
+      },
+      stills: [
+        {
+          src: '/media/routy-dashboard.webp',
+          alt: 'Routy dispatcher dashboard with live map',
+          width: 1600,
+          height: 1000,
+        },
+        {
+          src: '/media/routy-mobile.webp',
+          alt: 'Routy responder app on a phone',
+          width: 900,
+          height: 1900,
+        },
+        {
+          src: '/media/routy-close.webp',
+          alt: 'Routy job close-out view',
+          width: 1600,
+          height: 1000,
+        },
+      ],
+    },
     replay: {
       url: 'https://www.youtube.com/embed/ykPL2PVdLWw',
       caption: 'Dispatch → push → accept → live map → close-out.',

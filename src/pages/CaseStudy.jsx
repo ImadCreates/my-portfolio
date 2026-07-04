@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { record } from '../data/portfolioData';
 import { useCut, cutClick } from '../components/CutProvider';
+import LazyLoop from '../components/LazyLoop';
 import Slash from '../components/Slash';
 import useReveals from '../lib/useReveals';
 
@@ -33,6 +34,15 @@ export default function CaseStudy() {
         <p className="mt-8 max-w-2xl text-title text-bone">{entry.outcome}</p>
       </header>
 
+      {entry.caseMedia && (
+        <section aria-label="Product loop" className="mt-16" data-reveal>
+          <div className="max-w-3xl">
+            <LazyLoop {...entry.caseMedia.loop} />
+            <p className="label-mono mt-4 text-steel">{entry.caseMedia.loop.caption}</p>
+          </div>
+        </section>
+      )}
+
       <section aria-labelledby="fight-heading" className="mt-24" data-reveal>
         <h2 id="fight-heading" className="display-face pb-6 text-title text-bone">
           THE FIGHT
@@ -57,6 +67,26 @@ export default function CaseStudy() {
           ))}
         </ul>
       </section>
+
+      {entry.caseMedia && (
+        <section aria-label="Product screens" className="mt-24" data-reveal>
+          <ul className="grid gap-px border border-hairline bg-hairline md:grid-cols-3">
+            {entry.caseMedia.stills.map((still) => (
+              <li key={still.src} className="bg-ink">
+                <img
+                  src={still.src}
+                  alt={still.alt}
+                  width={still.width}
+                  height={still.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-64 w-full object-cover md:h-80"
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="replay-heading" className="mt-24" data-reveal>
         <h2 id="replay-heading" className="display-face pb-6 text-title text-bone">
