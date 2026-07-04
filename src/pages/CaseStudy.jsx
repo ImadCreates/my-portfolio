@@ -1,10 +1,13 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { record } from '../data/portfolioData';
+import useReveals from '../lib/useReveals';
 
 /* Case study, concept doc section 10. Outcome before tech, always. */
 export default function CaseStudy() {
   const { slug } = useParams();
   const entry = record.find((item) => item.slug === slug);
+
+  useReveals();
 
   if (!entry) return <Navigate to="/" replace />;
 

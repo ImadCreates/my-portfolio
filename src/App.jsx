@@ -4,11 +4,12 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
+import { scrollToTop } from './lib/scroll';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop();
   }, [pathname]);
   return null;
 }
