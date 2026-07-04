@@ -1,14 +1,36 @@
-import { personalInfo, hero } from './data/portfolioData';
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import CaseStudy from './pages/CaseStudy';
 
-/* Phase 1 placeholder. Proves the token layer renders. Replaced in phase 2. */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
-    <main className="flex min-h-screen items-center bg-ink px-6 text-bone">
-      <div>
-        <p className="label-mono text-steel">{hero.eyebrow.join(' / ')}</p>
-        <h1 className="display-face mt-4 text-hero">{personalInfo.name}</h1>
-        <p className="mt-6 max-w-xl text-body text-steel">{personalInfo.positioning}</p>
-      </div>
-    </main>
+    <BrowserRouter>
+      <a
+        href="#main"
+        className="label-mono fixed top-2 left-2 z-50 -translate-y-16 bg-ash px-4 py-2 text-bone transition-transform focus:translate-y-0"
+      >
+        SKIP TO CONTENT
+      </a>
+      <ScrollToTop />
+      <Nav />
+      <main id="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/record/:slug" element={<CaseStudy />} />
+        </Routes>
+      </main>
+      <Footer />
+    </BrowserRouter>
   );
 }
