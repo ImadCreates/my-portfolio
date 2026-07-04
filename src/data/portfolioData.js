@@ -12,7 +12,7 @@ export const personalInfo = {
   email: 'approachimad@gmail.com',
   github: 'https://github.com/ImadCreates',
   linkedin: 'https://linkedin.com/in/imadsecures',
-  resume: '/resume.pdf',
+  resume: '/Imaduddin_Ahmed_Resume.pdf',
   photo: '/me.png',
 };
 
