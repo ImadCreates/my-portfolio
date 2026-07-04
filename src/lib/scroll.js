@@ -20,7 +20,8 @@ export function scrollToSection(id, { immediate = false } = {}) {
   const el = document.getElementById(id);
   if (!el) return;
   if (lenis && !immediate) {
-    lenis.scrollTo(el);
+    /* force: the caller may have just released a scroll lock this tick. */
+    lenis.scrollTo(el, { force: true });
   } else if (lenis) {
     lenis.scrollTo(el, { immediate: true, force: true });
   } else {

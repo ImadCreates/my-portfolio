@@ -7,7 +7,7 @@ import useReveals from '../lib/useReveals';
 export default function CaseStudy() {
   const { slug } = useParams();
   const entry = record.find((item) => item.slug === slug);
-  const cutNavigate = useCut();
+  const { cutNavigate } = useCut();
 
   useReveals();
 

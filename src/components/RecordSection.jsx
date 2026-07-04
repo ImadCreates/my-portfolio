@@ -25,7 +25,7 @@ function RowContent({ entry }) {
 }
 
 export default function RecordSection() {
-  const cutNavigate = useCut();
+  const { cutNavigate } = useCut();
 
   return (
     <section id="record" aria-labelledby="record-heading" className="pt-24 md:pt-32">

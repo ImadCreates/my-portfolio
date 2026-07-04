@@ -1,11 +1,20 @@
-import { createContext, useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { POLY, halfShifts } from '../lib/cut';
 
-const CutContext = createContext(() => {});
+const CutContext = createContext({ cutNavigate: () => {}, cutTo: () => {} });
 
-/* cutNavigate(to): route change through the cut. */
+/* cutNavigate(to): route change through the cut.
+   cutTo(action): any state change through the cut. */
 export const useCut = () => useContext(CutContext);
 
 /* Click handler for router links that should travel through the cut.
@@ -92,11 +101,9 @@ export default function CutProvider({ children }) {
     return () => tl.kill();
   }, [introPending, finish]);
 
-  /* (b) Route transitions. Same gesture, under 0.7s, interruptible. */
-  const cutNavigate = useCallback(
-    (to) => {
-      const { pathname, hash } = locationRef.current;
-      if (to === pathname + hash) return;
+  /* (b) Transitions. Same gesture, under 0.7s, interruptible. */
+  const cutTo = useCallback(
+    (action) => {
       const root = rootRef.current;
       const halves = [upperRef.current, lowerRef.current];
       const names = root.querySelectorAll('[data-cut-name]');
@@ -111,7 +118,7 @@ export default function CutProvider({ children }) {
         gsap.set(lineRef.current, { opacity: 0 });
         gsap.set(halves, { x: 0, y: 0, autoAlpha: 1 });
         tl.fromTo(root, { autoAlpha: 0 }, { autoAlpha: 1, duration: T.fast, ease: 'none' })
-          .call(() => navigate(to))
+          .call(action)
           .to(root, { autoAlpha: 0, duration: T.base, ease: 'none' }, '+=0.05');
         return;
       }
@@ -130,7 +137,7 @@ export default function CutProvider({ children }) {
       tl.to(lineRef.current, { strokeDashoffset: 0, duration: T.fast, ease: EASE.cut })
         .set(halves, { autoAlpha: 1 })
         .set(lineRef.current, { opacity: 0 })
-        .call(() => navigate(to))
+        .call(action)
         .to(
           upperRef.current,
           { x: shifts.upper.x, y: shifts.upper.y, duration: T.base, ease: EASE.cut },
@@ -142,11 +149,22 @@ export default function CutProvider({ children }) {
           '<',
         );
     },
-    [navigate, finish],
+    [finish],
   );
 
+  const cutNavigate = useCallback(
+    (to) => {
+      const { pathname, hash } = locationRef.current;
+      if (to === pathname + hash) return;
+      cutTo(() => navigate(to));
+    },
+    [cutTo, navigate],
+  );
+
+  const value = useMemo(() => ({ cutNavigate, cutTo }), [cutNavigate, cutTo]);
+
   return (
-    <CutContext.Provider value={cutNavigate}>
+    <CutContext.Provider value={value}>
       {children}
       <div
         ref={rootRef}

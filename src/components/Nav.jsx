@@ -27,7 +27,7 @@ export default function Nav() {
   const menuOpenRef = useRef(false);
   const mountedRef = useRef(false);
   const location = useLocation();
-  const cutNavigate = useCut();
+  const { cutNavigate } = useCut();
   const onHome = location.pathname === '/';
 
   menuOpenRef.current = menuOpen;

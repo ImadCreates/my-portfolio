@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import CutProvider from './components/CutProvider';
+import CommandPalette from './components/CommandPalette';
+import GgChallenge from './components/GgChallenge';
 import { scrollToTop } from './lib/scroll';
 
 function ScrollToTop() {
@@ -26,6 +28,8 @@ export default function App() {
           SKIP TO CONTENT
         </a>
         <ScrollToTop />
+        <CommandPalette />
+        <GgChallenge />
         <Nav />
         <main id="main" tabIndex={-1} className="outline-none">
           <Routes>
