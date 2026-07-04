@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { personalInfo } from '../data/portfolioData';
 import { gsap, ScrollTrigger, T, EASE, prefersReducedMotion } from '../lib/motion';
-import { getLenis, lockScroll, scrollToSection } from '../lib/scroll';
+import { getLenis, lockScroll, scrollToSection, scrollToTop } from '../lib/scroll';
+import { POLY } from '../lib/cut';
+import { useCut, cutClick } from './CutProvider';
 
 const LINKS = [
   { id: 'record', label: 'RECORD' },
@@ -17,9 +19,15 @@ export default function Nav() {
   const headerRef = useRef(null);
   const linksRef = useRef(null);
   const underlineRef = useRef(null);
+  const menuRef = useRef(null);
+  const menuLineRef = useRef(null);
+  const menuFirstLinkRef = useRef(null);
+  const menuToggleRef = useRef(null);
+  const menuTlRef = useRef(null);
   const menuOpenRef = useRef(false);
+  const mountedRef = useRef(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  const cutNavigate = useCut();
   const onHome = location.pathname === '/';
 
   menuOpenRef.current = menuOpen;
@@ -36,6 +44,42 @@ export default function Nav() {
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  /* (c) The mobile menu opens and closes with the cut wipe. */
+  useLayoutEffect(() => {
+    const menu = menuRef.current;
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      gsap.set(menu, { autoAlpha: 0 });
+      return;
+    }
+    menuTlRef.current?.kill();
+    const reduced = prefersReducedMotion();
+    const tl = gsap.timeline();
+    menuTlRef.current = tl;
+
+    if (menuOpen) {
+      if (reduced) {
+        tl.fromTo(menu, { autoAlpha: 0 }, { autoAlpha: 1, duration: T.base, ease: 'none' });
+      } else {
+        gsap.set(menu, { autoAlpha: 1, clipPath: POLY.diagonal });
+        gsap.set(menuLineRef.current, { strokeDashoffset: 1, opacity: 1 });
+        tl.to(menuLineRef.current, { strokeDashoffset: 0, duration: T.fast, ease: EASE.cut })
+          .to(menu, { clipPath: POLY.full, duration: T.base, ease: EASE.cut }, '<')
+          .to(menuLineRef.current, { opacity: 0, duration: T.fast, ease: 'none' }, '<+0.3');
+      }
+      tl.call(() => menuFirstLinkRef.current?.focus());
+    } else {
+      if (reduced) {
+        tl.to(menu, { autoAlpha: 0, duration: T.base, ease: 'none' });
+      } else {
+        tl.to(menu, { clipPath: POLY.diagonal, duration: T.base, ease: EASE.cut }).set(menu, {
+          autoAlpha: 0,
+        });
+      }
+      menuToggleRef.current?.focus();
+    }
   }, [menuOpen]);
 
   /* Hide on scroll down, return instantly on any scroll up. */
@@ -55,12 +99,12 @@ export default function Nav() {
     };
 
     const lenis = getLenis();
-    const onWindowScroll = () => onScroll(window.scrollY);
     if (lenis) {
       const handler = ({ scroll }) => onScroll(scroll);
       lenis.on('scroll', handler);
       return () => lenis.off('scroll', handler);
     }
+    const onWindowScroll = () => onScroll(window.scrollY);
     window.addEventListener('scroll', onWindowScroll, { passive: true });
     return () => window.removeEventListener('scroll', onWindowScroll);
   }, []);
@@ -107,19 +151,35 @@ export default function Nav() {
   }, [activeSection]);
 
   const goToSection = (id) => {
-    setMenuOpen(false);
     if (!onHome) {
-      navigate(`/#${id}`);
+      cutNavigate(`/#${id}`);
       return;
     }
+    lockScroll(false);
+    setMenuOpen(false);
     scrollToSection(id);
     history.replaceState(null, '', `#${id}`);
+  };
+
+  const onLogoClick = (e) => {
+    if (onHome) {
+      e.preventDefault();
+      scrollToTop();
+      history.replaceState(null, '', '/');
+      return;
+    }
+    cutClick(cutNavigate, '/')(e);
   };
 
   return (
     <header ref={headerRef} className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-ink">
       <nav aria-label="Primary" className="flex h-14 items-center justify-between px-6 md:px-12">
-        <Link to="/" className="label-mono text-bone" aria-label="Imaduddin Ahmed, home">
+        <Link
+          to="/"
+          onClick={onLogoClick}
+          className="label-mono text-bone"
+          aria-label="Imaduddin Ahmed, home"
+        >
           {personalInfo.shortName}
         </Link>
 
@@ -145,6 +205,7 @@ export default function Nav() {
         </div>
 
         <button
+          ref={menuToggleRef}
           type="button"
           className="label-mono cursor-pointer text-bone md:hidden"
           aria-expanded={menuOpen}
@@ -155,25 +216,46 @@ export default function Nav() {
         </button>
       </nav>
 
-      {menuOpen && (
-        <div
-          id="mobile-menu"
-          className="fixed inset-0 top-14 z-40 flex flex-col justify-center gap-8 bg-ink px-6"
+      <div
+        id="mobile-menu"
+        ref={menuRef}
+        inert={!menuOpen}
+        className="fixed inset-0 top-14 z-40 flex flex-col justify-center gap-8 bg-ink px-6"
+      >
+        {LINKS.map(({ id, label, seal }, i) => (
+          <button
+            key={id}
+            ref={i === 0 ? menuFirstLinkRef : undefined}
+            type="button"
+            onClick={() => goToSection(id)}
+            className={`display-face cursor-pointer text-left text-heading ${
+              seal ? 'text-seal' : 'text-bone'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
         >
-          {LINKS.map(({ id, label, seal }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => goToSection(id)}
-              className={`display-face cursor-pointer text-left text-heading ${
-                seal ? 'text-seal' : 'text-bone'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
+          <line
+            ref={menuLineRef}
+            x1="100"
+            y1="0"
+            x2="0"
+            y2="100"
+            pathLength="1"
+            stroke="var(--color-seal)"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+            strokeDasharray="1"
+            strokeDashoffset="1"
+          />
+        </svg>
+      </div>
     </header>
   );
 }

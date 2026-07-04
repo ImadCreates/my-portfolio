@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { record } from '../data/portfolioData';
+import { useCut, cutClick } from './CutProvider';
 import SectionLabel from './SectionLabel';
 
 const META_CLASSES =
@@ -24,6 +25,8 @@ function RowContent({ entry }) {
 }
 
 export default function RecordSection() {
+  const cutNavigate = useCut();
+
   return (
     <section id="record" aria-labelledby="record-heading" className="pt-24 md:pt-32">
       <SectionLabel id="record-heading" index="01" title="RECORD" />
@@ -33,6 +36,7 @@ export default function RecordSection() {
             {entry.slug ? (
               <Link
                 to={`/record/${entry.slug}`}
+                onClick={cutClick(cutNavigate, `/record/${entry.slug}`)}
                 className="group relative block"
                 data-row
                 aria-label={`${entry.title} case study`}
