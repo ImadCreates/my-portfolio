@@ -1,198 +1,137 @@
+/*
+  RANK ONE content. Every stat here is real and verifiable.
+  No skill percentages, no invented numbers, no buzzwords.
+*/
+
 export const personalInfo = {
-  name: "Imaduddin Ahmed",
-  title: "Full-Stack Software Engineer",
-  tagline: "Engineer by passion, builder by nature.",
-  bio: `I'm a founder building Routy, a real-time dispatch and field coordination platform
-  currently live in production. I'm also a 4th-year Software Engineering student at York University
-  and a Full-Stack Developer working across Java (Spring Boot), React, and Flutter. Three internships
-  have shaped how I think about shipping code: full-stack mobile at Cetmatrix, healthcare IT
-  infrastructure at Care Hospitals, and now software development at Superstars.`,
-  location: "North York, Ontario, Canada",
-  email: "approachimad@gmail.com",
-  github: "https://github.com/ImadCreates",
-  linkedin: "https://linkedin.com/in/imadsecures",
-  website: "https://imaduddin-ahmed.vercel.app",
-  avatar: "/me.png",
+  name: 'Imaduddin Ahmed',
+  shortName: 'IMAD.A',
+  positioning:
+    'Software engineer, security specialization. Founder of Routy. Every line on this record was earned.',
+  location: 'Toronto',
+  email: 'approachimad@gmail.com',
+  github: 'https://github.com/ImadCreates',
+  linkedin: 'https://linkedin.com/in/imadsecures',
+  resume: '/resume.pdf',
+  photo: '/me.png',
 };
 
-export const skills = [
-  {
-    category: "Backend Development",
-    color: "#ff4655",
-    items: [
-      { name: "Java", level: 92 },
-      { name: "Spring Boot", level: 90 },
-      { name: "RESTful API Design", level: 88 },
-      { name: "Microservices", level: 87 },
-      { name: "JWT Authentication", level: 82 },
-      { name: "Google Firebase", level: 88 },
-    ],
-  },
-  {
-    category: "Frontend & Mobile",
-    color: "#00d4ff",
-    items: [
-      { name: "JavaScript", level: 87 },
-      { name: "React", level: 86 },
-      { name: "Flutter", level: 85 },
-      { name: "Dart", level: 84 },
-      { name: "HTML & CSS", level: 83 },
-      { name: "State Management (Provider, Riverpod)", level: 82 },
-    ],
-  },
-  {
-    category: "Tools & Platforms",
-    color: "#bd93f9",
-    items: [
-      { name: "Git", level: 90 },
-      { name: "Docker", level: 81 },
-      { name: "GitHub Actions", level: 83 },
-      { name: "Postman", level: 85 },
-      { name: "Linux", level: 78 },
-      { name: "Arduino", level: 65 },
-    ],
-  },
-  {
-    category: "DevOps & Cloud",
-    color: "#ffd700",
-    items: [
-      { name: "CI/CD Pipelines", level: 83 },
-      { name: "Firebase Hosting", level: 86 },
-      { name: "Vercel", level: 85 },
-      { name: "Web Performance Monitoring", level: 76 },
-    ],
-  },
-];
+export const hero = {
+  eyebrow: ['PLAYER PROFILE', 'SEASON 2026', 'TORONTO'],
+  recordStrip: ['LIVE PRODUCT: ROUTY', '03 INTERNSHIPS', "SECURITY SPEC · YORK '27"],
+};
 
-export const skillTags = [
-  "Technical Support", "Hardware Deployment", "ITSM",
-  "Healthcare Compliance (HIPAA)", "Server Maintenance",
-  "Firestore", "Cloud Functions", "Firebase Auth", "API Gateway", "IAM",
-];
-
-export const projects = [
+/* The Record: projects as match history rows. Routy first and dominant. */
+export const record = [
   {
-    title: "Routy",
-    subtitle: "Real-Time Dispatch Platform",
-    period: "Feb 2026 – Present",
-    status: "Active",
-    featured: true,
-    wide: true,
-    description:
-      "A real-time dispatch and field coordination platform built across a React dispatcher dashboard, Flutter responder app, and Spring Boot backend. Dispatchers assign the nearest available worker by GPS distance, workers receive targeted push notifications and navigate to the job, and status updates flow back to the dashboard in real time. An optional DE10-Lite FPGA hardware layer handles UART communication, a 4-state FSM, VGA display output, and a buzzer alarm for environments requiring physical alert systems.",
-    techStack: ["Flutter", "React", "Spring Boot", "Firebase", "Firestore", "FCM", "Leaflet", "Real-time DB"],
-    highlights: ["Active project", "Mobile + Web + Hardware", "Real-time sync", "GPS distance routing"],
-    github: "https://github.com/ImadCreates/Routy",
-    live: "https://routy.ca",
-    demos: [
+    slug: 'routy',
+    year: '2026',
+    status: 'LIVE',
+    title: 'ROUTY',
+    stack: 'Flutter / React / Firebase',
+    outcome:
+      'Live dispatch platform for small trades teams, in production, approaching first paying pilot.',
+    fight:
+      'In a small trades company the owner is the routing engine. Jobs come in by phone, get assigned over group texts, and nobody can see who is actually free. The day runs on the owner chasing his own guys.',
+    decisions: [
       {
-        url: "https://www.youtube.com/embed/ykPL2PVdLWw",
-        label: "APP DEMO",
-        desc: "Dispatch → FCM push → responder accepts → live map → dashboard update",
+        title: 'Firestore security rules and multi-tenancy',
+        body: 'Every document is scoped to a team, and the rules enforce it. A dispatcher can assign jobs for their own team only, a responder can read and update only the jobs assigned to them. Access control lives in the database layer, not in client code that can be bypassed.',
       },
       {
-        url: "https://www.youtube.com/embed/KYjn9Eqjglw",
-        label: "HARDWARE DEMO",
-        desc: "DE10-Lite FPGA — UART, 4-state FSM, VGA display, buzzer alarm",
+        title: 'Push delivery targeted by user',
+        body: 'Dispatch notifications go out through Firebase Cloud Messaging against a device token stored per user. The assigned responder gets the push, nobody else does, and the token refresh path is handled so a reinstalled app keeps receiving work.',
+      },
+      {
+        title: 'One backend, two clients, live state',
+        body: 'The React dispatcher dashboard and the Flutter responder app read the same Firestore collections through realtime listeners. A status change on a phone shows up on the dispatch map without polling or a refresh.',
       },
     ],
-    color: "#00d4ff",
+    replay: {
+      url: 'https://www.youtube.com/embed/ykPL2PVdLWw',
+      caption: 'Dispatch → push → accept → live map → close-out.',
+    },
+    links: {
+      repo: 'https://github.com/ImadCreates/Routy',
+      live: 'https://routy.ca',
+    },
+    architecture:
+      'React + Vite dispatcher dashboard on Vercel. Flutter responder app. Firebase backend: Firestore, Firebase Auth, Firebase Cloud Messaging.',
   },
   {
-    title: "Valorant Theme Portfolio",
-    subtitle: "Stylized Personal Portfolio",
-    period: "Apr 2026",
-    status: "Active",
-    featured: true,
-    description:
-      "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
-    techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
-    highlights: ["Active project", "Valorant-inspired UI", "Responsive design"],
-    github: "https://github.com/ImadCreates/my-portfolio",
-    live: "https://imaduddin-ahmed.vercel.app/",
-    color: "#ff4655",
+    slug: null,
+    year: '2026',
+    status: 'COURSEWORK',
+    title: 'DE10-LITE ALERT SYSTEM',
+    stack: 'FPGA / UART / VGA',
+    outcome:
+      'University digital systems project. A DE10-Lite FPGA alert unit with UART communication, a four-state FSM, VGA output, and a buzzer alarm.',
+    links: {
+      demo: 'https://www.youtube.com/watch?v=KYjn9Eqjglw',
+    },
   },
 ];
 
+/* Loadout: skill plus receipt. A skill without evidence does not go on the page. */
+export const loadout = [
+  { skill: 'FLUTTER / DART', evidence: 'Routy responder app, Superstars production features' },
+  { skill: 'REACT / VITE', evidence: 'Routy dispatcher dashboard, this site' },
+  { skill: 'FIREBASE / FIRESTORE', evidence: 'Auth, FCM, security rules, multi-tenant data model' },
+  { skill: 'SECURITY', evidence: 'Lassonde specialization, Firestore rule hardening' },
+  { skill: 'CI/CD', evidence: 'GitHub Actions pipelines at CETMATRIX and on Routy' },
+];
+
+/* The Player: three beats. Discipline, arc, direction. */
+export const player = {
+  paragraphs: [
+    'I run on routine. Up at 5, fundamentals before anything that counts, shipping before class. The standard is the same everywhere: one clean motion, no wasted movement.',
+    'Three internships taught me how production software actually gets built. Hospital IT at CARE, cross-platform mobile at CETMATRIX, product work at Superstars. Then I watched small trades crews run their whole day over group texts, and I started Routy to fix it.',
+    'I am finishing a software engineering degree at York with a security specialization. I want to build products people rely on, with the security work done as part of the build, not as an audit afterward.',
+  ],
+};
+
+/* Career entries. Roles, companies, and dates carried over exactly. */
 export const experience = [
   {
-    role: "Founder",
-    company: "Routy",
-    period: "Apr 2026 – Present",
-    location: "Self-employed",
+    role: 'Founder',
+    company: 'Routy',
+    period: 'Apr 2026 – Present',
     description:
-      "Building Routy, a dispatch and field coordination platform for any team that moves people to locations. Dispatchers assign the nearest available worker to any job from a live web dashboard. Workers receive the assignment on their phone, accept, navigate, and mark it done. Built the full system solo across React, Flutter, Spring Boot, and Firebase. Currently live at routy.ca and being taken to market.",
-    achievements: [
-      "Built the full dispatcher dashboard in React with live Firestore listeners, a Leaflet map, haversine distance ranking, and a two-step dispatch modal",
-      "Built the Flutter responder app on Android with GPS tracking, FCM push notifications targeted by UID, and a full alert lifecycle",
-      "Built the Spring Boot backend deployed on Railway handling alert encoding and targeted FCM delivery via fcm_tokens per user UID",
-      "Implemented Firestore security rules, environment variable hardening, and composite indexes for production readiness",
-    ],
-    color: "#00d4ff",
+      'Dispatch platform for small trades teams. A dispatcher assigns a job from a live web dashboard, the responder gets a push on their phone, accepts, navigates, and closes it out. Built solo: React + Vite dashboard on Vercel, Flutter responder app, Firebase backend with Firestore, Auth, and Cloud Messaging.',
   },
   {
-    role: "Software Developer Intern",
-    company: "Superstars",
-    period: "May 2026 – Present",
-    location: "",
+    role: 'Software Developer Intern',
+    company: 'Superstars',
+    period: 'May 2026 – Present',
     description:
-      "Building and improving features on the Superstars platform at superstars.co, a professional networking app available on iOS and Android. Working directly with the team on mobile development and product strategy.",
-    achievements: [
-      "Mobile development using Flutter and Dart",
-      "Connecting front end to back end via REST APIs",
-      "Weekly sprints and product strategy discussions",
-      "Contributing to platform improvements and special projects",
-    ],
-    color: "#bd93f9",
+      'Building features on the Superstars app, a professional networking platform on iOS and Android. Flutter and Dart, wiring the front end to REST APIs, weekly sprints with the team.',
   },
   {
-    role: "Software Engineer Intern",
-    company: "CETMATRIX — Career Education and Travel",
-    period: "Sep 2025 – Dec 2025",
-    duration: "4 months",
-    location: "On-site",
+    role: 'Software Engineer Intern',
+    company: 'CETMATRIX — Career Education and Travel',
+    period: 'Sep 2025 – Dec 2025',
     description:
-      "Developed and maintained cross-platform Flutter applications, engineered CI/CD pipelines, and extended cloud backend infrastructure on Google Firebase.",
-    achievements: [
-      "Built cross-platform Flutter apps in Dart with Provider & Riverpod state management",
-      "Extended cloud backend on Google Firebase — Firestore, Cloud Functions, and Firebase Auth",
-      "Engineered CI/CD pipelines with GitHub Actions to automate testing & deployment",
-      "Created internal tools using Cloud Functions and social media APIs for analytics & reporting",
-      "Managed company website infrastructure on Firebase Hosting and Vercel",
-    ],
-    color: "#ffd700",
+      'Built cross-platform Flutter apps with Provider and Riverpod state management. Extended the Firebase backend across Firestore, Cloud Functions, and Auth. Set up GitHub Actions pipelines for testing and deployment, and ran the company sites on Firebase Hosting and Vercel.',
   },
   {
-    role: "IT Infrastructure Intern",
-    company: "CARE Hospitals, Quality CARE India Limited",
-    period: "Sep 2025 – Dec 2025",
-    duration: "4 months",
-    location: "On-site",
+    role: 'IT Infrastructure Intern',
+    company: 'CARE Hospitals, Quality CARE India Limited',
+    period: 'Sep 2025 – Dec 2025',
     description:
-      "Managed critical IT infrastructure for a high-volume healthcare environment, maintaining 99.9% uptime for essential medical databases and bridging hardware-software requirements.",
-    achievements: [
-      "Supported infrastructure projects to increase operational efficiency and identify delays on internal web portals",
-      "Gained experience in healthcare IT compliance and data security (HIPAA) in a critical environment",
-      "Utilized ITSM systems to log, track, and resolve support tickets, adhering to service level agreements",
-    ],
-    color: "#ff4655",
+      'Kept hospital IT infrastructure running in a high-volume environment. Logged, tracked, and resolved tickets in an ITSM system under service level agreements, and worked inside healthcare data compliance rules.',
   },
 ];
 
 export const education = [
   {
-    degree: "B.Eng. Software Engineering",
-    institution: "Lassonde School of Engineering, York University",
-    period: "2022 – 2027",
-    location: "North York, Ontario, Canada",
-    gpa: null,
-    honors: "4th Year — Currently Enrolled",
-    highlights: [
-      "Relevant Courses: Advanced OOP, Data Structures & Algorithms, Building E-Commerce Systems, Digital Systems Engineering",
-      "Completed internships in software engineering and IT infrastructure across CETMATRIX and Care Hospitals",
-      "Currently building Routy, a live dispatch and field coordination platform being taken to market",
-      "Actively seeking new-grad and junior engineering roles",
-    ],
-    color: "#39ff88",
+    degree: 'B.Eng. Software Engineering',
+    institution: 'Lassonde School of Engineering, York University',
+    period: '2022 – 2027',
+    description: 'Security specialization. Fourth year, currently enrolled.',
   },
 ];
+
+export const challenge = {
+  headline: 'ISSUE A CHALLENGE.',
+  line: 'Hiring for a co-op or building something real? I answer fast.',
+};
