@@ -1,9 +1,11 @@
 import { loadout } from '../data/portfolioData';
+import GhostNumeral from './GhostNumeral';
 import SectionLabel from './SectionLabel';
 
 export default function LoadoutSection() {
   return (
-    <section id="loadout" aria-labelledby="loadout-heading" className="pt-24 md:pt-32">
+    <section id="loadout" aria-labelledby="loadout-heading" className="relative pt-12 md:pt-16">
+      <GhostNumeral n="02" />
       <SectionLabel id="loadout-heading" index="02" title="LOADOUT" />
       <ul>
         {loadout.map(({ skill, evidence }) => (

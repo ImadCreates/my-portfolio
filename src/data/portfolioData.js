@@ -29,6 +29,13 @@ export const record = [
     status: 'LIVE',
     title: 'ROUTY',
     stack: 'Flutter / React / Firebase',
+    blurb: 'Live dispatch for small trades teams. Assign, push, navigate, close out.',
+    media: {
+      src: '/media/routy-dashboard.webp',
+      alt: 'Routy dispatcher dashboard preview',
+      width: 1600,
+      height: 1000,
+    },
     outcome:
       'Live dispatch platform for small trades teams, in production, approaching first paying pilot.',
     fight:
@@ -64,6 +71,13 @@ export const record = [
     status: 'COURSEWORK',
     title: 'DE10-LITE ALERT SYSTEM',
     stack: 'FPGA / UART / VGA',
+    blurb: 'FPGA alert system. UART, 4-state FSM, VGA out.',
+    media: {
+      src: '/media/de10-fpga.webp',
+      alt: 'DE10-Lite FPGA alert system preview',
+      width: 1600,
+      height: 1000,
+    },
     outcome:
       'University digital systems project. A DE10-Lite FPGA alert unit with UART communication, a four-state FSM, VGA output, and a buzzer alarm.',
     links: {

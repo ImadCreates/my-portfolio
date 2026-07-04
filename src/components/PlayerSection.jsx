@@ -1,4 +1,5 @@
 import { education, experience, personalInfo, player } from '../data/portfolioData';
+import GhostNumeral from './GhostNumeral';
 import SectionLabel from './SectionLabel';
 
 function CareerEntry({ heading, period, description }) {
@@ -15,7 +16,8 @@ function CareerEntry({ heading, period, description }) {
 
 export default function PlayerSection() {
   return (
-    <section id="player" aria-labelledby="player-heading" className="pt-24 md:pt-32">
+    <section id="player" aria-labelledby="player-heading" className="relative pt-12 md:pt-16">
+      <GhostNumeral n="03" />
       <SectionLabel id="player-heading" index="03" title="THE PLAYER" />
 
       <div className="grid gap-12 px-6 md:grid-cols-[1fr_auto] md:px-12">
@@ -37,7 +39,7 @@ export default function PlayerSection() {
         />
       </div>
 
-      <h3 className="label-mono mt-20 px-6 pb-4 text-steel md:px-12" data-reveal>
+      <h3 className="label-mono mt-10 px-6 pb-4 text-steel md:px-12" data-reveal>
         CAREER
       </h3>
       <ul>
@@ -51,7 +53,7 @@ export default function PlayerSection() {
         ))}
       </ul>
 
-      <h3 className="label-mono mt-16 px-6 pb-4 text-steel md:px-12" data-reveal>
+      <h3 className="label-mono mt-8 px-6 pb-4 text-steel md:px-12" data-reveal>
         EDUCATION
       </h3>
       <ul>

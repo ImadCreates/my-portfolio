@@ -101,6 +101,15 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* S2.5: the hero right side hosts the slash canvas and one label. */}
+      <p
+        className="label-mono absolute top-1/2 right-4 hidden -translate-y-1/2 text-steel md:block"
+        style={{ writingMode: 'vertical-rl' }}
+        data-reveal
+      >
+        EST. TORONTO / 43.65 N
+      </p>
+
       {hintVisible && (
         <p
           ref={hintRef}

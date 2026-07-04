@@ -33,11 +33,12 @@
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* Type scale: 12 / 16 / 24 / 40 / hero. Big jumps, no in-between sizes. */
+  /* Type scale: 12 / 16 / 24 / 40 / section / hero. Big jumps. */
   --text-label: 0.75rem;
   --text-body: 1rem;
   --text-title: 1.5rem;
   --text-heading: 2.5rem;
+  --text-section: clamp(3rem, 8vw, 6.875rem);
   --text-hero: clamp(4rem, 10vw, 8.75rem);
 
   /* Motion easings. The cut is decisive, everything else settles. */

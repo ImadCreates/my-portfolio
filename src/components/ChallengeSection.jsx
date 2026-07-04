@@ -1,5 +1,6 @@
 import { challenge, personalInfo } from '../data/portfolioData';
 import useCopyEmail from '../lib/useCopyEmail';
+import GhostNumeral from './GhostNumeral';
 import Slash from './Slash';
 
 const EXTERNAL_LINKS = [
@@ -16,8 +17,9 @@ export default function ChallengeSection() {
     <section
       id="challenge"
       aria-labelledby="challenge-heading"
-      className="flex min-h-svh flex-col justify-center px-6 pt-24 md:px-12"
+      className="relative flex min-h-svh flex-col justify-center px-6 pt-12 md:px-12"
     >
+      <GhostNumeral n="04" className="top-1/2 -translate-y-1/2" />
       <h2 id="challenge-heading" className="display-face text-hero text-bone" data-reveal>
         {headline}
         <span className="text-seal">.</span>
