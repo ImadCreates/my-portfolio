@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
+import { emitCut } from '../lib/blade';
 
 /*
-  S1: the live slash. A fast pointer swipe over the hero draws a straight
-  1px seal line along the swipe vector. Draw 0.15s on the cut ease, hold,
-  fade 1.2s. Three concurrent cuts max, oldest fades first. Vanilla
-  canvas painted from a gsap.ticker callback that only runs while cuts
-  exist, the hero is on screen, and the tab is visible.
+  B1: the live slash, site-wide. A fixed full-viewport canvas active on
+  both routes. A fast pointer swipe draws a straight 1px seal line along
+  the swipe vector: draw 0.15s on the cut ease, hold one base beat, fade
+  1.2s. Three concurrent cuts, oldest fades first.
+
+  Draw stance: on pointerdown over non-interactive space the cursor
+  swaps to the blade mark (body.draw-stance); it also engages while a
+  fast swipe is armed. Slow drags exit cleanly so text selection works.
+  The paint loop only runs while cuts are alive and pauses on hidden
+  tabs. Reduced motion mounts nothing.
 */
 const DRAW_S = 0.15;
 const FADE_S = 1.2;
@@ -16,11 +22,11 @@ const SPEED_ARM = 1.4; /* px/ms to arm a swipe */
 const SPEED_COMMIT = 0.35; /* px/ms: decelerated, commit the cut */
 const MIN_LEN = 90; /* px: shorter gestures are not cuts */
 
-export default function SlashCanvas({ onCut }) {
-  const canvasRef = useRef(null);
-  const onCutRef = useRef(onCut);
-  onCutRef.current = onCut;
+const INTERACTIVE =
+  'a, button, input, textarea, select, iframe, video, header, [role="button"], [role="dialog"], [contenteditable]';
 
+export default function SlashCanvas() {
+  const canvasRef = useRef(null);
   const reduced = useMemo(() => prefersReducedMotion(), []);
 
   useEffect(() => {
@@ -41,11 +47,10 @@ export default function SlashCanvas({ onCut }) {
     window.addEventListener('resize', resize);
 
     const cuts = [];
-    let onScreen = true;
     let tickerOn = false;
 
     const render = () => {
-      if (!onScreen || document.hidden) return;
+      if (document.hidden) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineWidth = Math.max(dpr, 1);
       ctx.strokeStyle = seal;
@@ -107,10 +112,15 @@ export default function SlashCanvas({ onCut }) {
         }),
       );
       syncTicker();
-      onCutRef.current?.({ x1, y1, x2, y2 });
+      emitCut({ x1, y1, x2, y2 });
     };
 
-    /* Swipe detection: listen on window so hero text stays selectable. */
+    /* Draw stance. Engages on pointerdown over non-interactive space and
+       while a swipe is armed; never over links, inputs, or the nav. */
+    let stanceHeld = false;
+    const setStance = (on) => document.body.classList.toggle('draw-stance', on);
+
+    /* Swipe detection on window so text stays selectable. */
     let pts = [];
     let armed = false;
     let start = null;
@@ -120,15 +130,17 @@ export default function SlashCanvas({ onCut }) {
       armed = false;
       pts = [];
       clearTimeout(idleTimer);
-      if (!onScreen || document.hidden) return;
-      const rect = canvas.getBoundingClientRect();
-      const p1 = { x: start.x - rect.left, y: start.y - rect.top };
-      const p2 = { x: endX - rect.left, y: endY - rect.top };
-      if (Math.hypot(p2.x - p1.x, p2.y - p1.y) < MIN_LEN) return;
-      /* The gesture must cross the hero. */
-      const midY = (p1.y + p2.y) / 2;
-      if (midY < 0 || midY > rect.height) return;
-      spawnCut(p1.x, p1.y, p2.x, p2.y);
+      if (!stanceHeld) setStance(false);
+      if (document.hidden) return;
+      if (Math.hypot(endX - start.x, endY - start.y) < MIN_LEN) return;
+      spawnCut(start.x, start.y, endX, endY);
+    };
+
+    const onDown = (e) => {
+      if (e.button !== 0 || e.pointerType !== 'mouse') return;
+      if (e.target instanceof Element && e.target.closest(INTERACTIVE)) return;
+      stanceHeld = true;
+      setStance(true);
     };
 
     const onMove = (e) => {
@@ -142,6 +154,7 @@ export default function SlashCanvas({ onCut }) {
       if (!armed && speed > SPEED_ARM && dist > 24) {
         armed = true;
         start = { x: a.x, y: a.y };
+        if (e.pointerType === 'mouse') setStance(true);
       } else if (armed && speed < SPEED_COMMIT) {
         commit(e.clientX, e.clientY);
       }
@@ -152,28 +165,27 @@ export default function SlashCanvas({ onCut }) {
         idleTimer = setTimeout(() => commit(clientX, clientY), 140);
       }
     };
+
     const onUp = (e) => {
+      stanceHeld = false;
       if (armed) commit(e.clientX, e.clientY);
+      else setStance(false);
       pts = [];
     };
 
+    window.addEventListener('pointerdown', onDown, { passive: true });
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerup', onUp, { passive: true });
     window.addEventListener('pointercancel', onUp, { passive: true });
 
-    /* Pause when the hero leaves the viewport. */
-    const io = new IntersectionObserver(([entry]) => {
-      onScreen = entry.isIntersecting;
-    });
-    io.observe(canvas);
-
     return () => {
       window.removeEventListener('resize', resize);
+      window.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
       window.removeEventListener('pointercancel', onUp);
-      io.disconnect();
       clearTimeout(idleTimer);
+      setStance(false);
       cuts.slice().forEach(removeCut);
     };
   }, [reduced]);
@@ -184,7 +196,7 @@ export default function SlashCanvas({ onCut }) {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-20 h-full w-full"
+      className="pointer-events-none fixed inset-0 z-40 h-full w-full"
     />
   );
 }

@@ -7,6 +7,7 @@ import CaseStudy from './pages/CaseStudy';
 import CutProvider from './components/CutProvider';
 import CommandPalette from './components/CommandPalette';
 import GgChallenge from './components/GgChallenge';
+import SlashCanvas from './components/SlashCanvas';
 import { scrollToTop } from './lib/scroll';
 
 function ScrollToTop() {
@@ -45,6 +46,9 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        {/* B1: the blade layer. Site-wide, above content and nav, below
+            the route-transition overlay. */}
+        <SlashCanvas />
       </CutProvider>
     </BrowserRouter>
   );

@@ -1,7 +1,7 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { hero, personalInfo } from '../data/portfolioData';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
-import SlashCanvas from './SlashCanvas';
+import { onCut } from '../lib/blade';
 
 const SHEAR_PX = 2;
 const SHEAR_HOLD_S = 0.15;
@@ -40,8 +40,9 @@ export default function Hero() {
   );
 
   /* S1 shear: content above the cut line shifts 2px along the swipe
-     vector, content below shifts the other way, then settles back. */
-  const onCut = useCallback((line) => {
+     vector, content below shifts the other way, then settles back.
+     Cuts are site-wide now (B1); only cuts crossing the hero shear it. */
+  const handleCut = useCallback((line) => {
     if (hintRef.current && !sessionStorage.getItem(HINT_KEY)) {
       sessionStorage.setItem(HINT_KEY, '1');
       gsap.to(hintRef.current, { autoAlpha: 0, duration: T.base, ease: EASE.settle });
@@ -59,11 +60,14 @@ export default function Hero() {
        clip geometry degenerates; ship the cut without shear there. */
     if (len < 1 || Math.abs(dx) < 40) return;
 
-    const rect = wrap.getBoundingClientRect();
     const heroRect = wrap.closest('section').getBoundingClientRect();
+    const midY = (line.y1 + line.y2) / 2;
+    if (midY < heroRect.top || midY > heroRect.bottom) return;
+
+    const rect = wrap.getBoundingClientRect();
     const m = dy / dx;
-    const x1 = line.x1 + heroRect.left - rect.left;
-    const y1 = line.y1 + heroRect.top - rect.top;
+    const x1 = line.x1 - rect.left;
+    const y1 = line.y1 - rect.top;
     const y0 = y1 - m * x1;
     const yW = y1 + m * (rect.width - x1);
     const w = Math.round(rect.width);
@@ -86,10 +90,10 @@ export default function Hero() {
       .to([orig, dup], { x: 0, y: 0, duration: T.fast, ease: EASE.settle }, SHEAR_HOLD_S);
   }, []);
 
+  useEffect(() => onCut(handleCut), [handleCut]);
+
   return (
     <section aria-label="Player profile" className="relative flex min-h-svh flex-col justify-end">
-      <SlashCanvas onCut={onCut} />
-
       <div className="relative flex flex-1 flex-col justify-center px-6 pt-14 md:px-12">
         <div ref={wrapRef} className="relative">
           <div ref={origRef}>

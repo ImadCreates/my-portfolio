@@ -94,6 +94,16 @@
   }
 }
 
+/* Draw stance (B1): the blade mark exists only while a cut is being
+   drawn. A 1px bone line at 45 degrees with a seal tip, hotspot at the
+   tip. The OS cursor stays default at rest. */
+body.draw-stance {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cline x1='3' y1='19' x2='19' y2='3' stroke='%23EDEDE9' stroke-width='1'/%3E%3Cline x1='16.9' y1='5.1' x2='19' y2='3' stroke='%23C81E2E' stroke-width='1'/%3E%3C/svg%3E")
+      19 3,
+    crosshair;
+}
+
 /* Mono labels: nav, stats, metadata. Uppercase, tracked, scoreboard digits. */
 @utility label-mono {
   font-family: var(--font-mono);
