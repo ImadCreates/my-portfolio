@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { personalInfo } from '../data/portfolioData';
 import { useCut } from './CutProvider';
 import { lockScroll, scrollToSection } from '../lib/scroll';
+import { onSoundChange, setSound, soundEnabled } from '../lib/sound';
 import useCopyEmail from '../lib/useCopyEmail';
 
 const SECTIONS = [
@@ -22,6 +23,9 @@ export default function CommandPalette() {
   const { cutNavigate } = useCut();
   const location = useLocation();
   const { copied, copy } = useCopyEmail();
+  const [soundOn, setSoundOn] = useState(soundEnabled);
+
+  useEffect(() => onSoundChange(setSoundOn), []);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -42,8 +46,9 @@ export default function CommandPalette() {
       { key: 'copy-email', label: copied ? 'COPIED' : 'COPY EMAIL', run: copy },
       { key: 'github', label: 'OPEN GITHUB', run: () => openLink(personalInfo.github) },
       { key: 'resume', label: 'OPEN RESUME', run: () => openLink(personalInfo.resume) },
+      { key: 'sound', label: `SOUND: ${soundOn ? 'ON' : 'OFF'}`, run: () => setSound(!soundOn) },
     ];
-  }, [close, location.pathname, cutNavigate, copied, copy]);
+  }, [close, location.pathname, cutNavigate, copied, copy, soundOn]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { POLY, halfShifts } from '../lib/cut';
+import { tick } from '../lib/sound';
 
 const CutContext = createContext({ cutNavigate: () => {}, cutTo: () => {} });
 
@@ -134,7 +135,8 @@ export default function CutProvider({ children }) {
 
       /* Line draws over the outgoing page, screen snaps to ink, the route
          swaps underneath, and the halves separate to reveal the new page. */
-      tl.to(lineRef.current, { strokeDashoffset: 0, duration: T.fast, ease: EASE.cut })
+      tl.call(() => tick('route'))
+        .to(lineRef.current, { strokeDashoffset: 0, duration: T.fast, ease: EASE.cut })
         .set(halves, { autoAlpha: 1 })
         .set(lineRef.current, { opacity: 0 })
         .call(action)

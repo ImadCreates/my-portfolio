@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { emitCut } from '../lib/blade';
+import { tick } from '../lib/sound';
 
 /*
   B1: the live slash, site-wide. A fixed full-viewport canvas active on
@@ -112,6 +113,7 @@ export default function SlashCanvas() {
         }),
       );
       syncTicker();
+      tick('cut');
       emitCut({ x1, y1, x2, y2 });
     };
 
