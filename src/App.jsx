@@ -9,6 +9,7 @@ import CommandPalette from './components/CommandPalette';
 import GgChallenge from './components/GgChallenge';
 import SlashCanvas from './components/SlashCanvas';
 import ComboLayer from './components/ComboLayer';
+import ScrollRail from './components/ScrollRail';
 import { scrollToTop } from './lib/scroll';
 
 function ScrollToTop() {
@@ -47,6 +48,8 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        {/* B3: the edge. Above ghost numerals, below the blade layer. */}
+        <ScrollRail />
         {/* B1/B2: the blade layer. Site-wide, above content and nav,
             below the route-transition overlay. */}
         <SlashCanvas />

@@ -1,5 +1,5 @@
 import Lenis from 'lenis';
-import { gsap, ScrollTrigger, prefersReducedMotion } from './motion';
+import { gsap, ScrollTrigger, T, EASE, prefersReducedMotion } from './motion';
 
 let lenis = null;
 
@@ -20,8 +20,13 @@ export function scrollToSection(id, { immediate = false } = {}) {
   const el = document.getElementById(id);
   if (!el) return;
   if (lenis && !immediate) {
-    /* force: the caller may have just released a scroll lock this tick. */
-    lenis.scrollTo(el, { force: true });
+    /* force: the caller may have just released a scroll lock this tick.
+       Settle ease and the cut beat, same tokens as everything else. */
+    lenis.scrollTo(el, {
+      force: true,
+      duration: T.cut,
+      easing: gsap.parseEase(EASE.settle),
+    });
   } else if (lenis) {
     lenis.scrollTo(el, { immediate: true, force: true });
   } else {
