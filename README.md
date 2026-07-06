@@ -9,21 +9,30 @@ Career as match record, skills as loadout, contact as a challenge.
 
 ## The cut
 
-One signature mechanic, built once and reused everywhere:
+One signature mechanic, built once and reused everywhere. The blade appears on intent,
+never at rest:
 
-1. **The slash.** Swipe fast across the hero and a straight 1px seal line draws along
-   your vector, shears the name 2px along the cut, holds, and fades. Vanilla canvas
-   painted from the GSAP ticker, three cuts max, 60fps under 4x CPU throttle.
-2. **Loading sequence.** First visit per session: the line draws, the name snaps in with
+1. **The slash.** Swipe fast anywhere on either route and a straight 1px seal line draws
+   along your vector. Vanilla canvas painted from the GSAP ticker, three cuts max,
+   60fps under 4x CPU throttle, zero frames spent while idle.
+2. **Draw stance.** Press and drag on empty space and the cursor becomes a blade mark;
+   slow drags still select text, and the OS cursor stays default at rest.
+3. **Combos.** Cuts within 1.2s chain: a mono `CUT xN` counter at the cut's endpoint,
+   with streak titles once per session at x4, x7, and x10.
+4. **Sliceable targets.** The ghost numerals and the challenge heading split along the
+   actual cut line and reassemble. The hero name shears 2px on every cut that crosses it.
+5. **Loading sequence.** First visit per session: the line draws, the name snaps in with
    no fade, the screen splits along the line to reveal the hero. Under one second.
-3. **Route transitions.** The same split between `/` and case studies. Clip-path polygons
+6. **Route transitions.** The same split between `/` and case studies. Clip-path polygons
    driven by a GSAP timeline, under 0.7s, interruptible, never queued.
-4. **Mobile menu.** The overlay wipes open from the diagonal.
-5. **Ghost numerals.** Each section's outlined index numeral reveals with the same
-   diagonal wipe as it enters the viewport.
+7. **Mobile menu.** The overlay wipes open from the diagonal.
+8. **The edge.** A desktop scroll rail with section notches, seal progress fill, and a
+   blade-tip thumb; notches are keyboard-focusable shortcuts.
+9. **One sound, off by default.** A sub-80ms metallic tick synthesized in the Web Audio
+   API, zero assets; toggles in the command palette and footer, persisted.
 
 Everything else stays quiet. `prefers-reduced-motion` turns every reveal opacity-only,
-turns the cut into a plain fade, disables Lenis, and mounts no slash canvas.
+turns the cut into a plain fade, disables Lenis, and mounts none of the blade layer.
 
 ## Design tokens
 
@@ -96,7 +105,7 @@ filename, no code changes.
 ## Performance
 
 Lighthouse (mobile emulation, simulated slow 4G, production build): performance 95,
-accessibility 100. Total JS 139 kB gzipped against a 250 kB budget. The hero is served
+accessibility 100. Total JS 141 kB gzipped against a 250 kB budget. The hero is served
 as a static shell in `index.html` (kept in sync with `Hero.jsx`) so the largest paint
-does not wait for the bundle. The slash mechanic holds 60fps at 4x CPU throttle
-(p95 frame 16.7ms, zero frames over 25ms).
+does not wait for the bundle. A x10 combo with simultaneous slices holds 60fps at 4x
+CPU throttle (p95 frame 16.8ms, 298 of 300 frames on budget).

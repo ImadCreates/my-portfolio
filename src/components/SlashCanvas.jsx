@@ -170,7 +170,11 @@ export default function SlashCanvas() {
 
     const onUp = (e) => {
       stanceHeld = false;
-      if (armed) commit(e.clientX, e.clientY);
+      /* pointercancel may carry zeroed coords; use the last sample. */
+      const last = pts[pts.length - 1];
+      const ex = e.type === 'pointercancel' && last ? last.x : e.clientX;
+      const ey = e.type === 'pointercancel' && last ? last.y : e.clientY;
+      if (armed) commit(ex, ey);
       else setStance(false);
       pts = [];
     };
