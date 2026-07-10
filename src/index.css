@@ -1,14 +1,47 @@
 @import "tailwindcss";
 
-/* Anton is self-hosted from /public so index.html can preload it by a
-   stable URL. The hero name is the LCP element and must paint in the
-   display face, not a fallback. */
+/* All four faces are self-hosted from /public at stable URLs so
+   index.html can preload the two above-the-fold files. Everything is
+   subset to latin. The hero name is the LCP element and must paint in
+   the display face, not a fallback. */
 @font-face {
-  font-family: "Anton";
+  font-family: "Clash Display";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("/fonts/clash-display-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Clash Display";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url("/fonts/clash-display-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/instrument-serif-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: url("/fonts/anton-latin-400-normal.woff2") format("woff2");
+  src: url("/fonts/inter-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/jetbrains-mono-latin-400.woff2") format("woff2");
 }
 
 /*
@@ -28,18 +61,21 @@
   --color-bone: #edede9;
   --color-seal: #c81e2e;
 
-  /* Three faces, three jobs. */
-  --font-display: "Anton", "Arial Narrow", sans-serif;
+  /* Three faces, three jobs, plus one editorial counterpoint. */
+  --font-display: "Clash Display", "Arial Narrow", sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Instrument Serif", Georgia, serif;
 
   /* Type scale: 12 / 16 / 24 / 40 / section / hero. Big jumps. */
   --text-label: 0.75rem;
   --text-body: 1rem;
   --text-title: 1.5rem;
   --text-heading: 2.5rem;
+  /* Clash Display runs wider than Anton did; the hero floor drops so
+     IMADUDDIN and CHALLENGE. clear a 375px viewport. */
   --text-section: clamp(3rem, 8vw, 6.875rem);
-  --text-hero: clamp(4rem, 10vw, 8.75rem);
+  --text-hero: clamp(3.2rem, 10vw, 8.75rem);
 
   /* Motion easings. The cut is decisive, everything else settles. */
   --ease-cut: cubic-bezier(0.83, 0, 0.17, 1);
@@ -116,10 +152,31 @@ body.draw-stance {
   font-variant-numeric: tabular-nums;
 }
 
-/* Display face: headings and the giant name. Caps, tight leading. */
+/* Display face: headings and the giant name. Caps, tight leading.
+   Semibold carries the big settings; row titles and sub-heads drop to
+   medium via display-500. */
 @utility display-face {
   font-family: var(--font-display);
+  font-weight: 600;
   text-transform: uppercase;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+@utility display-500 {
+  font-weight: 500;
+}
+
+/* The editorial counterpoint: single emphasized words inside display or
+   body settings. Serif italic, sentence case, sized up a step so the
+   serif's smaller x-height reads level with Inter. Used extremely
+   sparingly; sparse is what makes it expensive. */
+@utility serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 1.1em;
+  line-height: 1;
 }

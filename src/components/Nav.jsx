@@ -223,7 +223,7 @@ export default function Nav() {
             ref={i === 0 ? menuFirstLinkRef : undefined}
             type="button"
             onClick={() => goToSection(id)}
-            className={`display-face cursor-pointer text-left text-heading ${
+            className={`display-face display-500 cursor-pointer text-left text-heading ${
               seal ? 'text-seal' : 'text-bone'
             }`}
           >

@@ -18,7 +18,7 @@ function RowContent({ entry }) {
         {entry.year} · {entry.status}
       </p>
       <div>
-        <h3 className="display-face text-heading text-bone">{entry.title}</h3>
+        <h3 className="display-face display-500 text-heading text-bone">{entry.title}</h3>
         <p className="mt-2 max-w-md text-body text-steel">{entry.blurb}</p>
       </div>
       <p className={`${META_CLASSES} md:text-right`}>{entry.stack}</p>

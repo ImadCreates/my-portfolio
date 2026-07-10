@@ -4,7 +4,7 @@ import { POLY } from '../lib/cut';
 import Sliceable from './Sliceable';
 
 /*
-  S2.1: a massive outlined Anton numeral on the right edge of each
+  S2.1: a massive outlined display-face numeral on the right edge of each
   section, partially cropped by the viewport, behind content. Reveals
   once with the diagonal cut wipe; opacity only under reduced motion.
   B2: the numeral is a sliceable target, so the reveal clip lives on a

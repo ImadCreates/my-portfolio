@@ -6,7 +6,7 @@ function CareerEntry({ heading, period, description }) {
   return (
     <li className="border-t border-hairline px-6 py-6 last:border-b md:px-12" data-reveal>
       <div className="flex flex-col justify-between gap-1 md:flex-row md:items-baseline md:gap-6">
-        <h4 className="text-body font-medium text-bone">{heading}</h4>
+        <h4 className="text-body text-bone">{heading}</h4>
         <p className="label-mono shrink-0 text-steel">{period}</p>
       </div>
       <p className="mt-2 max-w-2xl text-body text-steel">{description}</p>

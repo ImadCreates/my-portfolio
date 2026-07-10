@@ -44,14 +44,14 @@ export default function CaseStudy() {
       )}
 
       <section aria-labelledby="fight-heading" className="mt-24" data-reveal>
-        <h2 id="fight-heading" className="display-face pb-6 text-title text-bone">
+        <h2 id="fight-heading" className="display-face display-500 pb-6 text-title text-bone">
           THE FIGHT
         </h2>
         <p className="max-w-2xl text-body text-bone">{entry.fight}</p>
       </section>
 
       <section aria-labelledby="decisions-heading" className="mt-24">
-        <h2 id="decisions-heading" className="display-face pb-6 text-title text-bone" data-reveal>
+        <h2 id="decisions-heading" className="display-face display-500 pb-6 text-title text-bone" data-reveal>
           DECISIONS
         </h2>
         <ul>
@@ -89,7 +89,7 @@ export default function CaseStudy() {
       )}
 
       <section aria-labelledby="replay-heading" className="mt-24" data-reveal>
-        <h2 id="replay-heading" className="display-face pb-6 text-title text-bone">
+        <h2 id="replay-heading" className="display-face display-500 pb-6 text-title text-bone">
           REPLAY
         </h2>
         <div className="max-w-3xl border border-hairline">

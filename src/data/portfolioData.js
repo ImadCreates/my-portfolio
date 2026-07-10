@@ -6,8 +6,11 @@
 export const personalInfo = {
   name: 'Imaduddin Ahmed',
   shortName: 'IMAD.A',
-  positioning:
-    'Software engineer, security specialization. Founder of Routy. Every line on this record was earned.',
+  /* The accent word renders in the serif italic counterpoint. */
+  positioning: {
+    lead: 'Software engineer, security specialization. Founder of Routy. Every line on this record was',
+    accent: 'earned.',
+  },
   location: 'Toronto',
   email: 'approachimad@gmail.com',
   github: 'https://github.com/ImadCreates',
@@ -177,5 +180,10 @@ export const education = [
 
 export const challenge = {
   headline: 'ISSUE A CHALLENGE.',
-  line: 'Hiring for a co-op or building something real? I answer fast.',
+  /* "real" renders in the serif italic counterpoint. */
+  line: {
+    lead: 'Hiring for a co-op or building something',
+    accent: 'real',
+    tail: '? I answer fast.',
+  },
 };

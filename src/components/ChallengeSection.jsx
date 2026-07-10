@@ -29,7 +29,8 @@ export default function ChallengeSection() {
         </h2>
       </Sliceable>
       <p className="mt-8 max-w-xl text-body text-steel" data-reveal>
-        {challenge.line}
+        {challenge.line.lead} <em className="serif-accent">{challenge.line.accent}</em>
+        {challenge.line.tail}
       </p>
 
       <div className="mt-16 flex flex-col gap-6 md:flex-row md:items-center md:gap-12" data-reveal>

@@ -23,7 +23,8 @@ function HeroContent({ reveal = false }) {
         {last}
       </h1>
       <p {...r} className="mt-8 max-w-xl text-body text-steel">
-        {personalInfo.positioning}
+        {personalInfo.positioning.lead}{' '}
+        <em className="serif-accent">{personalInfo.positioning.accent}</em>
       </p>
     </>
   );
