@@ -6,12 +6,17 @@ import LoadoutSection from '../components/LoadoutSection';
 import PlayerSection from '../components/PlayerSection';
 import ChallengeSection from '../components/ChallengeSection';
 import useReveals from '../lib/useReveals';
+import usePageMeta from '../lib/usePageMeta';
 import { scrollToSection } from '../lib/scroll';
 
 export default function Home() {
   const { hash } = useLocation();
 
   useReveals();
+  usePageMeta(
+    'Imaduddin Ahmed · Software Engineer',
+    'Imaduddin Ahmed. Software engineer, security specialization. Founder of Routy. Toronto.',
+  );
 
   useEffect(() => {
     if (!hash) return;

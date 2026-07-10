@@ -4,6 +4,7 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
+import NotFound from './pages/NotFound';
 import CutProvider from './components/CutProvider';
 import CommandPalette from './components/CommandPalette';
 import GgChallenge from './components/GgChallenge';
@@ -64,6 +65,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/record/:slug" element={<CaseStudy />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

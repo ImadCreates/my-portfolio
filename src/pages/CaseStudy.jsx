@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { record } from '../data/portfolioData';
 import { useCut, cutClick } from '../components/CutProvider';
 import LazyLoop from '../components/LazyLoop';
@@ -8,6 +8,8 @@ import Slash from '../components/Slash';
 import TreatedMedia from '../components/TreatedMedia';
 import useReveals from '../lib/useReveals';
 import useLineReveal from '../lib/useLineReveal';
+import usePageMeta from '../lib/usePageMeta';
+import NotFound from './NotFound';
 
 /* Case study, concept doc section 10. Outcome before tech, always. */
 export default function CaseStudy() {
@@ -18,8 +20,12 @@ export default function CaseStudy() {
 
   useReveals();
   useLineReveal(titleRef);
+  usePageMeta(
+    entry && `${entry.title} · Imaduddin Ahmed`,
+    entry && entry.outcome,
+  );
 
-  if (!entry) return <Navigate to="/" replace />;
+  if (!entry) return <NotFound />;
 
   return (
     <article className="px-6 pt-32 md:px-12">
