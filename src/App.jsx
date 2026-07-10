@@ -10,6 +10,7 @@ import GgChallenge from './components/GgChallenge';
 import SlashCanvas from './components/SlashCanvas';
 import ComboLayer from './components/ComboLayer';
 import ScrollRail from './components/ScrollRail';
+import Grain from './components/Grain';
 import { scrollToTop } from './lib/scroll';
 
 function ScrollToTop() {
@@ -54,6 +55,9 @@ export default function App() {
             below the route-transition overlay. */}
         <SlashCanvas />
         <ComboLayer />
+        {/* P2: film grain over everything except the route-cut overlay
+            and the command palette. */}
+        <Grain />
       </CutProvider>
     </BrowserRouter>
   );

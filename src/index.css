@@ -110,9 +110,10 @@
     touch-action: pan-y pinch-zoom;
   }
 
+  /* Selection carries the seal: the one place red is always allowed. */
   ::selection {
-    background-color: var(--color-bone);
-    color: var(--color-ink);
+    background-color: var(--color-seal);
+    color: var(--color-bone);
   }
 
   :focus-visible {
@@ -120,8 +121,14 @@
     outline-offset: 3px;
   }
 
+  /* Minimal scrollbar: ink track, hairline thumb. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-hairline) var(--color-ink);
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
