@@ -5,6 +5,7 @@ import { useCut, cutClick } from '../components/CutProvider';
 import LazyLoop from '../components/LazyLoop';
 import MediaFrame from '../components/MediaFrame';
 import Slash from '../components/Slash';
+import TreatedMedia from '../components/TreatedMedia';
 import useReveals from '../lib/useReveals';
 import useLineReveal from '../lib/useLineReveal';
 
@@ -46,10 +47,12 @@ export default function CaseStudy() {
       {entry.caseMedia && (
         <section aria-label="Product loop" className="mt-16" data-reveal>
           <div className="max-w-3xl">
+            {/* The loop keeps the frame and caption but no filter:
+                filtering video is a frame-cost trap. */}
             <MediaFrame>
               <LazyLoop {...entry.caseMedia.loop} />
             </MediaFrame>
-            <p className="label-mono mt-4 text-steel">{entry.caseMedia.loop.caption}</p>
+            <p className="caption-mono mt-3">{entry.caseMedia.loop.caption}</p>
           </div>
         </section>
       )}
@@ -84,17 +87,15 @@ export default function CaseStudy() {
           <ul className="grid gap-6 md:grid-cols-3">
             {entry.caseMedia.stills.map((still) => (
               <li key={still.src}>
-                <MediaFrame className="h-64 md:h-80">
-                  <img
-                    src={still.src}
-                    alt={still.alt}
-                    width={still.width}
-                    height={still.height}
-                    loading="lazy"
-                    decoding="async"
-                    className="block h-full w-full object-cover"
-                  />
-                </MediaFrame>
+                <TreatedMedia
+                  src={still.src}
+                  alt={still.alt}
+                  width={still.width}
+                  height={still.height}
+                  caption={still.caption}
+                  className="h-64 md:h-80"
+                  imgClassName="block h-full w-full object-cover"
+                />
               </li>
             ))}
           </ul>
@@ -115,7 +116,7 @@ export default function CaseStudy() {
             className="aspect-video w-full"
           />
         </div>
-        <p className="label-mono mt-4 text-steel">{entry.replay.caption}</p>
+        <p className="caption-mono mt-3">{entry.replay.caption}</p>
       </section>
 
       <section aria-label="Verifiable links" className="mt-24 pb-8" data-reveal>

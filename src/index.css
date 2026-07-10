@@ -170,6 +170,20 @@ body.draw-stance {
   font-variant-numeric: tabular-nums;
 }
 
+/* P5: media captions. One step below label-mono, always steel. */
+@utility caption-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-steel);
+}
+
+/* P5: the house duotone, defined once in App as an SVG filter. */
+@utility duotone {
+  filter: url(#duotone);
+}
+
 /* Display face: headings and the giant name. Caps, tight leading.
    Semibold carries the big settings; row titles and sub-heads drop to
    medium via display-500. */

@@ -28,13 +28,19 @@ mkdirSync('public/media', { recursive: true });
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
 const page = await browser.newPage();
 
+/* P5: the frame now comes from TreatedMedia and grain from the global
+   layer, so the placeholder is just the flat ink field with the mono
+   label and a single hairline cut line. */
 for (const { name, w, h } of FILES) {
   await page.setViewport({ width: w, height: h });
   await page.setContent(`
-    <body style="margin:0;background:${ash};display:grid;place-items:center;
-                 width:${w}px;height:${h}px;box-sizing:border-box;
-                 border:1px solid ${hairline};outline:8px solid ${ink};outline-offset:-9px">
-      <div style="font-family:ui-monospace,monospace;letter-spacing:0.14em;
+    <body style="margin:0;background:${ink};display:grid;place-items:center;
+                 width:${w}px;height:${h}px;box-sizing:border-box;position:relative">
+      <svg style="position:absolute;inset:0;width:100%;height:100%">
+        <line x1="100%" y1="0" x2="0" y2="100%" stroke="${hairline}" stroke-width="1"/>
+      </svg>
+      <div style="position:relative;background:${ink};padding:1em 1.6em;
+                  font-family:ui-monospace,monospace;letter-spacing:0.14em;
                   color:${steel};text-align:center;font-size:${Math.round(w / 40)}px">
         MEDIA PENDING<br/>
         <span style="font-size:${Math.round(w / 64)}px">${name} · ${w}×${h}</span>

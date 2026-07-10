@@ -5,8 +5,8 @@ import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { POLY } from '../lib/cut';
 import { useCut, cutClick } from './CutProvider';
 import GhostNumeral from './GhostNumeral';
-import MediaFrame from './MediaFrame';
 import SectionLabel from './SectionLabel';
+import TreatedMedia from './TreatedMedia';
 
 const META_CLASSES =
   'label-mono text-steel transition-colors duration-(--t-fast) ease-settle ' +
@@ -23,18 +23,14 @@ function RowContent({ entry }) {
         <p className="mt-2 max-w-md text-body text-steel">{entry.blurb}</p>
       </div>
       <p className={`${META_CLASSES} md:text-right`}>{entry.stack}</p>
-      {/* Mobile: the preview sits inside the row, framed. */}
-      <MediaFrame className="mt-4 md:hidden">
-        <img
-          src={entry.media.src}
-          alt={entry.media.alt}
-          width={entry.media.width}
-          height={entry.media.height}
-          loading="lazy"
-          decoding="async"
-          className="block w-full"
-        />
-      </MediaFrame>
+      {/* Mobile: the preview sits inside the row, framed and treated. */}
+      <TreatedMedia
+        src={entry.media.src}
+        alt={entry.media.alt}
+        width={entry.media.width}
+        height={entry.media.height}
+        className="mt-4 md:hidden"
+      />
       {/* The cut, in miniature: 1px seal line draws left to right on hover. */}
       <span
         aria-hidden="true"
@@ -122,16 +118,18 @@ export default function RecordSection() {
             className="pointer-events-none invisible absolute top-1/2 right-6 z-20 hidden w-[30%] -translate-y-1/2 bg-ink opacity-0 md:right-12 lg:block"
           >
             {preview && (
-              <MediaFrame>
-                <img
-                  src={preview.src}
-                  alt=""
-                  width={preview.width}
-                  height={preview.height}
-                  decoding="async"
-                  className="block aspect-16/10 w-full object-cover"
-                />
-              </MediaFrame>
+              /* Keyed by src so each row's preview replays the duotone
+                 easing off: the record coming alive under attention. */
+              <TreatedMedia
+                key={preview.src}
+                src={preview.src}
+                alt=""
+                width={preview.width}
+                height={preview.height}
+                reveal="auto"
+                loading="eager"
+                imgClassName="block aspect-16/10 w-full object-cover"
+              />
             )}
           </div>
         )}

@@ -25,6 +25,24 @@ export default function App() {
   return (
     <BrowserRouter>
       <CutProvider>
+        {/* P5: the house duotone. Luminance in, shadows mapped toward
+            ink, highlights toward bone. Referenced as url(#duotone). */}
+        <svg aria-hidden="true" width="0" height="0" className="absolute">
+          <filter id="duotone" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                      0 0 0 1 0"
+            />
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues="0.0392 0.9294" />
+              <feFuncG type="table" tableValues="0.0392 0.9294" />
+              <feFuncB type="table" tableValues="0.0431 0.9137" />
+            </feComponentTransfer>
+          </filter>
+        </svg>
         {/* S2.2: structural grid. Three faint vertical rules, fixed
             behind all content. */}
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 hidden md:block">

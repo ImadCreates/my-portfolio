@@ -44,7 +44,11 @@ export default function MediaFrame({ children, className = '', ...rest }) {
       className={`relative overflow-clip border border-hairline ${className}`}
       {...rest}
     >
-      <div ref={innerRef} className="h-full w-full" style={reduced ? undefined : { scale: '1.12' }}>
+      <div
+        ref={innerRef}
+        className="relative h-full w-full"
+        style={reduced ? undefined : { scale: '1.12' }}
+      >
         {children}
       </div>
     </div>

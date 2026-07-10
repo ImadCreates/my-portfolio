@@ -1,7 +1,7 @@
 import { education, experience, personalInfo, player } from '../data/portfolioData';
 import GhostNumeral from './GhostNumeral';
-import MediaFrame from './MediaFrame';
 import SectionLabel from './SectionLabel';
+import TreatedMedia from './TreatedMedia';
 
 function CareerEntry({ heading, period, description }) {
   return (
@@ -29,16 +29,17 @@ export default function PlayerSection() {
             </p>
           ))}
         </div>
-        <MediaFrame className="h-56 w-56 self-start md:h-70 md:w-70" data-reveal>
-          <img
-            src={personalInfo.photo}
-            alt="Imaduddin Ahmed"
-            width="280"
-            height="280"
-            loading="lazy"
-            className="h-full w-full object-cover grayscale contrast-125"
-          />
-        </MediaFrame>
+        {/* The portrait stays duotone always: no hover reveal. */}
+        <TreatedMedia
+          src={personalInfo.photo}
+          alt="Imaduddin Ahmed"
+          width="280"
+          height="280"
+          reveal="never"
+          className="h-56 w-56 self-start md:h-70 md:w-70"
+          imgClassName="h-full w-full object-cover"
+          data-reveal
+        />
       </div>
 
       <h3 className="label-mono mt-10 px-6 pb-4 text-steel md:px-12" data-reveal>
