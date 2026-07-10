@@ -121,6 +121,17 @@
     outline-offset: 3px;
   }
 
+  /* P4: inside the inverted challenge section, seal-on-seal would
+     vanish; selection and focus flip to ink. */
+  #challenge ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  #challenge :focus-visible {
+    outline-color: var(--color-ink);
+  }
+
   /* Minimal scrollbar: ink track, hairline thumb. */
   html {
     scrollbar-width: thin;

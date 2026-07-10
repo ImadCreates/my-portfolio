@@ -50,7 +50,7 @@ class does not compile. GSAP reads the motion tokens out of the stylesheet at st
 | `--hairline` | `#232327` | All borders, 1px, always                |
 | `--steel`    | `#8A8A93` | Secondary text, labels                  |
 | `--bone`     | `#EDEDE9` | Primary text                            |
-| `--seal`     | `#C81E2E` | The only accent. Cuts, active states, the challenge. Under 2% of any viewport |
+| `--seal`     | `#C81E2E` | The only accent. Cuts, active states, the challenge. Under 2% of any viewport — except the Challenge section, which inverts to a full-bleed seal field on purpose |
 
 ### Type, three faces
 

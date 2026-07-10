@@ -10,7 +10,7 @@ import Sliceable from './Sliceable';
   B2: the numeral is a sliceable target, so the reveal clip lives on a
   wrapper while slice clips live inside Sliceable.
 */
-export default function GhostNumeral({ n, className = 'top-0' }) {
+export default function GhostNumeral({ n, className = 'top-0', stroke = 'var(--color-hairline)' }) {
   const revealRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -38,7 +38,7 @@ export default function GhostNumeral({ n, className = 'top-0' }) {
         <Sliceable>
           <span
             className="display-face block text-[clamp(10rem,40vh,30rem)] leading-[0.8] text-transparent"
-            style={{ WebkitTextStroke: '1px var(--color-hairline)' }}
+            style={{ WebkitTextStroke: `1px ${stroke}` }}
           >
             {n}
           </span>
