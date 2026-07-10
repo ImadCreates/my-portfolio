@@ -42,7 +42,7 @@ export default function LazyLoop({ src, poster, width, height, label }) {
       controls={reduced}
       preload="none"
       aria-label={label}
-      className="block aspect-16/10 w-full border border-hairline bg-ash object-cover"
+      className="block aspect-16/10 w-full bg-ash object-cover"
     />
   );
 }

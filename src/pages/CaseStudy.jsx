@@ -1,17 +1,22 @@
+import { useRef } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { record } from '../data/portfolioData';
 import { useCut, cutClick } from '../components/CutProvider';
 import LazyLoop from '../components/LazyLoop';
+import MediaFrame from '../components/MediaFrame';
 import Slash from '../components/Slash';
 import useReveals from '../lib/useReveals';
+import useLineReveal from '../lib/useLineReveal';
 
 /* Case study, concept doc section 10. Outcome before tech, always. */
 export default function CaseStudy() {
   const { slug } = useParams();
   const entry = record.find((item) => item.slug === slug);
   const { cutNavigate } = useCut();
+  const titleRef = useRef(null);
 
   useReveals();
+  useLineReveal(titleRef);
 
   if (!entry) return <Navigate to="/" replace />;
 
@@ -26,18 +31,24 @@ export default function CaseStudy() {
         BACK TO RECORD
       </Link>
 
-      <header className="mt-12" data-reveal>
-        <p className="label-mono text-steel">
+      <header className="mt-12">
+        <p className="label-mono text-steel" data-reveal>
           {entry.year} · {entry.status} · {entry.stack}
         </p>
-        <h1 className="display-face mt-6 text-hero text-bone">{entry.title}</h1>
-        <p className="mt-8 max-w-2xl text-title text-bone">{entry.outcome}</p>
+        <h1 ref={titleRef} className="display-face mt-6 text-hero text-bone">
+          {entry.title}
+        </h1>
+        <p className="mt-8 max-w-2xl text-title text-bone" data-reveal>
+          {entry.outcome}
+        </p>
       </header>
 
       {entry.caseMedia && (
         <section aria-label="Product loop" className="mt-16" data-reveal>
           <div className="max-w-3xl">
-            <LazyLoop {...entry.caseMedia.loop} />
+            <MediaFrame>
+              <LazyLoop {...entry.caseMedia.loop} />
+            </MediaFrame>
             <p className="label-mono mt-4 text-steel">{entry.caseMedia.loop.caption}</p>
           </div>
         </section>
@@ -70,18 +81,20 @@ export default function CaseStudy() {
 
       {entry.caseMedia && (
         <section aria-label="Product screens" className="mt-24" data-reveal>
-          <ul className="grid gap-px border border-hairline bg-hairline md:grid-cols-3">
+          <ul className="grid gap-6 md:grid-cols-3">
             {entry.caseMedia.stills.map((still) => (
-              <li key={still.src} className="bg-ink">
-                <img
-                  src={still.src}
-                  alt={still.alt}
-                  width={still.width}
-                  height={still.height}
-                  loading="lazy"
-                  decoding="async"
-                  className="block h-64 w-full object-cover md:h-80"
-                />
+              <li key={still.src}>
+                <MediaFrame className="h-64 md:h-80">
+                  <img
+                    src={still.src}
+                    alt={still.alt}
+                    width={still.width}
+                    height={still.height}
+                    loading="lazy"
+                    decoding="async"
+                    className="block h-full w-full object-cover"
+                  />
+                </MediaFrame>
               </li>
             ))}
           </ul>

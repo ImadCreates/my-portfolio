@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { hero, personalInfo } from '../data/portfolioData';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { onCut } from '../lib/blade';
+import { onIntroDone } from '../lib/intro';
+import useLineReveal from '../lib/useLineReveal';
 
 const SHEAR_PX = 2;
 const SHEAR_HOLD_S = 0.15;
 const HINT_KEY = 'rank-one:cut-done';
 
-/* Rendered twice: once live, once as the shear duplicate. */
-function HeroContent({ reveal = false }) {
+/* Rendered twice: once live, once as the shear duplicate. The live
+   name carries the line-mask reveal; the duplicate stays unsplit. */
+function HeroContent({ reveal = false, nameRef }) {
   const [first, last] = personalInfo.name.split(' ');
   const r = reveal ? { 'data-reveal': '' } : {};
 
@@ -17,7 +20,7 @@ function HeroContent({ reveal = false }) {
       <p {...r} className="label-mono text-steel">
         {hero.eyebrow.join(' / ')}
       </p>
-      <h1 {...r} className="display-face mt-6 text-hero text-bone">
+      <h1 ref={nameRef} className="display-face mt-6 text-hero text-bone">
         {first}
         <br />
         {last}
@@ -35,10 +38,31 @@ export default function Hero() {
   const origRef = useRef(null);
   const dupRef = useRef(null);
   const hintRef = useRef(null);
+  const nameRef = useRef(null);
+  const stripRef = useRef(null);
   const shearTl = useRef(null);
   const [hintVisible] = useState(
     () => !sessionStorage.getItem(HINT_KEY) && !prefersReducedMotion(),
   );
+
+  /* P3: the name reveals line by line once the intro has finished. */
+  useLineReveal(nameRef, { trigger: 'intro' });
+
+  /* P3: the record strip values roll up once, after the intro. */
+  useLayoutEffect(() => {
+    if (prefersReducedMotion()) return undefined;
+    const inners = stripRef.current.querySelectorAll('[data-strip-inner]');
+    gsap.set(inners, { yPercent: 110 });
+    return onIntroDone(() => {
+      gsap.to(inners, {
+        yPercent: 0,
+        duration: T.base,
+        ease: EASE.settle,
+        stagger: 0.09,
+        overwrite: true,
+      });
+    });
+  }, []);
 
   /* S1 shear: content above the cut line shifts 2px along the swipe
      vector, content below shifts the other way, then settles back.
@@ -98,7 +122,7 @@ export default function Hero() {
       <div className="relative flex flex-1 flex-col justify-center px-6 pt-14 md:px-12">
         <div ref={wrapRef} className="relative">
           <div ref={origRef}>
-            <HeroContent reveal />
+            <HeroContent reveal nameRef={nameRef} />
           </div>
           <div ref={dupRef} aria-hidden="true" className="invisible absolute inset-0 opacity-0">
             <HeroContent />
@@ -126,9 +150,9 @@ export default function Hero() {
       )}
 
       <ul
+        ref={stripRef}
         className="relative grid border-t border-hairline bg-ink md:grid-cols-3"
         aria-label="Record summary"
-        data-reveal
       >
         {hero.recordStrip.map((item, i) => (
           <li
@@ -137,7 +161,11 @@ export default function Hero() {
               i > 0 ? 'border-t border-hairline md:border-t-0 md:border-l' : ''
             }`}
           >
-            {item}
+            <span className="block overflow-clip">
+              <span className="block" data-strip-inner>
+                {item}
+              </span>
+            </span>
           </li>
         ))}
       </ul>

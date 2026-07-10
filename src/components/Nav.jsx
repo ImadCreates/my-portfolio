@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, T, EASE, prefersReducedMotion } from '../lib/motio
 import { getLenis, lockScroll, scrollToSection, scrollToTop } from '../lib/scroll';
 import { POLY } from '../lib/cut';
 import { useCut, cutClick } from './CutProvider';
+import useMagnetic from '../lib/useMagnetic';
 
 const LINKS = [
   { id: 'record', label: 'RECORD' },
@@ -26,9 +27,13 @@ export default function Nav() {
   const menuTlRef = useRef(null);
   const menuOpenRef = useRef(false);
   const mountedRef = useRef(false);
+  const challengeRef = useRef(null);
   const location = useLocation();
   const { cutNavigate } = useCut();
   const onHome = location.pathname === '/';
+
+  /* P3: the CHALLENGE link is one of the two magnetic elements. */
+  useMagnetic(challengeRef);
 
   menuOpenRef.current = menuOpen;
 
@@ -67,7 +72,7 @@ export default function Nav() {
         gsap.set(menuLineRef.current, { strokeDashoffset: 1, opacity: 1 });
         tl.to(menuLineRef.current, { strokeDashoffset: 0, duration: T.fast, ease: EASE.cut })
           .to(menu, { clipPath: POLY.full, duration: T.base, ease: EASE.cut }, '<')
-          .to(menuLineRef.current, { opacity: 0, duration: T.fast, ease: 'none' }, '<+0.3');
+          .to(menuLineRef.current, { opacity: 0, duration: T.fast, ease: EASE.settle }, '<+0.3');
       }
       tl.call(() => menuFirstLinkRef.current?.focus());
     } else {
@@ -140,7 +145,16 @@ export default function Nav() {
         gsap.to(underline, { opacity: 0, duration: T.fast, ease: EASE.settle });
         return;
       }
-      const vars = { x: link.offsetLeft, width: link.offsetWidth, opacity: 1 };
+      /* Rect math, not offsetLeft: the magnetic CHALLENGE link carries a
+         transform, which would otherwise become the offsetParent. */
+      const linkRect = link.getBoundingClientRect();
+      const parentRect = linksRef.current.getBoundingClientRect();
+      const dx = Number(gsap.getProperty(link, 'x')) || 0;
+      const vars = {
+        x: linkRect.left - parentRect.left - dx,
+        width: linkRect.width,
+        opacity: 1,
+      };
       if (prefersReducedMotion()) gsap.set(underline, vars);
       else gsap.to(underline, { ...vars, duration: T.base, ease: EASE.settle });
     };
@@ -182,6 +196,7 @@ export default function Nav() {
           {LINKS.map(({ id, label, seal }) => (
             <button
               key={id}
+              ref={seal ? challengeRef : undefined}
               type="button"
               onClick={() => goToSection(id)}
               className={`label-mono cursor-pointer transition-colors duration-(--t-fast) ease-settle ${

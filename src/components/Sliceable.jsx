@@ -53,9 +53,10 @@ export default function Sliceable({ children, className = '' }) {
     });
   }, [split]);
 
-  /* Duplicates must not carry ids or reveal hooks into the DOM. */
+  /* Duplicates must not carry ids, refs, or reveal hooks into the DOM;
+     React 19 forwards ref as a prop, so it clones unless stripped. */
   const ghost = isValidElement(children)
-    ? cloneElement(children, { id: undefined, 'data-reveal': undefined })
+    ? cloneElement(children, { id: undefined, ref: undefined, 'data-reveal': undefined })
     : children;
 
   return (

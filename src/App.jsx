@@ -34,7 +34,7 @@ export default function App() {
         </div>
         <a
           href="#main"
-          className="label-mono fixed top-2 left-2 z-50 -translate-y-16 bg-ash px-4 py-2 text-bone transition-transform focus:translate-y-0"
+          className="label-mono fixed top-2 left-2 z-50 -translate-y-16 bg-ash px-4 py-2 text-bone transition-transform duration-(--t-fast) ease-settle focus:translate-y-0"
         >
           SKIP TO CONTENT
         </a>

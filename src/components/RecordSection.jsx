@@ -5,6 +5,7 @@ import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { POLY } from '../lib/cut';
 import { useCut, cutClick } from './CutProvider';
 import GhostNumeral from './GhostNumeral';
+import MediaFrame from './MediaFrame';
 import SectionLabel from './SectionLabel';
 
 const META_CLASSES =
@@ -22,16 +23,18 @@ function RowContent({ entry }) {
         <p className="mt-2 max-w-md text-body text-steel">{entry.blurb}</p>
       </div>
       <p className={`${META_CLASSES} md:text-right`}>{entry.stack}</p>
-      {/* Mobile: the preview sits statically inside the row. */}
-      <img
-        src={entry.media.src}
-        alt={entry.media.alt}
-        width={entry.media.width}
-        height={entry.media.height}
-        loading="lazy"
-        decoding="async"
-        className="mt-4 block w-full border border-hairline md:hidden"
-      />
+      {/* Mobile: the preview sits inside the row, framed. */}
+      <MediaFrame className="mt-4 md:hidden">
+        <img
+          src={entry.media.src}
+          alt={entry.media.alt}
+          width={entry.media.width}
+          height={entry.media.height}
+          loading="lazy"
+          decoding="async"
+          className="block w-full"
+        />
+      </MediaFrame>
       {/* The cut, in miniature: 1px seal line draws left to right on hover. */}
       <span
         aria-hidden="true"
@@ -64,7 +67,7 @@ export default function RecordSection() {
       gsap.set(panel, { autoAlpha: 1, clipPath: POLY.diagonal });
       gsap.to(panel, { clipPath: POLY.full, duration: T.base, ease: EASE.cut });
     } else if (!preview && prev) {
-      gsap.to(panel, { autoAlpha: 0, duration: T.fast, ease: 'none' });
+      gsap.to(panel, { autoAlpha: 0, duration: T.fast, ease: EASE.settle });
     }
   }, [preview]);
 
@@ -116,17 +119,19 @@ export default function RecordSection() {
           <div
             ref={panelRef}
             aria-hidden="true"
-            className="pointer-events-none invisible absolute top-1/2 right-6 z-20 hidden w-[30%] -translate-y-1/2 border border-hairline bg-ink opacity-0 md:right-12 lg:block"
+            className="pointer-events-none invisible absolute top-1/2 right-6 z-20 hidden w-[30%] -translate-y-1/2 bg-ink opacity-0 md:right-12 lg:block"
           >
             {preview && (
-              <img
-                src={preview.src}
-                alt=""
-                width={preview.width}
-                height={preview.height}
-                decoding="async"
-                className="block aspect-16/10 w-full object-cover"
-              />
+              <MediaFrame>
+                <img
+                  src={preview.src}
+                  alt=""
+                  width={preview.width}
+                  height={preview.height}
+                  decoding="async"
+                  className="block aspect-16/10 w-full object-cover"
+                />
+              </MediaFrame>
             )}
           </div>
         )}

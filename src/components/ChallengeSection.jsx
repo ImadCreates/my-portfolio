@@ -1,5 +1,8 @@
+import { useRef } from 'react';
 import { challenge, personalInfo } from '../data/portfolioData';
 import useCopyEmail from '../lib/useCopyEmail';
+import useLineReveal from '../lib/useLineReveal';
+import useMagnetic from '../lib/useMagnetic';
 import GhostNumeral from './GhostNumeral';
 import Slash from './Slash';
 import Sliceable from './Sliceable';
@@ -12,7 +15,12 @@ const EXTERNAL_LINKS = [
 
 export default function ChallengeSection() {
   const { copied, copy } = useCopyEmail();
+  const headingRef = useRef(null);
+  const emailRef = useRef(null);
   const headline = challenge.headline.replace(/\.$/, '');
+
+  useLineReveal(headingRef);
+  useMagnetic(emailRef);
 
   return (
     <section
@@ -23,7 +31,7 @@ export default function ChallengeSection() {
       <GhostNumeral n="04" className="top-1/2 -translate-y-1/2" />
       {/* B2: the giant heading is a sliceable target. */}
       <Sliceable>
-        <h2 id="challenge-heading" className="display-face text-hero text-bone" data-reveal>
+        <h2 id="challenge-heading" ref={headingRef} className="display-face text-hero text-bone">
           {headline}
           <span className="text-seal">.</span>
         </h2>
@@ -35,6 +43,7 @@ export default function ChallengeSection() {
 
       <div className="mt-16 flex flex-col gap-6 md:flex-row md:items-center md:gap-12" data-reveal>
         <button
+          ref={emailRef}
           type="button"
           onClick={copy}
           className="label-mono group flex cursor-pointer items-center gap-2 text-left text-bone transition-colors duration-(--t-fast) ease-settle active:translate-x-[2px] hover:text-seal"

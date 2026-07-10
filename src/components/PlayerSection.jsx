@@ -1,5 +1,6 @@
 import { education, experience, personalInfo, player } from '../data/portfolioData';
 import GhostNumeral from './GhostNumeral';
+import MediaFrame from './MediaFrame';
 import SectionLabel from './SectionLabel';
 
 function CareerEntry({ heading, period, description }) {
@@ -28,15 +29,16 @@ export default function PlayerSection() {
             </p>
           ))}
         </div>
-        <img
-          src={personalInfo.photo}
-          alt="Imaduddin Ahmed"
-          width="280"
-          height="280"
-          loading="lazy"
-          className="h-56 w-56 self-start object-cover grayscale contrast-125 md:h-70 md:w-70"
-          data-reveal
-        />
+        <MediaFrame className="h-56 w-56 self-start md:h-70 md:w-70" data-reveal>
+          <img
+            src={personalInfo.photo}
+            alt="Imaduddin Ahmed"
+            width="280"
+            height="280"
+            loading="lazy"
+            className="h-full w-full object-cover grayscale contrast-125"
+          />
+        </MediaFrame>
       </div>
 
       <h3 className="label-mono mt-10 px-6 pb-4 text-steel md:px-12" data-reveal>

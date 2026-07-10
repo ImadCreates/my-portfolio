@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap, T, EASE, prefersReducedMotion } from '../lib/motion';
 import { POLY, halfShifts } from '../lib/cut';
+import { introDone } from '../lib/intro';
 import { tick } from '../lib/sound';
 
 const CutContext = createContext({ cutNavigate: () => {}, cutTo: () => {} });
@@ -67,6 +68,7 @@ export default function CutProvider({ children }) {
   useLayoutEffect(() => {
     if (!introPending) {
       sessionStorage.setItem(INTRO_KEY, '1');
+      introDone();
       return undefined;
     }
     const names = rootRef.current.querySelectorAll('[data-cut-name]');
@@ -75,6 +77,7 @@ export default function CutProvider({ children }) {
       onComplete: () => {
         sessionStorage.setItem(INTRO_KEY, '1');
         finish();
+        introDone();
       },
     });
     timelineRef.current = tl;
