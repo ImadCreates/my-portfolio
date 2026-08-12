@@ -44,6 +44,38 @@
   src: url("/fonts/jetbrains-mono-latin-400.woff2") format("woff2");
 }
 
+/* Metric-tuned fallbacks (P7): before the woff2s land, text paints in
+   these local faces adjusted to wrap within ~1% of the real fonts, so
+   the swap cannot shift layout. size-adjust values were measured
+   against the site's actual copy; vertical overrides come from each
+   font's hhea table divided by size-adjust. */
+@font-face {
+  font-family: "Clash Display Fallback";
+  src: local("Arial");
+  size-adjust: 99.08%;
+  ascent-override: 89.83%;
+  descent-override: 25.23%;
+  line-gap-override: 9.08%;
+}
+
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 106.84%;
+  ascent-override: 90.67%;
+  descent-override: 22.58%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+
 /*
   RANK ONE design tokens. Single source of truth.
   Palette: concept doc section 2. Type: section 3. Motion: section 7.
@@ -62,9 +94,9 @@
   --color-seal: #c81e2e;
 
   /* Three faces, three jobs, plus one editorial counterpoint. */
-  --font-display: "Clash Display", "Arial Narrow", sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Clash Display", "Clash Display Fallback", sans-serif;
+  --font-body: "Inter", "Inter Fallback", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, monospace;
   --font-serif: "Instrument Serif", Georgia, serif;
 
   /* Type scale: 12 / 16 / 24 / 40 / section / hero. Big jumps. */

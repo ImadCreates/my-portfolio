@@ -137,20 +137,32 @@ export default function useLineReveal(ref, { trigger = 'scroll' } = {}) {
     }
 
     /* Line breaks move with the viewport; re-split at the new width. */
+    let cancelled = false;
+    const resplit = () => {
+      if (cancelled || !ref.current) return;
+      inners = splitIntoLines(el, tokens);
+      gsap.set(inners, { yPercent: revealed ? 0 : 110 });
+    };
     let lastWidth = el.clientWidth;
     let timer = 0;
     const onResize = () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        if (!ref.current || el.clientWidth === lastWidth) return;
+        if (el.clientWidth === lastWidth) return;
         lastWidth = el.clientWidth;
-        inners = splitIntoLines(el, tokens);
-        gsap.set(inners, { yPercent: revealed ? 0 : 110 });
+        resplit();
       }, 150);
     };
     window.addEventListener('resize', onResize);
 
+    /* On a slow connection the first split measures the fallback face;
+       re-split once the real fonts land so line breaks stay true. */
+    if (!document.fonts.check('600 1em "Clash Display"')) {
+      document.fonts.ready.then(resplit);
+    }
+
     return () => {
+      cancelled = true;
       clearTimeout(timer);
       window.removeEventListener('resize', onResize);
       cleanupTrigger();
