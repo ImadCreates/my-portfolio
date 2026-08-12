@@ -173,7 +173,7 @@ function ProjectCard({ project, i, total }) {
           )}
           {project.live && (
             <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group/link ml-auto">
-              <span className="font-rajdhani text-xs tracking-widest transition-colors" style={{ color: project.color }}>LIVE DEMO</span>
+              <span className="font-rajdhani text-xs tracking-widest transition-colors" style={{ color: project.color }}>{project.liveLabel || 'LIVE DEMO'}</span>
               <ExternalLink size={12} style={{ color: project.color }} />
             </a>
           )}

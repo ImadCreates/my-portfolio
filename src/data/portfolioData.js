@@ -79,8 +79,8 @@ export const projects = [
     featured: true,
     wide: true,
     description:
-      "A real-time dispatch and field coordination platform built across a React dispatcher dashboard, Flutter responder app, and Spring Boot backend. Dispatchers assign the nearest available worker by GPS distance, workers receive targeted push notifications and navigate to the job, and status updates flow back to the dashboard in real time. An optional DE10-Lite FPGA hardware layer handles UART communication, a 4-state FSM, VGA display output, and a buzzer alarm for environments requiring physical alert systems.",
-    techStack: ["Flutter", "React", "Spring Boot", "Firebase", "Firestore", "FCM", "Leaflet", "Real-time DB"],
+      "A real-time dispatch and field coordination platform built across a React dispatcher dashboard, Flutter responder app, and Firebase backend (Firestore, Auth, Cloud Functions). Dispatchers assign the nearest available worker by GPS distance, workers receive targeted push notifications and navigate to the job, and status updates flow back to the dashboard in real time. An optional DE10-Lite FPGA hardware layer handles UART communication, a 4-state FSM, VGA display output, and a buzzer alarm for environments requiring physical alert systems.",
+    techStack: ["Flutter", "React", "Firebase", "Firestore", "FCM", "Leaflet", "Real-time DB"],
     highlights: ["Active project", "Mobile + Web + Hardware", "Real-time sync", "GPS distance routing"],
     github: "https://github.com/ImadCreates/Routy",
     live: "https://routy.ca",
@@ -99,11 +99,45 @@ export const projects = [
     color: "#00d4ff",
   },
   {
+    title: "Firewarden",
+    subtitle: "Firestore Security Rules Scanner",
+    description:
+      "An open-source CLI that statically scans Firebase Firestore security rules for misconfigurations that leak data. It finds the insecure rule, writes the hardened fix, and generates the emulator test that proves it. Validated against 70 production apps, finding exploitable misconfigurations in roughly 15% of them. Published on npm and runnable with a single command: npx firewarden scan ./firestore.rules",
+    techStack: ["TypeScript", "CLI", "Static Analysis", "Firebase", "Security", "AppSec"],
+    highlights: ["Published on npm", "Open source (MIT)", "SARIF output"],
+    github: "https://github.com/ImadCreates/firewarden",
+    live: "https://www.npmjs.com/package/firewarden",
+    liveLabel: "NPM",
+    color: "#ff4655",
+  },
+  {
+    title: "FleetBridge",
+    subtitle: "Telematics Normalization + Fleet Analytics",
+    description:
+      "A telematics data platform that ingests three simulated GPS providers with incompatible schemas (Northwind, Haulix, TracPoint) and normalizes them through per-provider adapters into one canonical model. On top of that sits fleet analytics including a severity-weighted safety score computed per driving hour rather than per distance, so short trips are not penalized unfairly.",
+    techStack: ["TypeScript", "React 19", "Vite", "Tailwind", "Leaflet", "Recharts", "Vitest"],
+    highlights: ["Live demo", "Adapter architecture", "Canonical data model"],
+    github: "https://github.com/ImadCreates/fleetbridge",
+    live: "https://fleetbridge-demo.vercel.app",
+    color: "#39ff88",
+  },
+  {
+    title: "transit-scope",
+    subtitle: "GTFS Frequency Diagnostic",
+    description:
+      "A frequency diagnostic built on Brampton Transit's live GTFS feed. A Python and Polars pipeline processes the raw schedule data, and a React and Leaflet map lets you re-simulate added trips live to see how headways change across the network.",
+    techStack: ["Python", "Polars", "React", "Leaflet", "GTFS"],
+    highlights: ["Real transit data", "Live re-simulation"],
+    github: "https://github.com/ImadCreates/transit-scope",
+    live: "https://transit-scope.vercel.app/",
+    color: "#ffd700",
+  },
+  {
     title: "Valorant Theme Portfolio",
     subtitle: "Stylized Personal Portfolio",
     period: "Apr 2026",
     status: "Active",
-    featured: true,
+    featured: false,
     description:
       "A themed portfolio website inspired by Valorant visuals, focused on bold aesthetics, smooth section transitions, and responsive layout design.",
     techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Lucide React"],
